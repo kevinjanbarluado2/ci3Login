@@ -47,6 +47,8 @@
 <script src="./assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="./assets/demo/demo.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript"></script>
+
 <script>
   $(document).ready(function() {
     $().ready(function() {
@@ -223,8 +225,37 @@
     // Javascript method's body can be found in assets/js/demos.js
     md.initDashboardPageCharts();
 
+    $('#smartwizard').smartWizard({
+      theme: 'arrows',
+      transitionEffect: 'fade',
+      justified: true,
+      toolbarSettings: {
+        toolbarPosition: 'both', // none, top, bottom, both
+        toolbarButtonPosition: 'right', // left, right, center
+        showNextButton: true, // show/hide a Next button
+        showPreviousButton: true, // show/hide a Previous button
+        toolbarExtraButtons: [] // Extra buttons to show on toolbar, array of jQuery input/buttons elements
+      },
+    });
+
+    // $('.sw-btn-next,.material-icons').on('click', function() {
+    //   if ($('#smartwizard a:eq(5)').hasClass("active")) {
+    //     $('.sw-btn-next').text('Generate').removeClass('disabled');
+
+    //   } else {
+    //     $('.sw-btn-next').text('Next');
+    //   }
+    // });
+
+    // $('.sw-btn-prev,.material-icons').on('click', function() {
+    //   $('.sw-btn-next').text('Next');
+    // });
+
+
   });
 </script>
+
+
 </body>
 
 </html>
