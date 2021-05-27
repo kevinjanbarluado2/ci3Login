@@ -1,5 +1,5 @@
 $(function(){
 
-alert("compliance");
+console.log();
 
 });
