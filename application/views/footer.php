@@ -49,6 +49,8 @@
 <script src="./assets/demo/demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript"></script>
 
+<script src="./assets/js/addons/<?=$activeNav;?>.js"></script>
+
 <script>
   $(document).ready(function() {
     $().ready(function() {

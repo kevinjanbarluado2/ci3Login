@@ -49,6 +49,6 @@ class Welcome extends CI_Controller
 		$data['activeNav'] = "compliance";
 		$this->load->view('header', $data);
 		$this->load->view('pages/compliance');
-		$this->load->view('footer');
+		$this->load->view('footer',$data);
 	}
 }
