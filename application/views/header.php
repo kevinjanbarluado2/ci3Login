@@ -1,3 +1,9 @@
+<?php
+//$privileges=explode(",",$_SESSION['privileges']);
+// convert to array
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,12 +41,14 @@
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
+        <?php //if(in_array('dashboard',$privileges)):?>
         <li class="nav-item <?php if($activeNav=="dashboard"){echo "active";} ?>">
             <a class="nav-link" href="<?=base_url(); ?>">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
+          <?php //endif;?>
           <li class="nav-item <?php if($activeNav=="users"){echo "active";} ?>">
           <a class="nav-link" href="<?=base_url('users'); ?>">
               <i class="material-icons">person</i>

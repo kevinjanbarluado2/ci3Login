@@ -28,6 +28,7 @@ class Login extends CI_Controller {
 		$this->session->set_userdata('name',$check->name);
 		$this->session->set_userdata('img',$check->img);
 		$this->session->set_userdata('admin',$check->admin);
+		// $this->session->set_userdata('privileges',$check->privileges);
 
 		redirect('welcome');
 		
