@@ -16,6 +16,8 @@
   <link href="./assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="./assets/demo/demo.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/x-icon" href="./img/icon.ico" />
 </head>
 
 <body class="">
