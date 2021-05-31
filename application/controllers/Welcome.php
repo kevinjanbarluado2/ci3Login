@@ -39,6 +39,7 @@ class Welcome extends CI_Controller
 	}
 	public function users()
 	{
+		$data = array();
 		$data['activeNav'] = "users";
 		$this->load->view('header', $data);
 		$this->load->view('pages/users');
@@ -46,6 +47,7 @@ class Welcome extends CI_Controller
 	}
 	public function compliance()
 	{
+		$data = array();
 		$data['activeNav'] = "compliance";
 		$this->load->view('header', $data);
 		$this->load->view('pages/compliance');
