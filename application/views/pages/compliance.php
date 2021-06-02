@@ -25,7 +25,7 @@ $step6 = $json->step6;
                 </button>
             </div>
             <div class="modal-body">
-                <iframe src="" style="width: 100%;"></iframe>
+                <iframe src="./assets/resources/TEST.pdf" style="width: 100%;height:100%"></iframe>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -541,16 +541,21 @@ $step6 = $json->step6;
 </div>
 </div>
 <style>
-    .modal-dialog {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-
-    .modal-content {
-        height: auto;
-        min-height: 100%;
-        border-radius: 0;
-    }
+.modal {
+  padding: 0 !important;
+}
+.modal .modal-dialog {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+}
+.modal .modal-content {
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+}
+.modal .modal-body {
+  overflow-y: auto;
+}
 </style>
