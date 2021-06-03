@@ -96,6 +96,31 @@ class UserProfile extends CI_Controller {
 		echo json_encode($result);
 	}
 
+	//function responsible for deleting records
+	public function deleteUserProfile(){
+		$result = array();
+		$page = 'deleteUserProfile';
+		$result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
+
+		if($this->input->post() && $this->input->post() != null) {
+			$post_data = array();
+			foreach ($this->input->post() as $k => $v) {
+				$post_data[$k] = $this->input->post($k,true);
+			}
+
+			$this->load->model('UserProfileCollection');
+			if($this->UserProfileCollection->deleteRows($post_data)) {
+				$result['message'] = "Successfully deleted user.";
+			} else {
+				$result['message'] = "Failed to delete user.";
+			}
+		} 
+
+		$result['key'] = $page;
+
+		echo json_encode($result);
+	}
+
 	function fetchRows(){ 
 		$this->load->model('UserProfileCollection');
         $fetch_data = $this->UserProfileCollection->make_datatables();  
@@ -131,6 +156,19 @@ class UserProfile extends CI_Controller {
             		  . ' <i class="material-icons">mode_edit</i> '
             		  . ' </button> '
             		  . ' </a> ';
+
+           	if($_SESSION['id'] <> $row->id) :
+	           	$buttons .= ' <a id="deleteUserProfile" ' 
+	            		  . ' class="deleteUserProfile" style="text-decoration: none;" '
+	            		  . ' href="'. base_url().'UserProfile/deleteUserProfile" '
+	            		  . $buttons_data
+	            		  . ' > '
+	            		  . ' <button class="btn btn-danger btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Delete">'
+	            		  . ' <i class="material-icons">delete</i> '
+	            		  . ' </button> '
+	            		  . ' </a> ';
+           	endif;
+
             $sub_array[] = $buttons;
             $data[] = $sub_array;  
         }  
