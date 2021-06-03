@@ -66,7 +66,7 @@ $privileges=explode(",",$_SESSION['privileges']);
           </li>
           <?php endif;?>
           <?php if(in_array('advisers',$privileges)):?>
-          <li class="nav-item <?php if($activeNav=="compliance"){echo "active";} ?>">
+          <li class="nav-item <?php if($activeNav=="advisers"){echo "active";} ?>">
             <a class="nav-link" href="<?=base_url('advisers'); ?>">
               <i class="material-icons">content_paste</i>
               <p>Advisers</p>
