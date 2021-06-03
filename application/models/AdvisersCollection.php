@@ -102,5 +102,13 @@ class AdvisersCollection extends CI_Model {
             return true;    
         return false;
     }
+
+    //delete adviser
+    public function deleteRows($params){
+        $this->db->where('idusers', $params['idusers']);
+        if ($this->db->delete($this->table,$params) !== FALSE)
+            return true;    
+        return false;
+    }
 }
 ?>

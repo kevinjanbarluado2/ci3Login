@@ -33,12 +33,12 @@
 									<thead class=" text-primary">
 										<tr>
 											<th width="15%">Name</th>
-											<th>Email</th>
-											<th>FSPR</th>
-											<th>Address</th>
-											<th>Trading Name</th>
-											<th>Telephone No</th>
-											<th>Action</th>
+											<th width="15%">Email</th>
+											<th width="15%">FSPR</th>
+											<th width="15%">Address</th>
+											<th width="15%">Trading Name</th>
+											<th width="15%">Telephone No</th>
+											<th width="10%">Action</th>
 										</tr>
 									</thead>
 								</table>
