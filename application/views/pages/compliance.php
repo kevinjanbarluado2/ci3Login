@@ -31,13 +31,8 @@ $policies = array(
                 </button>
             </div>
             <div class="modal-body">
-<<<<<<< HEAD
-                <!-- <iframe src="http://docs.google.com/gview?url=<?=base_url("assets/resources/TEST.pdf");?>&embedded=true" style="width: 100%;height:100%"></iframe> -->
-                <iframe src="<?=base_url("assets/resources/TEST.pdf");?>" style="width: 100%;height:100%"></iframe>
-=======
                 <!-- <iframe src="http://docs.google.com/gview?url=<?= base_url("assets/resources/TEST.pdf"); ?>&embedded=true" style="width: 100%;height:100%"></iframe> -->
                 <iframe src="<?= base_url("assets/resources/TEST.pdf"); ?>" style="width: 100%;height:100%"></iframe>
->>>>>>> 43bf3ec40a36642dfd641d3cc5999ad53d0de17d
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
