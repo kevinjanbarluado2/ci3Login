@@ -142,6 +142,81 @@ $(function(){
         }).catch(swal.noop)
         
     })
+
+    //delete adviser
+    $(document).on('click','#deleteAdvisers', function (e) {
+        e.preventDefault();
+        
+        me = $(this)
+        idusers = me.attr('data-idusers');
+        url = me.attr('href');
+
+        content = "Are you sure you want to proceed?";
+        if (me.hasClass("deleteAdvisers")) {
+            content = "Are you sure you want to delete this adviser?";
+        }
+
+        swal({
+            text: content,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            buttonsStyling: false
+        }).then(function(result) {  
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        idusers : idusers
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.hasOwnProperty("key")) {
+                            switch (result.key) {
+                                case 'deleteAdvisers':    
+                                    loadTable();
+                                    $.notify({
+                                        icon: "notifications",
+                                        message: result.message
+
+                                    }, {
+                                        type: 'success',
+                                        timer: 1000,
+                                        placement: {
+                                            from: 'top',
+                                            align: 'center'
+                                        }
+                                    });
+                                    $('#myModal .modal-body').html('');
+                                    $('#myModal').modal('hide');
+                                                    
+                                    break;
+                            }
+                        }
+                    },
+                    error: function (result) {
+                        $.notify({
+                            icon: "notifications",
+                            message: "There was an error in the connection. Please contact the administrator for updates."
+
+                        }, {
+                            type: 'danger',
+                            timer: 1000,
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                    }
+                });
+            }  
+        }).catch(swal.noop)
+        
+    })
 });
 
 //initialize table to be displayed
