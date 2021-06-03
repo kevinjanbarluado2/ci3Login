@@ -53,4 +53,12 @@ class Welcome extends CI_Controller
 		$this->load->view('pages/compliance');
 		$this->load->view('footer',$data);
 	}
+	public function advisers()
+	{
+		$data = array();
+		$data['activeNav'] = "advisers";
+		$this->load->view('header', $data);
+		$this->load->view('pages/advisers');
+		$this->load->view('footer',$data);
+	}
 }
