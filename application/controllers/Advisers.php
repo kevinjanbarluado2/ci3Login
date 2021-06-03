@@ -89,6 +89,31 @@ class Advisers extends CI_Controller {
 		echo json_encode($result);
 	}
 
+	//function responsible for deleting records
+	public function deleteAdvisers(){
+		$result = array();
+		$page = 'deleteAdvisers';
+		$result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
+
+		if($this->input->post() && $this->input->post() != null) {
+			$post_data = array();
+			foreach ($this->input->post() as $k => $v) {
+				$post_data[$k] = $this->input->post($k,true);
+			}
+
+			$this->load->model('AdvisersCollection');
+			if($this->AdvisersCollection->deleteRows($post_data)) {
+				$result['message'] = "Successfully deleted adviser.";
+			} else {
+				$result['message'] = "Failed to delete adviser.";
+			}
+		} 
+
+		$result['key'] = $page;
+
+		echo json_encode($result);
+	}
+
 	function fetchRows(){ 
 		$this->load->model('AdvisersCollection');
         $fetch_data = $this->AdvisersCollection->make_datatables();  
@@ -124,6 +149,15 @@ class Advisers extends CI_Controller {
             		  . ' > '
             		  . ' <button class="btn btn-info btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Update">'
             		  . ' <i class="material-icons">mode_edit</i> '
+            		  . ' </button> '
+            		  . ' </a> ';
+            $buttons .= ' <a id="deleteAdvisers" ' 
+            		  . ' class="deleteAdvisers" style="text-decoration: none;" '
+            		  . ' href="'. base_url().'Advisers/deleteAdvisers" '
+            		  . $buttons_data
+            		  . ' > '
+            		  . ' <button class="btn btn-danger btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Delete">'
+            		  . ' <i class="material-icons">delete</i> '
             		  . ' </button> '
             		  . ' </a> ';
             $sub_array[] = $buttons;

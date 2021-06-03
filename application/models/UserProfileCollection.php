@@ -120,5 +120,13 @@ class UserProfileCollection extends CI_Model {
         }
         return false;
     }
+
+    //delete user
+    public function deleteRows($params){
+        $this->db->where('id', $params['id']);
+        if ($this->db->delete($this->table,$params) !== FALSE)
+            return true;    
+        return false;
+    }
 }
 ?>

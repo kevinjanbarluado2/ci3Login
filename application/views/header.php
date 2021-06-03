@@ -24,6 +24,8 @@ $privileges=explode(",",$_SESSION['privileges']);
   <link href="./assets/demo/demo.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
   <link rel="icon" type="image/x-icon" href="./img/icon.ico" />
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/css/complianceapp.css">
 </head>
 
 <body class="">
@@ -66,7 +68,7 @@ $privileges=explode(",",$_SESSION['privileges']);
           </li>
           <?php endif;?>
           <?php if(in_array('advisers',$privileges)):?>
-          <li class="nav-item <?php if($activeNav=="compliance"){echo "active";} ?>">
+          <li class="nav-item <?php if($activeNav=="advisers"){echo "active";} ?>">
             <a class="nav-link" href="<?=base_url('advisers'); ?>">
               <i class="material-icons">content_paste</i>
               <p>Advisers</p>

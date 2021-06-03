@@ -6,6 +6,11 @@ $step3 = $json->step3;
 $step4 = $json->step4;
 $step5 = $json->step5;
 $step6 = $json->step6;
+$policies = array(
+    'Life', 'Trauma', 'Progressive Care', 'Trauma Multi',
+    'Major Care', 'MMR', 'IP', "Health", "Business Expenses",
+    'Key Person Cover', 'TPD', 'Waiver of Premium'
+);
 ?>
 
 
@@ -15,6 +20,7 @@ $step6 = $json->step6;
 
 
 <!-- Modal -->
+
 <div class="modal fade" id="complianceModal" tabindex="-1" role="dialog" aria-labelledby="complianceModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -25,8 +31,13 @@ $step6 = $json->step6;
                 </button>
             </div>
             <div class="modal-body">
+<<<<<<< HEAD
                 <!-- <iframe src="http://docs.google.com/gview?url=<?=base_url("assets/resources/TEST.pdf");?>&embedded=true" style="width: 100%;height:100%"></iframe> -->
                 <iframe src="<?=base_url("assets/resources/TEST.pdf");?>" style="width: 100%;height:100%"></iframe>
+=======
+                <!-- <iframe src="http://docs.google.com/gview?url=<?= base_url("assets/resources/TEST.pdf"); ?>&embedded=true" style="width: 100%;height:100%"></iframe> -->
+                <iframe src="<?= base_url("assets/resources/TEST.pdf"); ?>" style="width: 100%;height:100%"></iframe>
+>>>>>>> 43bf3ec40a36642dfd641d3cc5999ad53d0de17d
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -106,6 +117,27 @@ $step6 = $json->step6;
                             </div>
                             <div class="col">
                                 <label for="">Adviser</label>
+                                <select name="" id="" class="form-control">
+                                    <option value="" readonly="true">--Please Select--</option>
+                                    <option value="">Kevin</option>
+                                    <option value="">Sam</option>
+                                    <option value="">Omar</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="">Policy Type</label>
+                                <select name="policyType[]" class="form-control multiselect" multiple="multiple">
+                                    <?php foreach ($policies as $x) : ?>
+                                        <option value="<?= $x ?>"><?= $x ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="">Providers</label>
                                 <select name="" id="" class="form-control">
                                     <option value="" readonly="true">--Please Select--</option>
                                     <option value="">Kevin</option>
@@ -602,4 +634,13 @@ $step6 = $json->step6;
     .modal .modal-body {
         overflow-y: auto;
     }
+<<<<<<< HEAD
+=======
+
+	.select2-selection--multiple {
+		overflow: hidden !important;
+		height: auto !important;
+        min-height: 0 !important;
+	}
+>>>>>>> 43bf3ec40a36642dfd641d3cc5999ad53d0de17d
 </style>
