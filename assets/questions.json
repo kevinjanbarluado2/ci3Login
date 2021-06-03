@@ -8,61 +8,61 @@
         {
             "question": "Can you evidence that you clearly explain the extent (scope) of services and products you can provide and areas of competency including any limitations to your authorities, potential or know conflicts of interest so a client can make an informed choice whether to use your services?",
             "source": "Code Std 4 Disclosure Regs NZCFS L5 (US31869 1.1)",
-            "comments": "Included in: • AL Fact Find Needs Analysis Template P.24 • Disclosure Template(s)"
+            "comments": "Included in: • EI Fact Find Needs Analysis Template P.24 • Disclosure Template(s)"
         },
         {
             "question": "If a client declines to undertake a full suitability or needs analysis, is this decision noted in writing and signed and dated by the client acknowledging the advantages of a suitability analysis and the limitations of not undertaking one?",
             "source": "Best Practice",
-            "comments": "Note: This requirements is part of the current Code of Conduct for AFAs. AL Fact Find Needs Analysis Template P3"
+            "comments": "Note: This requirements is part of the current Code of Conduct for AFAs. EI Fact Find Needs Analysis Template P3"
         },
         {
             "question": "Do you note any other specific tasks requested by the client?",
             "source": "Best Practice",
-            "comments": "AL Fact Find Needs Analysis Template P2"
+            "comments": "EI Fact Find Needs Analysis Template P2"
         },
         {
             "question": "Do you explain how information you gather is used, the security of this information and who has access? (Privacy Statement and Acknowledgment})",
             "source": "Privacy Act Code Std 5 NZCFS L5 (US31869 1.1)",
-            "comments": "AL Fact Find Needs Analysis Template P3"
+            "comments": "EI Fact Find Needs Analysis Template P3"
         },
         {
             "question": "Do you get client(s) sign off on the Scope of Engagement and Privacy Act explanations and other acknowledgements e.g. receipt of documents",
             "source": "Best Practice",
-            "comments": "Required to prove the requirements above have been completed. AL Fact Find Needs Analysis Template P3"
+            "comments": "Required to prove the requirements above have been completed. EI Fact Find Needs Analysis Template P3"
         }
     ],
     "step2": [
         {
             "question": "Do you use a formal Fact Find Needs Analysis Document or Technology Platform that is designed to uncover all client circumstances having a bearing on the advice as per the agreed nature and scope of the engagement?",
             "source": "FMA Capability Requirement Code Std 3 Code Std 1 Best Practice",
-            "comments": "Note: The extent and level to which information is gathered will be determined by the agreed nature and scope of advice for the engagement. Code Std 1 talks about “listening to clients, considering their views and responding to their concerns and preferences.” This applies to several aspects of the needs analysis process below including the ‘Know your client’, act with integrity and ‘Treat clients fairly’ expectations. AL Fact Find Needs Analysis Template"
+            "comments": "Note: The extent and level to which information is gathered will be determined by the agreed nature and scope of advice for the engagement. Code Std 1 talks about “listening to clients, considering their views and responding to their concerns and preferences.” This applies to several aspects of the needs analysis process below including the ‘Know your client’, act with integrity and ‘Treat clients fairly’ expectations. EI Fact Find Needs Analysis Template"
         },
         {
             "question": "Throughout the process, do you formally establish and seek to understand and validate the clients attitude to and capacity for risk (risk tolerance) in accordance with the agreed Scope of Engagement? Including:<ul> <li>General attitude (willingness) to accept risk or self-insure</li><li>Priorities for cover type and identified needs</li><li>Self-insurance levels or time frames e.g. use of wait period / excesses</li><li>Availability and willingness to use own assets or borrow (capacity) including liquidity</li><li>Willingness to accept risk</li><li>Willingness to use family support / Government support / Public health services</ul></li>",
             "source": "Code Std 3 FSLAA S431 K and M NZCFS L5 US31866 1.1 US31869 1.2",
-            "comments": "AL Fact Find Needs Analysis Template P4"
+            "comments": "EI Fact Find Needs Analysis Template P4"
         },
         {
             "question": "Do you discuss with the client and record their personal objectives (reasons) for implementing a risk insurance plan relevant to the agreed nature and scope of the engagement?",
             "source": "Code Std 3 FSLAA S431 K/M NZCFS L5 US31866 1.2 US31869 1.2",
-            "comments": "AL Fact Find Needs Analysis Template P4"
+            "comments": "EI Fact Find Needs Analysis Template P4"
         },
         {
             "question": "Do you discuss with client, listen and record sufficient qualitative information about the client’s personal situation relevant to the agreed nature and scope of the engagement that may impact on needs? For example: <ul><li> Personal circumstances including obligations, values beliefs, aspirations, goals etc) especially around</li><li>Family</li><li>Work (income sources)</li><li>Housing</li><li>Money/Investments</li> <li>Lifestyle</li><li>Business Circumstances</li><li>Any reasonably foreseeable changes to these circumstances</li></ul>",
             "source": "FSLAA S431 L, M & I Code Std 1 Code Std 3 NZCFS L5 US31869 1.3",
-            "comments": "Note: The Privacy Act is very important here. You can only gather personal information form the person themselves and such information must be in line with the purpose as per the Scope of Engagement.AL Fact Find Needs Analysis Template"
+            "comments": "Note: The Privacy Act is very important here. You can only gather personal information form the person themselves and such information must be in line with the purpose as per the Scope of Engagement.EI Fact Find Needs Analysis Template"
         },
         {
             "question": "Do you gather and record sufficient quantitative client information relevant to the agreed nature and scope of the engagement to be able to make sound recommendations? For example: <strong>Personal details</strong> such as: <ul><li>dates of birth, address, marital status, and residency status </li><li> health status, pastimes and habits </li><li> employment status and nature of the job </li><li> Children </li><li> Estate planning provisions including details use of other advisers (e.g. accountants) Financial circumstances and details such as: </li><li> Assets (relevant to advice) including ownership </li><li> Current and potential liabilities </li><li> Level and nature of income from all sources o Existing insurances </li><li>Initial quantification / calculation of needs</li></ul>",
             "source": "FSLAA S431 L, M & I Code Std 1 Code Std 3 NZCFS L5 US31869 1.2 US31866 1.3 US31866 1.4 US31866 1.5",
-            "comments": "AL Fact Find Needs Analysis Template"
+            "comments": "EI Fact Find Needs Analysis Template"
         }
     ],
     "step3": [
         {
             "question": "Do you review all client information to <strong>identify circumstances that will impact on strategy and product solutions</strong> and how these may be incorporated into the advice? Consideration can include:<ul><li>Current assets</li><li>Current insurances</li><li>Health, family history, existing conditions, hazardous pursuits, habits, residency.</li><li>Sophistication of client (skills, experience and vulnerability)</li><li>Possibility of loading / exclusions</li><li>Time frames i.e. short-term needs versus long-term needs and affordability</li><li>Risk tolerances e.g. for wait period, benefit levels and excesses</li><li>Reasonably foreseeable changes to circumstances e.g. family status, inheritances, increased debt, change of employment situation, asset </li>acquisition<li>Client’s stated priorities /preferences</li><li>Taxation implications</li><li>Alternative strategies if insurance not possible.</li></ul>",
             "source": "FMA capability requirement as per their website FSLAA S431 L, M & I Code Std 3 FMA Guide on Care Diligence and Skill NZCFS L5 US31869 1.3 US31867 1.1-1.3 US31866 2.2",
-            "comments": "This is further evidence of how an adviser has undertaken care, diligence and skill to determine the most appropriate solution for the client both now and considering reasonable foreseeable changes to circumstances. It is not just about selecting the best rated product by price or benefits. There can be a lot of filtering of possible structure offerings, attributes and other available solution strategies that need to be considered before product comparators are used. Note these words from the FMA Website under ‘Monitoring’ … “Write it down. Make sure you've documented how you got to the conclusions you reached for your clients” AL template ‘Research and Analysis – Personal Insurance AL template ‘Research and Analysis – Restructuring ACC for the Self-Employed"
+            "comments": "This is further evidence of how an adviser has undertaken care, diligence and skill to determine the most appropriate solution for the client both now and considering reasonable foreseeable changes to circumstances. It is not just about selecting the best rated product by price or benefits. There can be a lot of filtering of possible structure offerings, attributes and other available solution strategies that need to be considered before product comparators are used. Note these words from the FMA Website under ‘Monitoring’ … “Write it down. Make sure you've documented how you got to the conclusions you reached for your clients” EI template ‘Research and Analysis – Personal Insurance EI template ‘Research and Analysis – Restructuring ACC for the Self-Employed"
         },
         {
             "question": "Do you analyse and evaluate the availability and use of alternative sources of support as part of the overall strategy and solution. For example:<ul><li>ACC</li><li>WINZ</li><li>Ministry of Health</li><li>Primary Health Organisations</li><li>Family</li><li>Self-insurance</li></ul>",
@@ -72,7 +72,7 @@
         {
             "question": "Do you research, analyse and evaluate existing insurance covers to determine if still fit for purpose. This may include such things as: <ul><li>Product features and options comparisons (loss or gain)</li><li>Existence of special concessions in existing cover</li><li>Impact of new health conditions, occupation, pursuits and habits on any proposed cover (potential loss of benefits /cover)</li><li>Premium projections and comparisons over the longer term</li></ul>",
             "source": "FMA Guide on Care Diligence and Skill FSLAA S431 L, M & I Code Std 3 NZCFS L5 US31867 1.3 US31866 2.1",
-            "comments": "This aspect singled out as it has a large ‘commentary’ in the Code as well as FMA focus. AL template ‘Research and Analysis – Personal Insurance"
+            "comments": "This aspect singled out as it has a large ‘commentary’ in the Code as well as FMA focus. EI template ‘Research and Analysis – Personal Insurance"
         },
         {
             "question": "Do you consider and model different solution options based on client needs, client needs, circumstances and/or client priorities.",
@@ -109,12 +109,12 @@
         {
             "question": "Do you provide a written record or Statement of Advice to your clients?",
             "source": "NZCFS L5 US31869 1.4",
-            "comments": "Note: Not all Advice needs to be in a formal SoA. In simple situations it could be verbal with appropriate recorded calls or file notes created at the same time as the advice. This might be common when further advice is given to an existing client. AL: Model SoA template"
+            "comments": "Note: Not all Advice needs to be in a formal SoA. In simple situations it could be verbal with appropriate recorded calls or file notes created at the same time as the advice. This might be common when further advice is given to an existing client. EI: Model SoA template"
         },
         {
             "question": "Are recommendations in the Statements of Advice written/presented in a clear, concise and effective way and suitable to:<ul><li>The level of sophistication of the client?</li><li>Any identified client vulnerabilities?</li><li>The level and nature of the advice as agreed in the Scope of Engagement.</li></ul>",
             "source": "FSLAA S431 J, K, L, & M Code Std 4 NZCFS L5 US31869 1.4",
-            "comments": "Note: This includes logical ordering, highlighting key information, explain any jargon in simple language whether written or verbal and avoidance of lengthy documents. AL: Model SoA template"
+            "comments": "Note: This includes logical ordering, highlighting key information, explain any jargon in simple language whether written or verbal and avoidance of lengthy documents. EI: Model SoA template"
         },
         {
             "question": "Do you check all advice documents to ensure there are no misleading (or likely to mislead) statements or omission of relevant information?",
@@ -124,32 +124,32 @@
         {
             "question": "Do you restate the Scope of Service and any other terms of the engagement?",
             "source": "NZCFS L5 US31869 1.4 Best Practice",
-            "comments": "AL: Model SoA template"
+            "comments": "EI: Model SoA template"
         },
         {
             "question": "Do you summarise key relevant facts and client circumstances on which your advice is based?",
             "source": "Best Practice NZCFS L5 US31869 1.4",
-            "comments": "AL: Model SoA template"
+            "comments": "EI: Model SoA template"
         },
         {
             "question": "Do you summarise the client’s core needs and objectives (in personal and practical terms) and their priorities?",
             "source": "Best Practice NZCFS L5 US31869 1.4",
-            "comments": "AL: Model SoA template"
+            "comments": "EI: Model SoA template"
         },
         {
             "question": "Does the advice clearly outline any considerations in arriving at your advice? For example: <ul><li>Client’s risks tolerance/capacity</li><li>Priorities</li><li>Choice of product provider</li><li>Known limitations to the advice e.g. needs identified but unable to address, insufficient information provided</li><li>Reasons for cancelling or retaining existing cover</li><li>Any restrictions to being able to provide best possible solution e.g. health status of client and any alternative risk management strategies</li><li>Government support available and their impact</li><li>Tax implications</li></ul>",
             "source": "Code Std 3 FMA Guide on Care Diligence and Skill NZCFS L5 US31869 1.4 US31867 2.1 US31869 1.3 Best Practice",
-            "comments": "AL: Model SoA template"
+            "comments": "EI: Model SoA template"
         },
         {
             "question": "Does your advice clearly define the underpinning strategies recommended to address client’s needs and objectives?",
             "source": "NZCFS L 5 Code Std 3",
-            "comments": "AL: Model SoA template"
+            "comments": "EI: Model SoA template"
         },
         {
             "question": "Does the advice clearly state how your product recommendations will meet the needs, circumstances and objectives of the client? This may include: <ul><li>LCover types and benefit structures</li><li>Sums insured</li><li>Premium type(s)</li><li>Optional Options recommended</li><li>Ownership structures recommended etc</li></ul>",
             "source": "Code Std 3 NZCFS L5 US31869 1.4 US31867 2.2- 2.3",
-            "comments": "AL: Model SoA template"
+            "comments": "EI: Model SoA template"
         },
         {
             "question": "Is the advice presented based on identified needs and not modified to represent the client’s final decision e.g. Accepting only part of the recommendation?",
@@ -159,12 +159,12 @@
         {
             "question": "Does the advice clearly state any identified risks, limitations or disadvantages of the recommended strategies or product solutions? For example: <ul><li>Needs identified but not addressed </li><li> Replacement of policy and possible risks and consequences of non-disclosure </li><li> Insufficient provision of information • Not implementing the recommendations</li></ul>",
             "source": "FSLAA S431 J, K, L, & M Code Std 4 FMA Guide on Care Diligence and Skill NZCFS L5 US31869 1.4",
-            "comments": "AL: Model SoA template"
+            "comments": "EI: Model SoA template"
         },
         {
             "question": "Does the recommendation clearly outline the premium costs (or your fees) of implementing the recommended strategies and products?",
             "source": "Code Std 4 NZCFS L5 US31869 1.4",
-            "comments": "Note: For risk advisers this will be captured under the new Disclosure Regulations AL: Model SoA template"
+            "comments": "Note: For risk advisers this will be captured under the new Disclosure Regulations EI: Model SoA template"
         },
         {
             "question": "Do you clearly and effectively communicate any conflicts of interest that might influence your advice e.g. qualification for higher commissions or qualifications for overseas trips and other incentives?",
@@ -174,7 +174,7 @@
         {
             "question": "Is the need for the client to seek other legal or specialist advice identified and noted in your advice? For example: need for Wills, EPAs etc.",
             "source": "NZCFS L5 US31867 1.3 US31867 2.4",
-            "comments": "AL: Model SoA template"
+            "comments": "EI: Model SoA template"
         },
         {
             "question": "Can you evidence you meet all applicable Disclosure Regulations required at this point of the process?",
@@ -186,22 +186,22 @@
         {
             "question": "Is there an appropriate place recording any client-initiated variations to the advice?",
             "source": "Best Practice NZCFS L5 US31869 1.5",
-            "comments": "AL: Model SoA template"
+            "comments": "EI: Model SoA template"
         },
         {
             "question": "Do you explain the process of implementation of any strategies and insurance solutions including possible time frames and impact of other requirements such as medical examinations, use of other professionals etc?",
             "source": "Best Practice NZCFS L5 US31869 1.4 US31869 1.5",
-            "comments": "AL: Model SoA template"
+            "comments": "EI: Model SoA template"
         },
         {
             "question": "Do you discuss the reasons for a review of their plans and products? Is such a review and an appropriate time frame and method recommended and agreed by the client?",
             "source": "Best Practice NZCFS L5 US31869 1.6",
-            "comments": "AL: Model SoA template"
+            "comments": "EI: Model SoA template"
         },
         {
             "question": "Does the client sign an Authority to Proceed? For example: <ul><li>Proceed with full recommendations</li><li>Proceed with noted variations</li><li>Do not proceed with recommendations</li></ul>",
             "source": "Best Practice NZCFS L5 US31869 1.5",
-            "comments": "AL: Model SoA template"
+            "comments": "EI: Model SoA template"
         },
         {
             "question": "Do you carefully support the client through the application questions to ensure they fully understand the disclosure requirements and complete all necessary documentation?",
@@ -211,12 +211,12 @@
         {
             "question": "Do you send a copy of their application(s) and reminding them of their Duty of Disclosure? This letter could include: <ul><li> Matters they may have overlooked</li><li> Health/Occupation changes since application</li></ul>",
             "source": "Best Practice NZCFS L5 US31869 1.5 US31868 1.2 US31868 2.1-2.2",
-            "comments": "AL: Example letters/e-mail wording for paper and electronic applications"
+            "comments": "EI: Example letters/e-mail wording for paper and electronic applications"
         },
         {
             "question": "Do you monitor and maintain tracking records (file notes) of the application and implementation process to ensure it is keeping within agreed time frames and to keep the client informed? For example:<ul><li>Discussion with underwriters / new business staff</li><li>Follow up conversations and actions on outstanding requirements</li><li>Discussion of variation to terms of cover and acceptance or otherwise</li>",
             "source": "Best Practice NZCFS L5 US31869 1.5 US31868 1.2 US31868 2.1-2.2",
-            "comments": "Part of the expected communication conduct requirements set down by the FMA Most will be recorded in CRMs today AL example / manual checklist for the end to end process. AL File Note template"
+            "comments": "Part of the expected communication conduct requirements set down by the FMA Most will be recorded in CRMs today EI example / manual checklist for the end to end process. EI File Note template"
         }
     ],
     "step6": [
@@ -233,7 +233,7 @@
         {
             "question": "Conducted a check with the client to understand and identify changes in circumstances and /or needs that will necessitate strategy or insurance product changes. Changes may include (but not limited to) such things as: <ul><li>Relationship status</li><li>Family status and responsibilities</li><li>Employment</li><li>Nature and source of income</li><li>Other financial circumstances including assets and liabilities</li><li>Insurances in place (acquired or ended/cancelled)</li><li>Risk tolerances and objectives</li><li>Health</li><li>Pastimes and habits</li><li>Goals and aspirations</li><li>Beneficiaries</li></ul>",
             "source": "FMA Monitoring Report NZCFS L5 (US31869 1.6)",
-            "comments": "Circle back to the previous steps for the process and drafting recommendations etc. AL: Review Interview template Note: Other requirements replicate those of the full advice process but usually to a much to a lesser extent unless a full revamp of the strategies and product options is required."
+            "comments": "Circle back to the previous steps for the process and drafting recommendations etc. EI: Review Interview template Note: Other requirements replicate those of the full advice process but usually to a much to a lesser extent unless a full revamp of the strategies and product options is required."
         }
     ]
 }
