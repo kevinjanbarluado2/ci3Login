@@ -20,6 +20,7 @@ $policies = array(
 
 
 <!-- Modal -->
+
 <div class="modal fade" id="complianceModal" tabindex="-1" role="dialog" aria-labelledby="complianceModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -131,7 +132,7 @@ $policies = array(
                                 </select>
                             </div>
                             <div class="col">
-                                <label for="">Adviser</label>
+                                <label for="">Providers</label>
                                 <select name="" id="" class="form-control">
                                     <option value="" readonly="true">--Please Select--</option>
                                     <option value="">Kevin</option>

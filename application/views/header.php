@@ -25,7 +25,7 @@ $privileges=explode(",",$_SESSION['privileges']);
   <link href="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
   <link rel="icon" type="image/x-icon" href="./img/icon.ico" />
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
+  <link rel="stylesheet" href="./assets/css/complianceapp.css">
 </head>
 
 <body class="">
