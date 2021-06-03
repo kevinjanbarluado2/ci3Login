@@ -25,7 +25,8 @@ $step6 = $json->step6;
                 </button>
             </div>
             <div class="modal-body">
-                <iframe src="./assets/resources/TEST.pdf" style="width: 100%;height:100%"></iframe>
+                <!-- <iframe src="http://docs.google.com/gview?url=<?=base_url("assets/resources/TEST.pdf");?>&embedded=true" style="width: 100%;height:100%"></iframe> -->
+                <iframe src="<?=base_url("assets/resources/TEST.pdf");?>" style="width: 100%;height:100%"></iframe>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -37,6 +38,12 @@ $step6 = $json->step6;
 <div id="smartwizard">
 
     <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="#info">
+                Fill-up<br>
+                <small><i class="material-icons">article</i></small>
+            </a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="#step-1">
                 Step 1<br>
@@ -82,6 +89,40 @@ $step6 = $json->step6;
     </ul>
 
     <div class="tab-content">
+
+        <div id="info" class="tab-pane" role="tabpanel" aria-labelledby="info">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title">Information</h4>
+                        <p class="card-category">Kindly fill-up necessary information</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+
+                                <label for="">Client Name</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="col">
+                                <label for="">Adviser</label>
+                                <select name="" id="" class="form-control">
+                                    <option value="" readonly="true">--Please Select--</option>
+                                    <option value="">Kevin</option>
+                                    <option value="">Sam</option>
+                                    <option value="">Omar</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
         <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
             <div class="col-md-12">
                 <div class="card">
@@ -541,21 +582,24 @@ $step6 = $json->step6;
 </div>
 </div>
 <style>
-.modal {
-  padding: 0 !important;
-}
-.modal .modal-dialog {
-  width: 100%;
-  max-width: none;
-  height: 100%;
-  margin: 0;
-}
-.modal .modal-content {
-  height: 100%;
-  border: 0;
-  border-radius: 0;
-}
-.modal .modal-body {
-  overflow-y: auto;
-}
+    .modal {
+        padding: 0 !important;
+    }
+
+    .modal .modal-dialog {
+        width: 100%;
+        max-width: none;
+        height: 100%;
+        margin: 0;
+    }
+
+    .modal .modal-content {
+        height: 100%;
+        border: 0;
+        border-radius: 0;
+    }
+
+    .modal .modal-body {
+        overflow-y: auto;
+    }
 </style>
