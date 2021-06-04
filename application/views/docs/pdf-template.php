@@ -1,20 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>PDF Template</title>
-
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link
-		href="https://fonts.googleapis.com/css2?family=Quattrocento+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-		rel="stylesheet">
-
-	<link rel="stylesheet" href="css/pdf.css" />
-</head>
-
 <body>
 	<div class="page-header">
 		<table class="header">
@@ -22,7 +7,7 @@
 				<td class="header-left-box">
 					&nbsp;
 				</td>
-				<td class="header-image"><img src="img/logo-only.png" height="73" />
+				<td class="header-image"><img src="<?=FCPATH.'assets/img/logo-only.png';?>" height="73" />
 				</td>
 				<td class="header-title">DOCUMENT HEADER HERE...
 				</td>
@@ -156,5 +141,195 @@
 		</table>
 	</div>
 </body>
+<style>
+	.page-header {
+    margin-bottom: 5em;
+}
 
-</html>
+.margin {
+    height: 100%;
+    margin-left: 0.77in;
+    margin-right: 0.77in;
+    /* border: 1px dashed black; */
+}
+
+.page-break {
+    page-break-after: always;
+}
+
+.header {
+    width: 100%;
+}
+
+.header-image {
+    padding-left: 5.5pt;
+    padding-bottom: 0;
+}
+
+.header-title {
+    font-family: 'Quattrocento Sans', sans-serif;
+    font-size: 18pt;
+    font-weight: bold;
+    text-align: right;
+    white-space: nowrap;
+    color: #44546a;
+    padding-left: 5.5pt;
+    padding-right: 5.5pt;
+    padding-bottom: 0;
+    vertical-align: bottom;
+}
+
+.header-left-box {
+    width: 0.68in;
+    height: 0.65in;
+    background-color: #44546a;
+    vertical-align: bottom;
+    padding: 0;
+}
+
+.header-right-box {
+    width: 0.68in;
+    height: 0.65in;
+    background-color: #2e74b6;
+    vertical-align: bottom;
+    padding: 0;
+}
+
+.table-footer {
+    width: 100%;
+    padding-left: 0.25in;
+    padding-right: 0.25in;
+    margin-bottom: 1em;
+}
+
+.footer-logo {
+    width: 50%;
+}
+
+.footer-page {
+    width: 50%;
+    text-align: right;
+    font-family: 'Quattrocento Sans', sans-serif;
+    font-size: 11pt;
+    color: #5b9bd5;
+    vertical-align: bottom;
+}
+
+.footer-link {
+    text-align: right;
+    font-family: 'Quattrocento Sans', sans-serif;
+    font-size: 11pt;
+    color: #5b9bd5;
+    text-decoration: none;
+}
+
+body {
+    font-family: 'Quattrocento Sans', sans-serif;
+    font-size: 11pt;
+    font-weight: normal;
+    padding: 48px 0;
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+p {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+p,
+li {
+    text-align: justify;
+}
+
+ol,
+ul,
+li {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.bg-shark {
+    background-color: #2B3036;
+}
+
+.bg-lmara {
+    background-color: #0081B8;
+}
+
+.bg-tblue {
+    background-color: #0F6497;
+}
+
+.bg-dsgreen {
+    background-color: #0C4664;
+}
+
+.text-white {
+    color: #ffffff;
+}
+
+.text-shark {
+    color: #2B3036;
+}
+
+.text-lmara {
+    color: #0081B8;
+}
+
+.text-tblue {
+    color: #0F6497;
+}
+
+.text-ds-green {
+    color: #0C4664;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.w-half {
+    width: 50%;
+}
+
+.text-lg {
+    font-size: 1.25em;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.mt-4 {
+    margin-top: 1em;
+}
+
+.mb-4 {
+    margin-bottom: 1em;
+}
+
+.mb-8 {
+    margin-bottom: 2em;
+}
+
+.p-4 {
+    padding: 1em;
+}
+
+.flex {
+    display: flex;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+</style>
+

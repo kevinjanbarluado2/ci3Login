@@ -32,7 +32,7 @@ $policies = array(
             </div>
             <div class="modal-body">
                 <!-- <iframe src="http://docs.google.com/gview?url=<?= base_url("assets/resources/TEST.pdf"); ?>&embedded=true" style="width: 100%;height:100%"></iframe> -->
-                <iframe src="<?= base_url("assets/resources/TEST.pdf"); ?>" style="width: 100%;height:100%"></iframe>
+                <iframe id="pdfHere" src="<?= base_url("assets/resources/preview.pdf"); ?>" style="width: 100%;height:100%"></iframe>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -594,7 +594,7 @@ $policies = array(
                 <button type="button" class="btn btn-info" id="generateCompliance">
                         Generate Compliance
                     </button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#complianceModal">
+                    <button id="viewPdf" type="button" class="btn btn-primary disabled" data-toggle="modal" data-target="#complianceModal" disabled>
                         View PDF
                     </button>
                 </div>
