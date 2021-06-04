@@ -6,11 +6,11 @@ $step3 = $json->step3;
 $step4 = $json->step4;
 $step5 = $json->step5;
 $step6 = $json->step6;
-$policies = [
-    'Life', 'Trauma', 'Progressive Care', 'Trauma Multi',
-    'Major Care', 'MMR', 'IP', 'Health', 'Business Expenses',
-    'Key Person Cover', 'TPD', 'Waiver of Premium',
-];
+// $policies = [
+//     'Life', 'Trauma', 'Progressive Care', 'Trauma Multi',
+//     'Major Care', 'MMR', 'IP', 'Health', 'Business Expenses',
+//     'Key Person Cover', 'TPD', 'Waiver of Premium',
+// ];
 ?>
 
 
@@ -112,11 +112,18 @@ $policies = [
                             </div>
                             <div class="col">
                                 <label for="">Adviser</label>
-                                <select name="adviser" id="" class="form-control">
-                                    <option value="" readonly="true">--Please Select--</option>
-                                    <option value="1">Kevin</option>
-                                    <option value="2">Sam</option>
-                                    <option value="3">Omar</option>
+                                <select name="adviser" id="" class="form-control select2-info">
+                                    <option value="" readonly="true"></option>
+                                    <?php if(isset($advisers) && sizeof($advisers) >= 1) : ?>
+                                        <?php foreach ($advisers as $k => $v) : ?>
+                                            <option value="<?php echo $advisers[$k]['idusers']; ?>">
+                                            <?php
+                                                $full_name = $advisers[$k]['last_name'].", ".$advisers[$k]['first_name']." ".((isset($advisers[$k]['middle_name']) && $advisers[$k]['middle_name'] <> "") ? substr($advisers[$k]['middle_name'], 0, 1)."." : "");
+                                                echo $full_name;
+                                            ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </select>
 
                             </div>
@@ -126,18 +133,26 @@ $policies = [
                             <div class="col">
                                 <label for="">Policy Type</label>
                                 <select name="policyType" class="form-control multiselect" multiple="multiple">
-                                    <?php foreach ($policies as $x) : ?>
-                                        <option value="<?= $x ?>"><?= $x ?></option>
-                                    <?php endforeach; ?>
+                                    <?php if(isset($policies) && sizeof($policies) >= 1) : ?>
+                                        <?php foreach ($policies as $k => $v) : ?>
+                                            <option value="<?php echo $policies[$k]['idproduct_category']; ?>">
+                                                <?php echo $policies[$k]['name']; ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </select>
                             </div>
                             <div class="col">
                                 <label for="">Providers</label>
-                                <select name="providers" id="" class="form-control">
-                                    <option value="" readonly="true">--Please Select--</option>
-                                    <option value="Kevin">Kevin</option>
-                                    <option value="Sam">Sam</option>
-                                    <option value="Omar">Omar</option>
+                                <select name="providers" id="" class="form-control multiselect" multiple="multiple">
+                                    <option value="" readonly="true"></option>
+                                    <?php if(isset($providers) && sizeof($providers) >= 1) : ?>
+                                        <?php foreach ($providers as $k => $v) : ?>
+                                            <option value="<?php echo $providers[$k]['idcompany_provider']; ?>">
+                                                <?php echo $providers[$k]['company_name']; ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </select>
 
                             </div>

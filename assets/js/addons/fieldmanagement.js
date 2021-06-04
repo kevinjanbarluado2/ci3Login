@@ -233,6 +233,8 @@ $(function () {
     	var baseurl = $('#base_url').val();
     	var filter = $('#filter').val();
 
+    	$('body').attr('style', 'overflow: auto !important');
+
     	switch(filter) {
     		case "provider" :
     			add_url = baseurl + "CompanyProvider/addForm";
@@ -297,6 +299,8 @@ function loadTable(){
 		processing:true,
 		serverSide:true,
 		responsive:true,
+		scrollY:"275px",
+        scrollCollapse:true,
 		order:[],
 		// columnDefs: [ { orderable: false, targets: -1 } ],
 		// scroller: {
@@ -354,5 +358,5 @@ function loadTable(){
                                 +    '</div>'
                                 +'</div>'
                                 +'</div>'}
-	}).clear().draw();
+	});
 }

@@ -122,5 +122,14 @@ class CompanyProviderCollection extends CI_Model {
             return true;    
         return false;
     }
+
+    //get all active providers
+    public function getActiveProviders(){
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->order_by("company_name", "asc");
+        $this->db->where('status', 'Active');
+        return $this->db->get()->result_array();
+    }
 }
 ?>

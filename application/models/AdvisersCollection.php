@@ -110,5 +110,14 @@ class AdvisersCollection extends CI_Model {
             return true;    
         return false;
     }
+
+    //get all active advisers
+    public function getActiveAdvisers(){
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->order_by("last_name", "asc");
+        // $this->db->where('status', 'Active');
+        return $this->db->get()->result_array();
+    }
 }
 ?>
