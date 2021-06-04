@@ -122,5 +122,14 @@ class PolicyTypeSoldCollection extends CI_Model {
             return true;    
         return false;
     }
+
+    //get all active policies
+    public function getActivePolicies(){
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->order_by("name", "asc");
+        $this->db->where('status', 'Active');
+        return $this->db->get()->result_array();
+    }
 }
 ?>

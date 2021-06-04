@@ -47,8 +47,18 @@ class Welcome extends CI_Controller
 	}
 	public function compliance()
 	{
+		
+
+		$this->load->model('AdvisersCollection');
+		$this->load->model('CompanyProviderCollection');
+		$this->load->model('PolicyTypeSoldCollection');
+
 		$data = array();
 		$data['activeNav'] = "compliance";
+		$data['advisers'] = $this->AdvisersCollection->getActiveAdvisers();
+		$data['providers'] = $this->CompanyProviderCollection->getActiveProviders();
+		$data['policies'] = $this->PolicyTypeSoldCollection->getActivePolicies();
+		
 		$this->load->view('header', $data);
 		$this->load->view('pages/compliance');
 		$this->load->view('footer',$data);
