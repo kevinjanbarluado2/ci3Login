@@ -31,8 +31,8 @@ $policies = [
                 </button>
             </div>
             <div class="modal-body">
-                <!-- <iframe src="http://docs.google.com/gview?url=<?php echo base_url('assets/resources/TEST.pdf'); ?>&embedded=true" style="width: 100%;height:100%"></iframe> -->
-                <iframe src="<?php echo base_url('assets/resources/TEST.pdf'); ?>" style="width: 100%;height:100%"></iframe>
+                <!-- <iframe src="http://docs.google.com/gview?url=<?= base_url("assets/resources/TEST.pdf"); ?>&embedded=true" style="width: 100%;height:100%"></iframe> -->
+                <iframe id="pdfHere" src="<?= base_url("assets/resources/preview.pdf"); ?>" style="width: 100%;height:100%"></iframe>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -108,15 +108,15 @@ $policies = [
                             <div class="col">
 
                                 <label for="">Client Name</label>
-                                <input type="text" class="form-control">
+                                <input type="text" name="client" class="form-control">
                             </div>
                             <div class="col">
                                 <label for="">Adviser</label>
-                                <select name="" id="" class="form-control">
+                                <select name="adviser" id="" class="form-control">
                                     <option value="" readonly="true">--Please Select--</option>
-                                    <option value="">Kevin</option>
-                                    <option value="">Sam</option>
-                                    <option value="">Omar</option>
+                                    <option value="1">Kevin</option>
+                                    <option value="2">Sam</option>
+                                    <option value="3">Omar</option>
                                 </select>
 
                             </div>
@@ -125,19 +125,19 @@ $policies = [
                         <div class="row">
                             <div class="col">
                                 <label for="">Policy Type</label>
-                                <select name="policyType[]" class="form-control multiselect" multiple="multiple">
-                                    <?php foreach ($policies as $x) { ?>
-                                        <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
-                                    <?php } ?>
+                                <select name="policyType" class="form-control multiselect" multiple="multiple">
+                                    <?php foreach ($policies as $x) : ?>
+                                        <option value="<?= $x ?>"><?= $x ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                             <div class="col">
                                 <label for="">Providers</label>
-                                <select name="" id="" class="form-control">
+                                <select name="providers" id="" class="form-control">
                                     <option value="" readonly="true">--Please Select--</option>
-                                    <option value="">Kevin</option>
-                                    <option value="">Sam</option>
-                                    <option value="">Omar</option>
+                                    <option value="Kevin">Kevin</option>
+                                    <option value="Sam">Sam</option>
+                                    <option value="Omar">Omar</option>
                                 </select>
 
                             </div>
@@ -185,7 +185,7 @@ $policies = [
                                                 <div class="form-group">
                                                     <div class="form-check form-check-radio">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="radio" name="<?php echo "s1$ind"; ?>" value="0">
+                                                            <input class="form-check-input" type="radio" name="<?= "s1_$ind"; ?>" value="0">
                                                             0
                                                             <span class="circle">
                                                                 <span class="check"></span>
@@ -194,7 +194,7 @@ $policies = [
                                                     </div>
                                                     <div class="form-check form-check-radio">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="radio" name="<?php echo "s1$ind"; ?>" value="1">
+                                                            <input class="form-check-input" type="radio" name="<?= "s1_$ind"; ?>" value="1">
                                                             1
                                                             <span class="circle">
                                                                 <span class="check"></span>
@@ -203,7 +203,7 @@ $policies = [
                                                     </div>
                                                     <div class="form-check form-check-radio">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="radio" name="<?php echo "s1$ind"; ?>" value="2">
+                                                            <input class="form-check-input" type="radio" name="<?= "s1_$ind"; ?>" value="2">
                                                             2
                                                             <span class="circle">
                                                                 <span class="check"></span>
@@ -258,7 +258,7 @@ $policies = [
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s2$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s2_$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -267,7 +267,7 @@ $policies = [
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s2$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s2_$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -276,7 +276,7 @@ $policies = [
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s2$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s2_$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -330,7 +330,7 @@ $policies = [
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s3$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s3_$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -339,7 +339,7 @@ $policies = [
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s3$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s3_$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -348,7 +348,7 @@ $policies = [
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s3$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s3_$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -404,7 +404,7 @@ $policies = [
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s4$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s4_$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -413,7 +413,7 @@ $policies = [
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s4$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s4_$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -422,7 +422,7 @@ $policies = [
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s4$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s4_$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -476,7 +476,7 @@ $policies = [
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s5$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s5_$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -485,7 +485,7 @@ $policies = [
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s5$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s5_$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -494,7 +494,7 @@ $policies = [
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s5$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s5_$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -548,7 +548,7 @@ $policies = [
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s6$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -557,7 +557,7 @@ $policies = [
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s6$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -566,7 +566,7 @@ $policies = [
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?php echo "s6$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -592,15 +592,13 @@ $policies = [
                     <h4 class="card-title ">Generate</h4>
                     <p class="card-category">Compliance</p>
                 </div>
-                <div class="card-body">
-
-
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#complianceModal">
+                <div class="card-body d-flex justify-content-between">
+                <button type="button" class="btn btn-info" id="generateCompliance">
+                        Generate Compliance
+                    </button>
+                    <button id="viewPdf" type="button" class="btn btn-primary disabled" data-toggle="modal" data-target="#complianceModal" disabled>
                         View PDF
                     </button>
-
-
-
                 </div>
             </div>
         </div>
