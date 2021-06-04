@@ -1,17 +1,20 @@
-$(function(){
-	var privileges_str = '';
-	loadTable();
-
+$(function () {
+	$('.select2').select2();
+	var add_url = '';
 	//Ajax non-forms
-	//event triggered upon clicking of view, add or update users
-    //displays users form, users details will be displayed for viewing and update 
-	$(document).on('click', '#addUserProfileForm, .viewUserProfileForm, .updateUserProfileForm', function (e) {
+	//event triggered upon clicking of view, add or update fields
+    //displays fields form, fields details will be displayed for viewing and update 
+	$(document).on('click', '#addForm, .viewForm, .updateForm', function (e) {
 		e.preventDefault();
 
 		my = $(this)
 		id = my.attr('data-id');
 		url = my.attr('href');
 		privileges_str = '';
+
+		if (my.hasClass("addForm")) {
+            url = add_url;
+        }
 
 		$.ajax({
             type: "POST",
@@ -22,55 +25,31 @@ $(function(){
                 page = my.attr('id');
                 if(result.hasOwnProperty("key")){
                     switch(result.key){
-                        case 'addUserProfile':
+                        case 'add':
                             page="";
-                            $('#myModal .modal-dialog').attr('class','modal-dialog modal-xl');
-                            $('#myModal .modal-title').html('Register New User Account');
+                            $('#myModal .modal-dialog').attr('class','modal-dialog modal-sm');
+                            $('#myModal .modal-title').html('Add Record');
                             $('#myModal .modal-body').html(result.form);
                             $('#myModal').modal('show');
                             break;
-                        case 'viewUserProfile' :
-                        case 'updateUserProfile':
-                            $('#myModal .modal-dialog').attr('class','modal-dialog modal-xl');
-                            $('#myModal .modal-title').html('User Details');
+                        case 'view' :
+                        case 'update':
+                            $('#myModal .modal-dialog').attr('class','modal-dialog modal-sm');
+                            $('#myModal .modal-title').html('Record Details');
                             $('#myModal .modal-body').html(result.form);
-                            $('#myModal').modal('show');    
+                            $('#myModal').modal('show');  
 
                             $.each(my.data(),function(i,v){
-                            	if(i == 'privileges') {
-                            		$('input:checkbox').prop('checked', false);
-
-                            		privileges_str = my.data(i);
-  									var privileges_arr = privileges_str.split(",");
-			                    	
-			                    	$.each(privileges_arr, function(k, v) {
-								  		$('#checkbox_'+v).prop('checked',true);
-									});
-			                    } 
-
 		                    	$('.'+i).val(my.data(i)).change(); 
 		                    });
 
-		                                         
                             break;
                     }
 
-                    if(result.key =="viewUserProfile"){
+                    if(result.key =="view"){
                         $('form').find('input, textarea, button, select').attr('disabled','disabled');
                         $('form').find('#cancelUpdateForm').removeAttr('disabled');
                     }
-
-
-					$('.bootstrap-switch').each(function(){
-					    $this = $(this);
-					    data_on_label = $this.data('on-label') || '';
-					    data_off_label = $this.data('off-label') || '';
-
-					    $this.bootstrapSwitch({
-					        onText: data_on_label,
-					        offText: data_off_label
-					    });
-					});
                 }
             },
             error: function(result){
@@ -91,46 +70,18 @@ $(function(){
 
 	});
 
-    //updates privilege column depending on selected checkbox
-	$(document).on('click', 'input:checkbox', function (e) {
-		var val = $(this).is(":checked");
-		var name = $(this).attr('data-value');
-		if(val === true) {
-			if(privileges_str == '') 
-				privileges_str = name;
-			else 
-				privileges_str = privileges_str + ','+name;
-		} else  {
-			var privileges_arr = privileges_str.split(",");
-			var index = privileges_arr.indexOf(name);
-			if (index >= 0) {
-			  privileges_arr.splice( index, 1 );
-			}
-
-			privileges_str = '';
-			$.each(privileges_arr, function(k, v) {
-		  		if(privileges_str == '')
-		  			privileges_str = v;
-		  		else 
-		  			privileges_str = privileges_str + ','+v;
-		  		
-			});
-		}
-		$('#privileges').val(privileges_str);
-	});
-
-    //Ajax Forms
-    //event triggered upon submitting users form
-    $(document).on('submit', '#addUserProfile, #updateUserProfile', function (e) {
+	//Ajax Forms
+    //event triggered upon submitting form
+    $(document).on('submit', '#add, #update', function (e) {
         e.preventDefault();
         var form = $(this)
         content = "Are you sure you want to proceed?";
 
-        if (form.attr('id') == "addUserProfile") {
-            content = "Are you sure you want to add this user?";
+        if (form.attr('id') == "add") {
+            content = "Are you sure you want to add this record?";
         }
-        if (form.attr('id') == "updateUserProfile") {
-            content = "Are you sure you want to update this user?";
+        if (form.attr('id') == "update") {
+            content = "Are you sure you want to update this record?";
         }
 
         url = form.attr('action');
@@ -155,8 +106,8 @@ $(function(){
                     success: function (result) {
                         if (result.hasOwnProperty("key")) {
                             switch (result.key) {
-                                case 'addUserProfile':
-                                case 'updateUserProfile':    
+                                case 'add':
+                                case 'update':    
                                     loadTable();
                                     $.notify({
                                         icon: "notifications",
@@ -197,8 +148,8 @@ $(function(){
         
     })
 
-    //delete user
-    $(document).on('click','#deleteUserProfile', function (e) {
+    //activate/deactive record
+    $(document).on('click','#activate, #deactivate', function (e) {
         e.preventDefault();
         
         me = $(this)
@@ -206,8 +157,11 @@ $(function(){
         url = me.attr('href');
 
         content = "Are you sure you want to proceed?";
-        if (me.hasClass("deleteUserProfile")) {
-            content = "Are you sure you want to delete this user?";
+        if (me.hasClass("activate")) {
+            content = "Are you sure you want to activate this record?";
+        }
+        if (me.hasClass("deactivate")) {
+            content = "Are you sure you want to deactivate this record?";
         }
 
         swal({
@@ -231,7 +185,8 @@ $(function(){
                     success: function (result) {
                         if (result.hasOwnProperty("key")) {
                             switch (result.key) {
-                                case 'deleteUserProfile':    
+                            	case 'activate':   
+                                case 'deactivate':    
                                     loadTable();
                                     $.notify({
                                         icon: "notifications",
@@ -271,11 +226,71 @@ $(function(){
         }).catch(swal.noop)
         
     })
+
+	//trigger when selecting filter
+	//set datatables header and url
+    $(document).on('change','#filter', function (e) {
+    	var baseurl = $('#base_url').val();
+    	var filter = $('#filter').val();
+
+    	switch(filter) {
+    		case "provider" :
+    			add_url = baseurl + "CompanyProvider/addForm";
+    			$('#datatables_wrapper').remove();
+	    		$('.table-responsive').html(
+	    			'<table id="datatables" class="filter-table table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">'+
+		    			'<thead class=" text-primary">' +
+				    		'<tr>'+
+								'<th>Name</th>'+
+								'<th width="20%">Status</th>'+
+								'<th width="20%">Action</th>'+
+							'</tr>'+
+						'</thead>'+
+					'</table>'
+	    		);
+    			break;
+    		case "policy-type-sold" :
+    			add_url = baseurl + "PolicyTypeSold/addForm";
+    			$('#datatables_wrapper').remove();
+	    		$('.table-responsive').html(
+	    			'<table id="datatables" class="filter-table table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">'+
+		    			'<thead class=" text-primary">' +
+				    		'<tr>'+
+				    			'<th width="20%">Code</th>'+
+								'<th>Name</th>'+
+								'<th width="20%">Status</th>'+
+								'<th width="20%">Action</th>'+
+							'</tr>'+
+						'</thead>'+
+					'</table>'
+	    		);
+    			break;
+    		default :
+    			$('#table-div').hide();
+    			break;
+    	}
+    	$('#table-div').show();
+    	loadTable();
+    	
+    });
 });
 
 //initialize table to be displayed
 function loadTable(){
 	var baseurl = $('#base_url').val();
+	var filter = $('#filter').val();
+
+	switch(filter) {
+		case "provider" :
+			url = baseurl + "CompanyProvider/fetchRows";
+			break;
+		case "policy-type-sold" :
+			url = baseurl + "PolicyTypeSold/fetchRows";
+			break;
+		default :
+			//do nothing
+			break;
+	}
 
 	table = $('#datatables').DataTable({
 		destroy:true,
@@ -283,7 +298,7 @@ function loadTable(){
 		serverSide:true,
 		responsive:true,
 		order:[],
-		columnDefs: [ { orderable: false, targets: -1 } ],
+		// columnDefs: [ { orderable: false, targets: -1 } ],
 		// scroller: {
 		// 	displayBuffer: 20
 		// }
@@ -323,7 +338,10 @@ function loadTable(){
             $('#datatables button').removeAttr('disabled');
         },
 		ajax : {  
-            url:baseurl + "UserProfile/fetchRows",  
+            url:url,
+            data: {
+            	filter : filter
+            },
             type:"POST",
         },
         oLanguage: {sProcessing: '<div class="preloader pl-size-sm">'
@@ -336,5 +354,5 @@ function loadTable(){
                                 +    '</div>'
                                 +'</div>'
                                 +'</div>'}
-	});
+	}).clear().draw();
 }
