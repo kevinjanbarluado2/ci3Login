@@ -590,16 +590,13 @@ $policies = array(
                     <h4 class="card-title ">Generate</h4>
                     <p class="card-category">Compliance</p>
                 </div>
-                <div class="card-body">
+                <div class="card-body d-flex justify-content-between">
                 <button type="button" class="btn btn-info" id="generateCompliance">
                         Generate Compliance
                     </button>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#complianceModal">
                         View PDF
                     </button>
-
-
-
                 </div>
             </div>
         </div>
