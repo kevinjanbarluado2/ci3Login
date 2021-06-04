@@ -75,6 +75,14 @@ $privileges=explode(",",$_SESSION['privileges']);
             </a>
           </li>
           <?php endif;?>
+          <?php if(in_array('fieldmanagement',$privileges)):?>
+          <li class="nav-item <?php if($activeNav=="fieldmanagement"){echo "active";} ?>">
+            <a class="nav-link" href="<?=base_url('fieldmanagement'); ?>">
+              <i class="material-icons">settings</i>
+              <p>Fieldmanagement</p>
+            </a>
+          </li>
+          <?php endif;?>
         </ul>
       </div>
     </div>

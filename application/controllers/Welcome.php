@@ -61,4 +61,12 @@ class Welcome extends CI_Controller
 		$this->load->view('pages/advisers');
 		$this->load->view('footer',$data);
 	}
+	public function fieldmanagement()
+	{
+		$data = array();
+		$data['activeNav'] = "fieldmanagement";
+		$this->load->view('header', $data);
+		$this->load->view('pages/fieldmanagement');
+		$this->load->view('footer',$data);
+	}
 }
