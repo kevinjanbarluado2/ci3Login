@@ -6,11 +6,11 @@ $step3 = $json->step3;
 $step4 = $json->step4;
 $step5 = $json->step5;
 $step6 = $json->step6;
-$policies = array(
+$policies = [
     'Life', 'Trauma', 'Progressive Care', 'Trauma Multi',
-    'Major Care', 'MMR', 'IP', "Health", "Business Expenses",
-    'Key Person Cover', 'TPD', 'Waiver of Premium'
-);
+    'Major Care', 'MMR', 'IP', 'Health', 'Business Expenses',
+    'Key Person Cover', 'TPD', 'Waiver of Premium',
+];
 ?>
 
 
@@ -177,10 +177,10 @@ $policies = array(
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($step1 as $ind => $x) : ?>
+                                    <?php foreach ($step1 as $ind => $x) { ?>
                                         <tr>
-                                            <td><?= $x->question; ?></td>
-                                            <td><?= $x->source; ?></td>
+                                            <td><?php echo $x->question; ?></td>
+                                            <td><?php echo $x->source; ?></td>
                                             <td>
                                                 <div class="form-group">
                                                     <div class="form-check form-check-radio">
@@ -213,9 +213,9 @@ $policies = array(
                                                 </div>
                         </div>
                         </td>
-                        <td><textarea class="form-control" placeholder="<?= $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php } ?>
                     </tbody>
                     </table>
                     </div>
@@ -250,10 +250,10 @@ $policies = array(
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($step2 as $ind => $x) : ?>
+                                <?php foreach ($step2 as $ind => $x) { ?>
                                     <tr>
-                                        <td><?= $x->question; ?></td>
-                                        <td><?= $x->source; ?></td>
+                                        <td><?php echo $x->question; ?></td>
+                                        <td><?php echo $x->source; ?></td>
                                         <td>
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
@@ -285,9 +285,9 @@ $policies = array(
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?= $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -322,11 +322,11 @@ $policies = array(
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($step3 as $ind => $x) : ?>
+                                <?php foreach ($step3 as $ind => $x) { ?>
                                     <tr>
-                                        <td><?= $x->question; ?></td>
-                                        <td><?= $x->source; ?></td>
-                                        <td>
+                                        <td class="align-top"><?php echo $x->question; ?></td>
+                                        <td class="align-top"><?php echo $x->source; ?></td>
+                                        <td class="align-top">
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
@@ -357,9 +357,11 @@ $policies = array(
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?= $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td class="align-top relative">
+											<textarea class="form-control h-100" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea>
+										</td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -394,10 +396,10 @@ $policies = array(
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($step4 as $ind => $x) : ?>
+                                <?php foreach ($step4 as $ind => $x) { ?>
                                     <tr>
-                                        <td><?= $x->question; ?></td>
-                                        <td><?= $x->source; ?></td>
+                                        <td><?php echo $x->question; ?></td>
+                                        <td><?php echo $x->source; ?></td>
                                         <td>
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
@@ -429,9 +431,9 @@ $policies = array(
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?= $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -466,10 +468,10 @@ $policies = array(
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($step5 as $ind => $x) : ?>
+                                <?php foreach ($step5 as $ind => $x) { ?>
                                     <tr>
-                                        <td><?= $x->question; ?></td>
-                                        <td><?= $x->source; ?></td>
+                                        <td><?php echo $x->question; ?></td>
+                                        <td><?php echo $x->source; ?></td>
                                         <td>
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
@@ -501,9 +503,9 @@ $policies = array(
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?= $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -538,10 +540,10 @@ $policies = array(
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($step6 as $x) : ?>
+                                <?php foreach ($step6 as $x) { ?>
                                     <tr>
-                                        <td><?= $x->question; ?></td>
-                                        <td><?= $x->source; ?></td>
+                                        <td><?php echo $x->question; ?></td>
+                                        <td><?php echo $x->source; ?></td>
                                         <td>
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
@@ -573,9 +575,9 @@ $policies = array(
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?= $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -632,5 +634,13 @@ $policies = array(
 		overflow: hidden !important;
 		height: auto !important;
         min-height: 0 !important;
+	}
+
+	#step-3 span.bmd-form-group{
+		position: absolute;
+		top: 0;
+		bottom: 4px;
+		left: 0;
+		right: 0;
 	}
 </style>
