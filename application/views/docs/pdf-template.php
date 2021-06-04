@@ -1,6 +1,6 @@
 <?php 
 $info = $data['data']['info'];
-
+var_dump($data['data']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
