@@ -1,15 +1,19 @@
+<?php 
+$info = $data['data']['info'];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <body>
 	<div class="page-header">
 		<table class="header">
-			<tr>
+			<tr width="100px">
 				<td class="header-left-box">
 					&nbsp;
 				</td>
 				<td class="header-image"><img src="<?=FCPATH.'assets/img/logo-only.png';?>" height="73" />
 				</td>
-				<td class="header-title">DOCUMENT HEADER HERE...
+				<td class="header-title">COMPLIANCE RESULT
 				</td>
 				<td class="header-right-box">
 					&nbsp;
@@ -17,13 +21,13 @@
 			</tr>
 		</table>
 	</div>
-
+	
 	<div class="margin">
 		<table class="w-full text-lg text-tblue font-bold mb-8">
 			<tbody>
 				<tr>
 					<td class="w-half">
-						Adviser <span class="underline">Alice Alpha</span>
+						Adviser <span class="underline"><?=$info['adviser']?></span>
 					</td>
 					<td class="w-half">
 						Date <span class="underline">3rd June, 2021</span>
@@ -31,7 +35,7 @@
 				</tr>
 				<tr>
 					<td>
-						Client <span class="underline">Charlie Cruz</span>
+						Client <span class="underline"><?=$info['client']?></span>
 					</td>
 					<td>
 						Score <span class="underline">100</span>
@@ -125,21 +129,7 @@
 		</div>
 	</div>
 
-	<div class="page-footer">
-		<table class="table-footer">
-			<tr>
-				<td class="footer-logo">
-					<img src="img/horizontal-logo.png" width="204" />
-				</td>
-				<td class="footer-page">
-					<a href="https://eliteinsure.co.nz" class="footer-link" target="_blank">
-						www.eliteinsure.co.nz
-					</a>
-					&nbsp;|&nbsp;Page [N]
-				</td>
-			</tr>
-		</table>
-	</div>
+
 </body>
 <style>
 	.page-header {
