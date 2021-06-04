@@ -108,15 +108,15 @@ $policies = array(
                             <div class="col">
 
                                 <label for="">Client Name</label>
-                                <input type="text" class="form-control">
+                                <input type="text" name="client" class="form-control">
                             </div>
                             <div class="col">
                                 <label for="">Adviser</label>
-                                <select name="" id="" class="form-control">
+                                <select name="adviser" id="" class="form-control">
                                     <option value="" readonly="true">--Please Select--</option>
-                                    <option value="">Kevin</option>
-                                    <option value="">Sam</option>
-                                    <option value="">Omar</option>
+                                    <option value="1">Kevin</option>
+                                    <option value="2">Sam</option>
+                                    <option value="3">Omar</option>
                                 </select>
 
                             </div>
@@ -125,7 +125,7 @@ $policies = array(
                         <div class="row">
                             <div class="col">
                                 <label for="">Policy Type</label>
-                                <select name="policyType[]" class="form-control multiselect" multiple="multiple">
+                                <select name="policyType" class="form-control multiselect" multiple="multiple">
                                     <?php foreach ($policies as $x) : ?>
                                         <option value="<?= $x ?>"><?= $x ?></option>
                                     <?php endforeach; ?>
@@ -133,11 +133,11 @@ $policies = array(
                             </div>
                             <div class="col">
                                 <label for="">Providers</label>
-                                <select name="" id="" class="form-control">
+                                <select name="providers" id="" class="form-control">
                                     <option value="" readonly="true">--Please Select--</option>
-                                    <option value="">Kevin</option>
-                                    <option value="">Sam</option>
-                                    <option value="">Omar</option>
+                                    <option value="Kevin">Kevin</option>
+                                    <option value="Sam">Sam</option>
+                                    <option value="Omar">Omar</option>
                                 </select>
 
                             </div>
@@ -185,7 +185,7 @@ $policies = array(
                                                 <div class="form-group">
                                                     <div class="form-check form-check-radio">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="radio" name="<?= "s1$ind"; ?>" value="0">
+                                                            <input class="form-check-input" type="radio" name="<?= "s1_$ind"; ?>" value="0">
                                                             0
                                                             <span class="circle">
                                                                 <span class="check"></span>
@@ -194,7 +194,7 @@ $policies = array(
                                                     </div>
                                                     <div class="form-check form-check-radio">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="radio" name="<?= "s1$ind"; ?>" value="1">
+                                                            <input class="form-check-input" type="radio" name="<?= "s1_$ind"; ?>" value="1">
                                                             1
                                                             <span class="circle">
                                                                 <span class="check"></span>
@@ -203,7 +203,7 @@ $policies = array(
                                                     </div>
                                                     <div class="form-check form-check-radio">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="radio" name="<?= "s1$ind"; ?>" value="2">
+                                                            <input class="form-check-input" type="radio" name="<?= "s1_$ind"; ?>" value="2">
                                                             2
                                                             <span class="circle">
                                                                 <span class="check"></span>
@@ -258,7 +258,7 @@ $policies = array(
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s2$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s2_$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -267,7 +267,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s2$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s2_$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -276,7 +276,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s2$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s2_$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -330,7 +330,7 @@ $policies = array(
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s3$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s3_$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -339,7 +339,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s3$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s3_$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -348,7 +348,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s3$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s3_$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -402,7 +402,7 @@ $policies = array(
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s4$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s4_$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -411,7 +411,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s4$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s4_$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -420,7 +420,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s4$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s4_$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -474,7 +474,7 @@ $policies = array(
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s5$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s5_$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -483,7 +483,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s5$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s5_$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -492,7 +492,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s5$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s5_$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -546,7 +546,7 @@ $policies = array(
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s6$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -555,7 +555,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s6$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -564,7 +564,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s6$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -591,8 +591,9 @@ $policies = array(
                     <p class="card-category">Compliance</p>
                 </div>
                 <div class="card-body">
-
-
+                <button type="button" class="btn btn-info" id="generateCompliance">
+                        Generate Compliance
+                    </button>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#complianceModal">
                         View PDF
                     </button>
@@ -629,13 +630,10 @@ $policies = array(
     .modal .modal-body {
         overflow-y: auto;
     }
-<<<<<<< HEAD
-=======
 
 	.select2-selection--multiple {
 		overflow: hidden !important;
 		height: auto !important;
         min-height: 0 !important;
 	}
->>>>>>> 43bf3ec40a36642dfd641d3cc5999ad53d0de17d
 </style>
