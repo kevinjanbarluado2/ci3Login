@@ -3,7 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Advisers extends CI_Controller {
 	public function index() {
-		// var_export("TEST");die();
+		// $this->load->model('AdvisersCollection');
+		// $res = $this->AdvisersCollection->getActiveAdvisersById("24");
+		// var_export($res);die();
 	}
 
 	//accessing adviser form for viewing of records
