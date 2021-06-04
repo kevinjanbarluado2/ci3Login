@@ -6,11 +6,11 @@ $step3 = $json->step3;
 $step4 = $json->step4;
 $step5 = $json->step5;
 $step6 = $json->step6;
-$policies = array(
+$policies = [
     'Life', 'Trauma', 'Progressive Care', 'Trauma Multi',
-    'Major Care', 'MMR', 'IP', "Health", "Business Expenses",
-    'Key Person Cover', 'TPD', 'Waiver of Premium'
-);
+    'Major Care', 'MMR', 'IP', 'Health', 'Business Expenses',
+    'Key Person Cover', 'TPD', 'Waiver of Premium',
+];
 ?>
 
 
@@ -31,8 +31,8 @@ $policies = array(
                 </button>
             </div>
             <div class="modal-body">
-                <!-- <iframe src="http://docs.google.com/gview?url=<?= base_url("assets/resources/TEST.pdf"); ?>&embedded=true" style="width: 100%;height:100%"></iframe> -->
-                <iframe src="<?= base_url("assets/resources/TEST.pdf"); ?>" style="width: 100%;height:100%"></iframe>
+                <!-- <iframe src="http://docs.google.com/gview?url=<?php echo base_url('assets/resources/TEST.pdf'); ?>&embedded=true" style="width: 100%;height:100%"></iframe> -->
+                <iframe src="<?php echo base_url('assets/resources/TEST.pdf'); ?>" style="width: 100%;height:100%"></iframe>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -126,9 +126,9 @@ $policies = array(
                             <div class="col">
                                 <label for="">Policy Type</label>
                                 <select name="policyType[]" class="form-control multiselect" multiple="multiple">
-                                    <?php foreach ($policies as $x) : ?>
-                                        <option value="<?= $x ?>"><?= $x ?></option>
-                                    <?php endforeach; ?>
+                                    <?php foreach ($policies as $x) { ?>
+                                        <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                             <div class="col">
@@ -177,15 +177,15 @@ $policies = array(
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($step1 as $ind => $x) : ?>
+                                    <?php foreach ($step1 as $ind => $x) { ?>
                                         <tr>
-                                            <td><?= $x->question; ?></td>
-                                            <td><?= $x->source; ?></td>
+                                            <td><?php echo $x->question; ?></td>
+                                            <td><?php echo $x->source; ?></td>
                                             <td>
                                                 <div class="form-group">
                                                     <div class="form-check form-check-radio">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="radio" name="<?= "s1$ind"; ?>" value="0">
+                                                            <input class="form-check-input" type="radio" name="<?php echo "s1$ind"; ?>" value="0">
                                                             0
                                                             <span class="circle">
                                                                 <span class="check"></span>
@@ -194,7 +194,7 @@ $policies = array(
                                                     </div>
                                                     <div class="form-check form-check-radio">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="radio" name="<?= "s1$ind"; ?>" value="1">
+                                                            <input class="form-check-input" type="radio" name="<?php echo "s1$ind"; ?>" value="1">
                                                             1
                                                             <span class="circle">
                                                                 <span class="check"></span>
@@ -203,7 +203,7 @@ $policies = array(
                                                     </div>
                                                     <div class="form-check form-check-radio">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="radio" name="<?= "s1$ind"; ?>" value="2">
+                                                            <input class="form-check-input" type="radio" name="<?php echo "s1$ind"; ?>" value="2">
                                                             2
                                                             <span class="circle">
                                                                 <span class="check"></span>
@@ -213,9 +213,9 @@ $policies = array(
                                                 </div>
                         </div>
                         </td>
-                        <td><textarea class="form-control" placeholder="<?= $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php } ?>
                     </tbody>
                     </table>
                     </div>
@@ -250,15 +250,15 @@ $policies = array(
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($step2 as $ind => $x) : ?>
+                                <?php foreach ($step2 as $ind => $x) { ?>
                                     <tr>
-                                        <td><?= $x->question; ?></td>
-                                        <td><?= $x->source; ?></td>
+                                        <td><?php echo $x->question; ?></td>
+                                        <td><?php echo $x->source; ?></td>
                                         <td>
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s2$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s2$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -267,7 +267,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s2$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s2$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -276,7 +276,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s2$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s2$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -285,9 +285,9 @@ $policies = array(
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?= $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -322,15 +322,15 @@ $policies = array(
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($step3 as $ind => $x) : ?>
+                                <?php foreach ($step3 as $ind => $x) { ?>
                                     <tr>
-                                        <td><?= $x->question; ?></td>
-                                        <td><?= $x->source; ?></td>
-                                        <td>
+                                        <td class="align-top"><?php echo $x->question; ?></td>
+                                        <td class="align-top"><?php echo $x->source; ?></td>
+                                        <td class="align-top">
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s3$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s3$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -339,7 +339,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s3$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s3$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -348,7 +348,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s3$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s3$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -357,9 +357,11 @@ $policies = array(
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?= $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td class="align-top relative">
+											<textarea class="form-control h-100" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea>
+										</td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -394,15 +396,15 @@ $policies = array(
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($step4 as $ind => $x) : ?>
+                                <?php foreach ($step4 as $ind => $x) { ?>
                                     <tr>
-                                        <td><?= $x->question; ?></td>
-                                        <td><?= $x->source; ?></td>
+                                        <td><?php echo $x->question; ?></td>
+                                        <td><?php echo $x->source; ?></td>
                                         <td>
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s4$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s4$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -411,7 +413,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s4$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s4$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -420,7 +422,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s4$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s4$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -429,9 +431,9 @@ $policies = array(
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?= $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -466,15 +468,15 @@ $policies = array(
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($step5 as $ind => $x) : ?>
+                                <?php foreach ($step5 as $ind => $x) { ?>
                                     <tr>
-                                        <td><?= $x->question; ?></td>
-                                        <td><?= $x->source; ?></td>
+                                        <td><?php echo $x->question; ?></td>
+                                        <td><?php echo $x->source; ?></td>
                                         <td>
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s5$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s5$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -483,7 +485,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s5$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s5$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -492,7 +494,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s5$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s5$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -501,9 +503,9 @@ $policies = array(
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?= $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -538,15 +540,15 @@ $policies = array(
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($step6 as $x) : ?>
+                                <?php foreach ($step6 as $x) { ?>
                                     <tr>
-                                        <td><?= $x->question; ?></td>
-                                        <td><?= $x->source; ?></td>
+                                        <td><?php echo $x->question; ?></td>
+                                        <td><?php echo $x->source; ?></td>
                                         <td>
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s6$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s6$ind"; ?>" value="0">
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -555,7 +557,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s6$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s6$ind"; ?>" value="1">
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -564,7 +566,7 @@ $policies = array(
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s6$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?php echo "s6$ind"; ?>" value="2">
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -573,9 +575,9 @@ $policies = array(
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?= $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
                                     </tr>
-                                <?php endforeach; ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -634,5 +636,13 @@ $policies = array(
 		overflow: hidden !important;
 		height: auto !important;
         min-height: 0 !important;
+	}
+
+	#step-3 span.bmd-form-group{
+		position: absolute;
+		top: 0;
+		bottom: 4px;
+		left: 0;
+		right: 0;
 	}
 </style>
