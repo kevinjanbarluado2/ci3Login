@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `advisers_tbl` (
   PRIMARY KEY (`idusers`)
 ) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8;
 
--- Dumping data for table compliance.advisers_tbl: ~71 rows (approximately)
+-- Dumping data for table compliance.advisers_tbl: ~64 rows (approximately)
 /*!40000 ALTER TABLE `advisers_tbl` DISABLE KEYS */;
 INSERT INTO `advisers_tbl` (`idusers`, `last_name`, `first_name`, `middle_name`, `email`, `fspr_number`, `address`, `trading_name`, `telephone_no`, `photo`, `role`, `experience`, `provider`, `providerKiwi`, `advCommissionPer`, `advOngoingCommissionPer`) VALUES
 	(1, 'Bandiola', 'Kieth Mark', 'Sevilla', 'scalaberch69@gmail.com', '', '', '', '', NULL, 'Adviser', '', '', 0, '', ''),
@@ -190,6 +190,7 @@ CREATE TABLE IF NOT EXISTS `results_tbl` (
   `adviser_id` int(11) DEFAULT NULL,
   `providers` int(11) DEFAULT NULL,
   `policy_type` int(11) DEFAULT NULL,
+  `policy_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `clients` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date_added` datetime DEFAULT current_timestamp(),
   `date_modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -206,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `results_tbl` (
   CONSTRAINT `FK_results_tbl_product_category` FOREIGN KEY (`policy_type`) REFERENCES `product_category` (`idproduct_category`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table compliance.results_tbl: ~1 rows (approximately)
+-- Dumping data for table compliance.results_tbl: ~0 rows (approximately)
 /*!40000 ALTER TABLE `results_tbl` DISABLE KEYS */;
 /*!40000 ALTER TABLE `results_tbl` ENABLE KEYS */;
 
