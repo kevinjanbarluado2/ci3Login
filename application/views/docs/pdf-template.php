@@ -359,6 +359,10 @@ function createTable($step)
 		<th>Compliance officer checking</th>
 		<th style="color: #205478"><?= $added_by; ?></th>
 	</tr>
+	<tr>
+		<th>Policy Number</th>
+		<th style="color: #205478"><?= $info['policyNumber']; ?></th>
+	</tr>
 </table>
 <p></p>
 <p></p>
