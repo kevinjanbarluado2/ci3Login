@@ -562,7 +562,7 @@ $step6 = $json->step6;
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($step6 as $x) { ?>
+                                <?php foreach ($step6 as $ind=>$x) { ?>
                                     <tr>
                                         <td><?php echo $x->question; ?></td>
                                         <td><?php echo $x->source; ?></td>
