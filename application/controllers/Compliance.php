@@ -77,11 +77,17 @@ class Compliance extends CI_Controller
     
     public function generate()
     {
+        $adviser_id = $_POST['data']['info']['adviser'];
+        
+        $this->load->model('AdvisersCollection');
+        $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
+        
         ob_start();
         set_time_limit(300);
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $html = $this->load->view('docs/pdf-template', array(
-            'data' => $_POST
+            'data' => $_POST,
+            'adviserInfo' => $adviserInfo
         ), true);
         // remove default header/footer
         $pdf->setPrintHeader(false);

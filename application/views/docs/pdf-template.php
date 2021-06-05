@@ -1,6 +1,33 @@
 <?php
 $info = $data['data']['info'];
-// var_dump($data['data']);
+
+$client_name = isset($info) ? $info['client'] : "client name";
+$adviser_name = "";
+$adviser_fsp_no = "";
+$adviser_contact_no = "";
+$adviser_email_address = "";
+$adviser_address = "";
+if(isset($adviserInfo) && sizeof($adviserInfo) >= 1) {
+	$adviser_name = $adviserInfo->first_name." ".$adviserInfo->last_name;
+	$adviser_fsp_no = $adviserInfo->fspr_number;
+	$adviser_contact_no = $adviserInfo->telephone_no;
+	$adviser_email_address = $adviserInfo->email;
+	$adviser_address = $adviserInfo->address;
+} 
+
+$total_score = 0;
+$total_question = 0;
+$max_score = 0;
+
+for($i = 1; $i <= 6; $i++) :
+	foreach ($data['data']['step'.$i] as $ind => $x) :
+		$total_score += $x['value'];
+	endforeach;
+	$total_question += sizeof($data['data']['step'.$i]);
+endfor;
+
+$max_score = $total_question * 2;
+$score_percentage = ($total_score / $max_score) * 100;
 
 function createTable($step){
 echo "<table width=\"100%\" cellpadding=\"5\">";
@@ -222,31 +249,29 @@ echo "</table>";
 	</tr>
 </table>
 
-<h2 class="sectionn-title" align="center"><?= strtoupper('file review - client name - for adviser name'); ?></h2>
+<h2 class="sectionn-title" align="center"><?= strtoupper('file review - '.$client_name.' - for '.$adviser_name); ?></h2>
 
 <p></p>
 <table class="table ff-table" style="font-size:115%" cellpadding="5" nobr="true">
 	<tr class="ff-tbl-alt">
 		<td width="25%">Name of Financial Adviser:</td>
-		<td width="25%"></td>
+		<td width="25%"><?php echo $adviser_name; ?></td>
 
 		<td width="25%">Financial Advice Provider Name:</td>
-		<td width="25%">
-
-		</td>
+		<td width="25%">Eliteinsure Limited trading as Eliteinsure</td>
 
 	</tr>
 
 	<tr>
 		<td width="25%">FSP Number:</td>
-		<td width="25%"></td>
+		<td width="25%"><?php echo $adviser_fsp_no; ?></td>
 
 		<td width="25%">FAP FSP Number:</td>
 		<td width="25%">706272</td>
 	</tr>
 	<tr class="ff-tbl-alt">
 		<td width="25%">Contact Number:</td>
-		<td width="25%"></td>
+		<td width="25%"><?php echo $adviser_contact_no; ?></td>
 
 		<td width="25%">FAP Contact Number:</td>
 		<td width="25%">0508 123 467</td>
@@ -254,7 +279,7 @@ echo "</table>";
 
 	<tr>
 		<td width="25%">Email Address:</td>
-		<td width="25%"><?php /*echo $user_info->email;*/ ?></td>
+		<td width="25%"><?php echo $adviser_email_address; ?></td>
 
 		<td width="25%">FAP email address:</td>
 		<td width="25%">admin@eliteinsure.co.nz</td>
@@ -263,8 +288,10 @@ echo "</table>";
 
 	<tr class="ff-tbl-alt">
 		<td width="25%">Physical address:</td>
-		<td width="75%" colspan="3"></td>
+		<td width="25%"><?php echo $adviser_address; ?></td>
 
+		<td width="25%">Total Score:</td>
+		<td width="25%"><?php echo $total_score."/".$max_score." (".number_format($score_percentage,2)."%)"; ?></td>
 	</tr>
 
 
@@ -278,13 +305,6 @@ echo "</table>";
 </table>
 <?php createTable($data['data']['step1']); ?>
 
-<table nobr="true">
-	<tr class="kevin">
-		<th><b>Step 2 - Collect client information (Fact Find and Needs Analysis)</b><br></th>
-	</tr>
-</table>
-<?php createTable($data['data']['step2']); ?>
-<p></p>
 <table nobr="true">
 	<tr class="kevin">
 		<th><b>Step 2 - Collect client information (Fact Find and Needs Analysis)</b><br></th>
