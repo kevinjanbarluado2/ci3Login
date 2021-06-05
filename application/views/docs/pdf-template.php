@@ -1,325 +1,321 @@
-<?php 
+<?php
 $info = $data['data']['info'];
-var_dump($data['data']);
+// var_dump($data['data']);
+
+function createTable($step){
+echo "<table width=\"100%\" cellpadding=\"5\">";
+foreach ($step as $ind => $x) :
+	$num = $ind + 1;
+	echo $trheader = ($ind % 2 == 0) ? "<tr class=\"ff-tbl-alt\">" : "<tr>";
+	$zero = ($x['value'] == "0") ? "checked=\"true\"" : "";
+	$one = ($x['value'] == "1") ? "checked=\"true\"" : "";
+	$two = ($x['value'] == "2") ? "checked=\"true\"" : "";
+	$num = $ind + 1;
+	echo "<td width=\"350px\">{$num}. {$x['question']}</td>";
+	echo "<td  width=\"175px\">";
+	echo "<input type=\"radio\" readonly=\"true\" $zero name=\"{$ind}\" id=\"rqa\" value=\"0\"/> <label for=\"rqa\">zero</label><br />";
+	echo "<input type=\"radio\" readonly=\"true\" $one name=\"{$ind}\" id=\"rqa\" value=\"1\"/> <label for=\"rqa\">one</label><br />";
+	echo "<input type=\"radio\" readonly=\"true\" $two name=\"{$ind}\" id=\"rqb\" value=\"2\"/> <label for=\"rqb\">two</label><br /></td>";
+	echo "</tr>";
+
+endforeach;
+echo "</table>";
+}
+
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<body>
-	<div class="page-header">
-		<table class="header">
-			<tr width="100px">
-				<td class="header-left-box">
-					&nbsp;
-				</td>
-				<td class="header-image"><img src="<?=FCPATH.'assets/img/logo-only.png';?>" height="73" />
-				</td>
-				<td class="header-title">COMPLIANCE RESULT
-				</td>
-				<td class="header-right-box">
-					&nbsp;
-				</td>
-			</tr>
-		</table>
-	</div>
-	
-	<div class="margin">
-		<table class="w-full text-lg text-tblue font-bold mb-8">
-			<tbody>
-				<tr>
-					<td class="w-half">
-						Adviser <span class="underline"><?=$info['adviser']?></span>
-					</td>
-					<td class="w-half">
-						Date <span class="underline">3rd June, 2021</span>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						Client <span class="underline"><?=$info['client']?></span>
-					</td>
-					<td>
-						Score <span class="underline">100</span>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+<style type="text/css">
+	body {
+		font-family: arial;
+		margin: auto;
+		display: block;
+		position: relative
+	}
 
-		<div class="mt-4">
-			<div class="bg-lmara p-4 text-white font-bold">
-				<span class="text-lg">Step [N]</span> Insert step [N] desc
-			</div>
-			<table class="w-full">
-				<tr>
-					<td class="p-4 w-full">Question 1</td>
-					<td class="p-4 nowrap">
-						<label>
-							0 <input name="answer1" type="radio" checked>
-						</label>
-						&emsp;
-						<label>
-							1<input name="answer1" type="radio">
-						</label>
-						&emsp;
-						<label>
-							2 <input name="answer1" type="radio">
-						</label>
-					</td>
-				</tr>
-			</table>
-			<table class="w-full">
-				<tr>
-					<td class="p-4 w-full">Question 2</td>
-					<td class="p-4 nowrap">
-						<label>
-							0 <input name="answer2" type="radio" checked>
-						</label>
-						&emsp;
-						<label>
-							1<input name="answer2" type="radio">
-						</label>
-						&emsp;
-						<label>
-							2 <input name="answer2" type="radio">
-						</label>
-					</td>
-				</tr>
-			</table>
-		</div>
+	label {
+		display: block;
+		color: black !important;
+	}
 
-		<div class="mt-4">
-			<div class="bg-lmara p-4 text-white font-bold">
-				<span class="text-lg">Step [N]</span> Insert step [N] desc
-			</div>
-			<table class="w-full">
-				<tr>
-					<td class="p-4 w-full">Question 1</td>
-					<td class="p-4 nowrap">
-						<label>
-							0 <input name="answer3" type="radio" checked>
-						</label>
-						&emsp;
-						<label>
-							1<input name="answer3" type="radio">
-						</label>
-						&emsp;
-						<label>
-							2 <input name="answer3" type="radio">
-						</label>
-					</td>
-				</tr>
-			</table>
-			<table class="w-full">
-				<tr>
-					<td class="p-4 w-full">Question 2</td>
-					<td class="p-4 nowrap">
-						<label>
-							0 <input name="answer4" type="radio" checked>
-						</label>
-						&emsp;
-						<label>
-							1<input name="answer4" type="radio">
-						</label>
-						&emsp;
-						<label>
-							2 <input name="answer4" type="radio">
-						</label>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>
+	p,
+	li {
+		font-size: 1.15em;
+	}
 
+	.kevin {
+		font-size: 1.15em;
+	}
 
-</body>
+	.inline {
+		display: inline !important
+	}
+
+	.pagebreak {
+		margin-top: 30px;
+		margin-bottom: 30px
+	}
+
+	.pull-left {
+		float: left
+	}
+
+	.pull-right {
+		float: right
+	}
+
+	.width-25 {
+		width: 25%
+	}
+
+	.width-50 {
+		width: 45%
+	}
+
+	.width-40 {
+		width: 40%
+	}
+
+	.width-60 {
+		width: 60%
+	}
+
+	.width-30 {
+		width: 30%
+	}
+
+	.width-70 {
+		width: 70%
+	}
+
+	.width-100 {
+		width: 100%
+	}
+
+	.clearfix {
+		clear: both
+	}
+
+	.text-center {
+		text-align: center
+	}
+
+	.text-left {
+		text-align: left
+	}
+
+	.text-right {
+		text-align: right
+	}
+
+	.text-uppercase {
+		text-transform: uppercase
+	}
+
+	.red {
+		color: #347Ab8
+	}
+
+	.pale {
+		opacity: .5
+	}
+
+	label {
+		color: #777;
+		border-bottom: 1px solid #ddd;
+		text-transform: uppercase;
+		font-size: .7em;
+		margin-bottom: 10px;
+		margin-left: 10px;
+		margin-right: 10px
+	}
+
+	.value {
+		display: block;
+		margin-top: 5px;
+		padding: 10px;
+		padding-top: 5px;
+		margin-top: 0px;
+		font-size: .9em;
+		margin-bottom: 20px;
+		margin-right: 10px
+	}
+
+	.normal-weight {
+		font-weight: normal;
+		font-size: 1.1em;
+	}
+
+	.text-center.normal-weight.red {
+		text-align: left
+	}
+
+	tr th {
+		text-align: left;
+		padding: 10px
+	}
+
+	tr th label {
+		display: block;
+		padding: 0px;
+		border: none;
+		margin-left: 0;
+		margin-bottom: 0
+	}
+
+	.table .value {
+		margin-bottom: 0
+	}
+
+	.table.bordered td,
+	.table.bordered th {
+		border: 1px solid #ddd
+	}
+</style>
 <style>
-	.page-header {
-    margin-bottom: 5em;
-}
+	.sectionn-title {
+		padding: 0%;
+		margin: 0%;
+		color: #205478;
+		letter-spacing: 3px;
+		font-weight: 300;
+		text-transform: uppercase;
+		border-bottom: 1px solid #205478;
+	}
 
-.margin {
-    height: 100%;
-    margin-left: 0.77in;
-    margin-right: 0.77in;
-    /* border: 1px dashed black; */
-}
+	.tbl-title {
+		padding: 5px 0px 5px 0px;
+	}
 
-.page-break {
-    page-break-after: always;
-}
+	.tbl-title td {
+		color: #999;
+		font-size: 95%;
+		text-transform: uppercase;
+	}
 
-.header {
-    width: 100%;
-}
+	.tbl-value {
+		border: 1px solid #999;
+		padding: 5px;
+		font-size: 95%;
+	}
 
-.header-image {
-    padding-left: 5.5pt;
-    padding-bottom: 0;
-}
+	.ff-table th {
+		background-color: #205478;
+		color: #fff;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		font-size: 95%;
+	}
 
-.header-title {
-    font-family: 'Quattrocento Sans', sans-serif;
-    font-size: 18pt;
-    font-weight: bold;
-    text-align: right;
-    white-space: nowrap;
-    color: #44546a;
-    padding-left: 5.5pt;
-    padding-right: 5.5pt;
-    padding-bottom: 0;
-    vertical-align: bottom;
-}
-
-.header-left-box {
-    width: 0.68in;
-    height: 0.65in;
-    background-color: #44546a;
-    vertical-align: bottom;
-    padding: 0;
-}
-
-.header-right-box {
-    width: 0.68in;
-    height: 0.65in;
-    background-color: #2e74b6;
-    vertical-align: bottom;
-    padding: 0;
-}
-
-.table-footer {
-    width: 100%;
-    padding-left: 0.25in;
-    padding-right: 0.25in;
-    margin-bottom: 1em;
-}
-
-.footer-logo {
-    width: 50%;
-}
-
-.footer-page {
-    width: 50%;
-    text-align: right;
-    font-family: 'Quattrocento Sans', sans-serif;
-    font-size: 11pt;
-    color: #5b9bd5;
-    vertical-align: bottom;
-}
-
-.footer-link {
-    text-align: right;
-    font-family: 'Quattrocento Sans', sans-serif;
-    font-size: 11pt;
-    color: #5b9bd5;
-    text-decoration: none;
-}
-
-body {
-    font-family: 'Quattrocento Sans', sans-serif;
-    font-size: 11pt;
-    font-weight: normal;
-    padding: 48px 0;
-    margin: 0;
-}
-
-table {
-    border-collapse: collapse;
-}
-
-p {
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
-p,
-li {
-    text-align: justify;
-}
-
-ol,
-ul,
-li {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.bg-shark {
-    background-color: #2B3036;
-}
-
-.bg-lmara {
-    background-color: #0081B8;
-}
-
-.bg-tblue {
-    background-color: #0F6497;
-}
-
-.bg-dsgreen {
-    background-color: #0C4664;
-}
-
-.text-white {
-    color: #ffffff;
-}
-
-.text-shark {
-    color: #2B3036;
-}
-
-.text-lmara {
-    color: #0081B8;
-}
-
-.text-tblue {
-    color: #0F6497;
-}
-
-.text-ds-green {
-    color: #0C4664;
-}
-
-.w-full {
-    width: 100%;
-}
-
-.w-half {
-    width: 50%;
-}
-
-.text-lg {
-    font-size: 1.25em;
-}
-
-.underline {
-    text-decoration: underline;
-}
-
-.font-bold {
-    font-weight: bold;
-}
-
-.mt-4 {
-    margin-top: 1em;
-}
-
-.mb-4 {
-    margin-bottom: 1em;
-}
-
-.mb-8 {
-    margin-bottom: 2em;
-}
-
-.p-4 {
-    padding: 1em;
-}
-
-.flex {
-    display: flex;
-}
-
-.nowrap {
-    white-space: nowrap;
-}
+	.ff-tbl-alt td {
+		background-color: #eee;
+	}
 </style>
 
+<table width="100%" cellspacing="5">
+	<tr>
+		<td width="100%" align="right">
+			<?php
+
+			// echo '<img src="' . base_url() . 'resource/' . $link . '" style="width: 75px;" />';
+
+			?>
+		</td>
+	</tr>
+</table>
+
+<h2 class="sectionn-title" align="center"><?= strtoupper('file review - client name - for adviser name'); ?></h2>
+
+<p></p>
+<table class="table ff-table" style="font-size:115%" cellpadding="5" nobr="true">
+	<tr class="ff-tbl-alt">
+		<td width="25%">Name of Financial Adviser:</td>
+		<td width="25%"></td>
+
+		<td width="25%">Financial Advice Provider Name:</td>
+		<td width="25%">
+
+		</td>
+
+	</tr>
+
+	<tr>
+		<td width="25%">FSP Number:</td>
+		<td width="25%"></td>
+
+		<td width="25%">FAP FSP Number:</td>
+		<td width="25%">706272</td>
+	</tr>
+	<tr class="ff-tbl-alt">
+		<td width="25%">Contact Number:</td>
+		<td width="25%"></td>
+
+		<td width="25%">FAP Contact Number:</td>
+		<td width="25%">0508 123 467</td>
+	</tr>
+
+	<tr>
+		<td width="25%">Email Address:</td>
+		<td width="25%"><?php /*echo $user_info->email;*/ ?></td>
+
+		<td width="25%">FAP email address:</td>
+		<td width="25%">admin@eliteinsure.co.nz</td>
+	</tr>
+
+
+	<tr class="ff-tbl-alt">
+		<td width="25%">Physical address:</td>
+		<td width="75%" colspan="3"></td>
+
+	</tr>
+
+
+</table>
+<p></p>
+
+<table nobr="true">
+	<tr class="kevin">
+		<th><b>Step 1 - Establish and define the relationship with the client</b><br></th>
+	</tr>
+</table>
+<?php createTable($data['data']['step1']); ?>
+
+<table nobr="true">
+	<tr class="kevin">
+		<th><b>Step 2 - Collect client information (Fact Find and Needs Analysis)</b><br></th>
+	</tr>
+</table>
+<?php createTable($data['data']['step2']); ?>
+<p></p>
+<table nobr="true">
+	<tr class="kevin">
+		<th><b>Step 2 - Collect client information (Fact Find and Needs Analysis)</b><br></th>
+	</tr>
+</table>
+<?php createTable($data['data']['step2']); ?>
+<p></p>
+<table nobr="true">
+	<tr class="kevin">
+		<th><b>Step 3 - Research, analyse and evaluate information</b><br></th>
+	</tr>
+</table>
+<?php createTable($data['data']['step3']); ?>
+<p></p>
+<table nobr="true">
+	<tr class="kevin">
+		<th><b>Step 4 - Develop the advice recommendations and present to the client</b><br></th>
+	</tr>
+</table>
+<?php createTable($data['data']['step4']); ?>
+<p></p>
+<table nobr="true">
+	<tr class="kevin">
+		<th><b>Step 5 - Implement the recommendations</b><br></th>
+	</tr>
+</table>
+<?php createTable($data['data']['step5']); ?>
+<p></p>
+<table nobr="true">
+	<tr class="kevin">
+		<th><b>Step 6 - Review the client’s situation</b><br></th>
+	</tr>
+</table>
+<?php createTable($data['data']['step6']); ?>
