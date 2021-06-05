@@ -101,4 +101,27 @@ class Compliance extends CI_Controller
         ob_end_clean();
         echo json_encode(array("link" => base_url('assets/resources/preview.pdf')));
     }
+
+    public function savecompliance() {   
+      $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
+      
+      
+      if($this->input->post() && $this->input->post() != null){
+        $post_data = array();
+        foreach ($this->input->post() as $k => $v) {
+          $post_data[$k] = $this->input->post($k,true);
+        }
+
+        $this->load->model('ComplianceCollection');
+        if($this->ComplianceCollection->savecompliance($post_data)) {
+          $result['message'] = "Successfully saved.";
+        } else {
+          $result['message'] = "Failed to save details.";
+        }
+      } 
+
+      $result['key'] = $page;
+      
+      echo json_encode($result);
+    }
 }
