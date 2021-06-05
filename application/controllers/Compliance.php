@@ -52,7 +52,8 @@ class MYPDF extends TCPDF {
         $image = base_url() . "img/logo.png";
         $this->Image($image,  8, 280, 0, 10 , 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-        $this->Cell(0, 10, 'www.eliteinsure.co.nz | Page'.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 10, 'www.eliteinsure.co.nz | Page'.$this->getAliasNumPage(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
+        //$this->Cell(0, 10, 'www.eliteinsure.co.nz | Page'.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
     }
 
     
@@ -87,7 +88,8 @@ class Compliance extends CI_Controller
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $html = $this->load->view('docs/pdf-template', array(
             'data' => $_POST,
-            'adviserInfo' => $adviserInfo
+            'adviserInfo' => $adviserInfo,
+            'added_by'=>$_SESSION['name']
         ), true);
         // remove default header/footer
         $pdf->setPrintHeader(false);
