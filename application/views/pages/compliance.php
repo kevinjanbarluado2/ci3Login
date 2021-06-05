@@ -20,7 +20,6 @@ $step6 = $json->step6;
 
 
 <!-- Modal -->
-
 <div class="modal fade" id="complianceModal" tabindex="-1" role="dialog" aria-labelledby="complianceModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -114,13 +113,13 @@ $step6 = $json->step6;
                                 <label for="">Adviser</label>
                                 <select name="adviser" id="" class="form-control select2-info">
                                     <option value="" readonly="true"></option>
-                                    <?php if(isset($advisers) && sizeof($advisers) >= 1) : ?>
+                                    <?php if (isset($advisers) && sizeof($advisers) >= 1) : ?>
                                         <?php foreach ($advisers as $k => $v) : ?>
                                             <option value="<?php echo $advisers[$k]['idusers']; ?>">
-                                            <?php
-                                                $full_name = $advisers[$k]['last_name'].", ".$advisers[$k]['first_name']." ".((isset($advisers[$k]['middle_name']) && $advisers[$k]['middle_name'] <> "") ? substr($advisers[$k]['middle_name'], 0, 1)."." : "");
+                                                <?php
+                                                $full_name = $advisers[$k]['last_name'] . ", " . $advisers[$k]['first_name'] . " " . ((isset($advisers[$k]['middle_name']) && $advisers[$k]['middle_name'] <> "") ? substr($advisers[$k]['middle_name'], 0, 1) . "." : "");
                                                 echo $full_name;
-                                            ?>
+                                                ?>
                                             </option>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
@@ -133,7 +132,7 @@ $step6 = $json->step6;
                             <div class="col">
                                 <label for="">Policy Type</label>
                                 <select name="policyType" class="form-control multiselect" multiple="multiple">
-                                    <?php if(isset($policies) && sizeof($policies) >= 1) : ?>
+                                    <?php if (isset($policies) && sizeof($policies) >= 1) : ?>
                                         <?php foreach ($policies as $k => $v) : ?>
                                             <option value="<?php echo $policies[$k]['idproduct_category']; ?>">
                                                 <?php echo $policies[$k]['name']; ?>
@@ -146,7 +145,7 @@ $step6 = $json->step6;
                                 <label for="">Providers</label>
                                 <select name="providers" id="" class="form-control multiselect" multiple="multiple">
                                     <option value="" readonly="true"></option>
-                                    <?php if(isset($providers) && sizeof($providers) >= 1) : ?>
+                                    <?php if (isset($providers) && sizeof($providers) >= 1) : ?>
                                         <?php foreach ($providers as $k => $v) : ?>
                                             <option value="<?php echo $providers[$k]['idcompany_provider']; ?>">
                                                 <?php echo $providers[$k]['company_name']; ?>
@@ -157,6 +156,14 @@ $step6 = $json->step6;
 
                             </div>
 
+                        </div>
+                        <div class="row">
+                            <div class="col">
+
+                                <label for="">Policy Number</label>
+                                <input type="text" name="policyNumber" class="form-control">
+                            </div>
+                            <div class="col"></div>
                         </div>
                     </div>
                 </div>
@@ -373,8 +380,8 @@ $step6 = $json->step6;
                                             </div>
                                         </td>
                                         <td class="align-top relative">
-											<textarea class="form-control h-100" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea>
-										</td>
+                                            <textarea class="form-control h-100" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea>
+                                        </td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -608,7 +615,7 @@ $step6 = $json->step6;
                     <p class="card-category">Compliance</p>
                 </div>
                 <div class="card-body d-flex justify-content-between">
-                <button type="button" class="btn btn-info" id="generateCompliance">
+                    <button type="button" class="btn btn-info" id="generateCompliance">
                         Generate Compliance
                     </button>
                     <button id="viewPdf" type="button" class="btn btn-primary disabled" data-toggle="modal" data-target="#complianceModal" disabled>
@@ -645,17 +652,17 @@ $step6 = $json->step6;
         overflow-y: auto;
     }
 
-	.select2-selection--multiple {
-		overflow: hidden !important;
-		height: auto !important;
+    .select2-selection--multiple {
+        overflow: hidden !important;
+        height: auto !important;
         min-height: 0 !important;
-	}
+    }
 
-	#step-3 span.bmd-form-group{
-		position: absolute;
-		top: 0;
-		bottom: 4px;
-		left: 0;
-		right: 0;
-	}
+    #step-3 span.bmd-form-group {
+        position: absolute;
+        top: 0;
+        bottom: 4px;
+        left: 0;
+        right: 0;
+    }
 </style>
