@@ -1,5 +1,5 @@
 <?php
-class AdvisersCollection extends CI_Model {
+class PdfCollection extends CI_Model {
     var $select_column = null; 
     function __construct() {
         // Call the Model constructor
@@ -10,29 +10,22 @@ class AdvisersCollection extends CI_Model {
         }
     }
     
-    //set orderable columns in advisers_tbl list
-    var $table = "advisers_tbl";   
+    //set orderable columns in results_tbl list
+    var $table = "results_tbl";   
     var $order_column = array(
-        "last_name",
-        "email",
-        "fspr_number",
-        "address",
-        "trading_name",
-        "telephone_no",
+        "clients",
+        "advisers_tbl.first_name",
+        "date_added",
+        "date_added",
         ""
     );
 
-    //set searchable parameters in advisers_tbl table
+    //set searchable parameters in results_tbl table
     public function getColumns(){
         $rows = array(
-            "last_name",
-            "first_name",
-            "middle_name",
-            "email",
-            "fspr_number",
-            "address",
-            "trading_name",
-            "telephone_no",
+            "clients",
+            "date_added",
+            "date_added",
         );
         return $rows; 
     }
@@ -49,12 +42,17 @@ class AdvisersCollection extends CI_Model {
 
     } 
     
-    //fetch list of advisers_tbl
+    //fetch list of results_tbl
     function make_query() {  
+        $this->select_column[] = 'advisers_tbl.last_name';
+        $this->select_column[] = 'advisers_tbl.first_name';
         $this->db->select(
-            $this->table.'.*'
+            $this->table.'.*,
+            advisers_tbl.first_name,
+            advisers_tbl.last_name'
         );  
         $this->db->from($this->table);
+        $this->db->join("advisers_tbl",$this->table.".adviser_id = advisers_tbl.idusers","left");
 
         if(isset($_POST["search"]["value"])) {  
             $this->db->group_start();
@@ -69,64 +67,31 @@ class AdvisersCollection extends CI_Model {
         if(isset($_POST["order"])) {    
             $this->db->order_by($this->order_column[$_POST['order']['0']['column']]." ". $_POST['order']['0']['dir']);
         } else {  
-            $this->db->order_by("idusers DESC");  
+            $this->db->order_by("results_id DESC");  
         }  
     }
 
-    //get count of all advisers_tbl
+    //get count of all results_tbl
     function get_all_data() {  
         $this->db->select($this->table."*");  
         $this->db->from($this->table);
         return $this->db->count_all_results();  
     }  
 
-    //get count of filtered advisers_tbl
+    //get count of filtered results_tbl
     function get_filtered_data(){  
          $this->make_query(); 
          $query = $this->db->get();  
          return $query->num_rows();  
     }  
 
-    //add adviser
-    public function addRows($params){
-        $this->db->insert($this->table, $params);
-        if($this->db->affected_rows() > 0) 
-            return true;        
-        return false;
-    }
-
-    //update adviser
-    public function updateRows($params){        
-        $this->db->where('idusers', $params['idusers']);
-        if ($this->db->update($this->table,$params) !== FALSE)
-            return true;    
-        return false;
-    }
-
     //delete adviser
     public function deleteRows($params){
-        $this->db->where('idusers', $params['idusers']);
+        $this->db->where('results_id', $params['results_id']);
         if ($this->db->delete($this->table,$params) !== FALSE)
             return true;    
         return false;
     }
 
-    //get all active advisers
-    public function getActiveAdvisers(){
-        $this->db->select('*');
-        $this->db->from($this->table);
-        $this->db->order_by("last_name", "asc");
-        // $this->db->where('status', 'Active');
-        return $this->db->get()->result_array();
-    }
-
-    //get advisers by id
-    public function getActiveAdvisersById($id){
-        $this->db->select('*');
-        $this->db->from($this->table);
-        $this->db->where('idusers', $id);
-        // $this->db->where('status', 'Active');
-        return $this->db->get()->row();
-    }
 }
 ?>

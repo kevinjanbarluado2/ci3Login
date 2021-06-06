@@ -70,7 +70,7 @@ $privileges=explode(",",$_SESSION['privileges']);
           <?php if(in_array('advisers',$privileges)):?>
           <li class="nav-item <?php if($activeNav=="advisers"){echo "active";} ?>">
             <a class="nav-link" href="<?=base_url('advisers'); ?>">
-              <i class="material-icons">content_paste</i>
+              <i class="material-icons">groups</i>
               <p>Advisers</p>
             </a>
           </li>
@@ -80,6 +80,14 @@ $privileges=explode(",",$_SESSION['privileges']);
             <a class="nav-link" href="<?=base_url('fieldmanagement'); ?>">
               <i class="material-icons">settings</i>
               <p>Fieldmanagement</p>
+            </a>
+          </li>
+          <?php endif;?>
+          <?php if(in_array('pdf',$privileges)):?>
+          <li class="nav-item <?php if($activeNav=="pdf"){echo "active";} ?>">
+            <a class="nav-link" href="<?=base_url('pdf'); ?>">
+              <i class="material-icons">print</i>
+              <p>PDF</p>
             </a>
           </li>
           <?php endif;?>
