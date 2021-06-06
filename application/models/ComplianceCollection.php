@@ -31,5 +31,14 @@ class ComplianceCollection extends CI_Model {
             return true;        
         return false;
     }
+
+    //get compliance result by id
+    public function getComplianceResultsById($results_id){
+        $this->db->select('*');
+        $this->db->from('results_tbl');
+        $this->db->where('results_id', $results_id);
+        // $this->db->where('status', 'Active');
+        return $this->db->get()->row();
+    }
 }
 ?>
