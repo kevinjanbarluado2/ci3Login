@@ -13,7 +13,7 @@ class MYPDF extends TCPDF
         parent::__construct();
 
         $this->SetCreator(PDF_CREATOR);
-        $this->SetAuthor('Doc Generator');
+        $this->SetAuthor('EliteInsure Ltd');
 
         // set margins
         $this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP / 2, PDF_MARGIN_RIGHT);
@@ -78,7 +78,7 @@ class Compliance extends CI_Controller
         die();
     }
 
-    public function sendEmail($fileName = "")
+    public function sendEmail($fileName = "", $adviserEmail = "")
     {
 
         $mail = new PHPMailer(true);
@@ -101,10 +101,12 @@ class Compliance extends CI_Controller
 
             //Recipients
             $mail->setFrom('filereview@eliteinsure.co.nz', 'Compliance');
-            $mail->addAddress('kevin@eliteinsure.co.nz', 'Recipient');     //Add a recipient
-            // $mail->addAddress('ellen@example.com');               //Name is optional
-            // $mail->addReplyTo('info@example.com', 'Information');
-            // $mail->addCC('cc@example.com');c`    
+            $mail->addAddress('compliance@eliteinsure.co.nz', 'Recipient');
+            $mail->addCC('admin@eliteinsure.co.nz', 'admin');
+            if ($adviserEmail !== "") {
+                $mail->addCC($adviserEmail, 'adviser');
+            }
+
             // $mail->addBCC('bcc@example.com');
 
             //Attachments
