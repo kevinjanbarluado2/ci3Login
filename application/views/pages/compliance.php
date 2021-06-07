@@ -453,9 +453,9 @@ $step6 = $json->step6;
               <tbody>
                 <?php foreach ($step4 as $ind => $x) { ?>
                 <tr>
-                  <td><?php echo $x->question; ?></td>
-                  <td><?php echo $x->source; ?></td>
-                  <td>
+                  <td class="align-top text-justify"><?php echo $x->question; ?></td>
+                  <td class="align-top text-center"><?php echo $x->source; ?></td>
+                  <td class="align-top">
                     <div class="form-group">
                       <div class="form-check form-check-radio">
                         <label class="form-check-label">
@@ -489,7 +489,7 @@ $step6 = $json->step6;
                       </div>
                     </div>
                   </td>
-                  <td><textarea class="form-control"
+                  <td class="align-top"><textarea class="form-control"
                       placeholder="<?php echo $x->comments; ?>" cols="30"
                       rows="10"></textarea></td>
                 </tr>

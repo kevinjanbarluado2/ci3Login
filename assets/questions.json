@@ -122,38 +122,38 @@
 	],
 	"step4": [
 		{
-			"question": "Do you provide a written record or <span class="font-weight-bold">Statement of Advice</span> to your clients?",
-			"source": "<span class="font-weight-bold">NZCFS L5</span><br>US31869 1.4",
+			"question": "Do you provide a written record or <span class='font-weight-bold'>Statement of Advice</span> to your clients?",
+			"source": "<span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.4",
 			"comments": "Note: Not all Advice needs to be in a formal SoA. In simple situations it could be verbal with appropriate recorded calls or file notes created at the same time as the advice. This might be common when further advice is given to an existing client.\n\nAL: Model SoA template"
 		},
 		{
-			"question": "Are recommendations in the Statements of Advice written/presented in a <span class="font-weight-bold">clear, concise and effective</span> way and suitable to:<ul><li>The level of sophistication of the client?</li><li>Any identified client vulnerabilities?</li><li>The level and nature of the advice as agreed in the Scope of Engagement.</li></ul>",
-			"source": "<span class="font-weight-bold">FSLAA</span><br>S431 J, K, L, & M<br><br><span class="font-weight-bold">Code Std 4</span><br><br><span class="font-weight-bold">NZCFS L5</span><br>US31869 1.4",
+			"question": "Are recommendations in the Statements of Advice written/presented in a <span class='font-weight-bold'>clear, concise and effective</span> way and suitable to:<ul><li>The level of sophistication of the client?</li><li>Any identified client vulnerabilities?</li><li>The level and nature of the advice as agreed in the Scope of Engagement.</li></ul>",
+			"source": "<span class='font-weight-bold'>FSLAA</span><br>S431 J, K, L, & M<br><br><span class='font-weight-bold'>Code Std 4</span><br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.4",
 			"comments": "Note: This includes logical ordering, highlighting key information, explain any jargon in simple language whether written or verbal and avoidance of lengthy documents.\n\nAL: Model SoA template"
 		},
 		{
 			"question": "Do you check all advice documents to ensure there are no misleading (or likely to mislead) statements or omission of relevant information?",
-			"source": "<span class="font-weight-bold">Fair Trading Act</span><br><br><span class="font-weight-bold">FSLAA</span>S431 J, K, L, & M<br><br><span class="font-weight-bold">Code Std 4</span>",
+			"source": "<span class='font-weight-bold'>Fair Trading Act</span><br><br><span class='font-weight-bold'>FSLAA</span><br>S431 J, K, L, & M<br><br><span class='font-weight-bold'>Code Std 4</span>",
 			"comments": ""
 		},
 		{
-			"question": "Do you restate the <span class="font-weight-bold">Scope of Service</span> and any other terms of the engagement?",
-			"source": "<span class="font-weight-bold">NZCFS L5</span><br>US31869 1.4<br><br>Best Practice",
+			"question": "Do you restate the <span class='font-weight-bold'>Scope of Service</span> and any other terms of the engagement?",
+			"source": "<span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.4<br><br>Best Practice",
 			"comments": "AL: Model SoA template"
 		},
 		{
-			"question": "Do you summarise <span class="font-weight-bold">key relevant <u>facts</u></span> and <span class="font-weight-bold">client circumstances</span> on which your advice is based?",
-			"source": "Best Practice<br><br><span class="font-weight-bold">NZCFS L5</span><br>US31869 1.4",
+			"question": "Do you summarise <span class='font-weight-bold'>key relevant <u>facts</u></span> and <span class='font-weight-bold'>client circumstances</span> on which your advice is based?",
+			"source": "Best Practice<br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.4",
 			"comments": "AL: Model SoA template"
 		},
 		{
-			"question": "Do you summarise the client’s core <span class="font-weight-bold">needs and objectives</span> (in personal and practical terms) and their priorities?",
-			"source": "Best Practice<br><br><span class="font-weight-bold">NZCFS L5</span><br>US31869 1.4",
+			"question": "Do you summarise the client’s core <span class='font-weight-bold'>needs and objectives</span> (in personal and practical terms) and their priorities?",
+			"source": "Best Practice<br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.4",
 			"comments": "AL: Model SoA template"
 		},
 		{
 			"question": "Does the advice clearly outline any considerations in arriving at your advice? For example:<ul><li>Client’s risks tolerance/capacity</li><li>Priorities</li><li>Choice of product provider</li><li>Known limitations to the advice e.g. needs identified but unable to address, insufficient information provided</li><li>Reasons for cancelling or retaining existing cover</li><li>Any restrictions to being able to provide best possible solution e.g. health status of client and any alternative risk management strategies</li><li>Government support available and their impact</li><li>Tax implications</li></ul>",
-			"source": "<span class="font-weight-bold">Code Std 3</span><br<br>FMA Guide on Care Diligence and Skill<br><br><span class="font-weight-bold">NZCFS L5</span><br>US31869 1.4<br>US31867 2.1<br>US31869 1.3<br><br>Best Practice",
+			"source": "<span class='font-weight-bold'>Code Std 3</span><br><br>FMA Guide on Care Diligence and Skill<br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.4<br>US31867 2.1<br>US31869 1.3<br><br>Best Practice",
 			"comments": "AL: Model SoA template"
 		},
 		{
@@ -163,7 +163,7 @@
 		},
 		{
 			"question": "Does the advice clearly state how your product recommendations will meet the needs, circumstances and objectives of the client? This may include:<ul><li>Cover types and benefit structures</li><li>Sums insured</li><li>Premium type(s)</li><li>Optional Options recommended</li><li>Ownership structures recommended etc</li></ul>",
-			"source": "<span class="font-weight-bold">Code Std 3</span><br><br><span class="font-weight-bold">NZCFS L5</span><br>US31869 1.4<br>US31867 2.2- 2.3",
+			"source": "<span class='font-weight-bold'>Code Std 3</span><br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.4<br>US31867 2.2- 2.3",
 			"comments": "AL: Model SoA template"
 		},
 		{
@@ -173,27 +173,27 @@
 		},
 		{
 			"question": "Does the advice clearly state any identified risks, limitations or disadvantages of the recommended strategies or product solutions? For example:<ul><li>Needs identified but not addressed</li><li>Replacement of policy and possible risks and consequences of non-disclosure</li><li>Insufficient provision of information</li><li>Not implementing the recommendations</li></ul>",
-			"source": "<span class="font-weight-bold">FSLAA</span><br>S431 J, K, L, & M<br><br><span class="font-weight-bold">Code Std 4</span><br><br>FMA Guide on Care Diligence and Skill<br><br><span class="font-weight-bold">NZCFS L5</span><br>US31869 1.4",
+			"source": "<span class='font-weight-bold'>FSLAA</span><br>S431 J, K, L, & M<br><br><span class='font-weight-bold'>Code Std 4</span><br><br>FMA Guide on Care Diligence and Skill<br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.4",
 			"comments": "AL: Model SoA template"
 		},
 		{
 			"question": "Does the recommendation clearly outline the premium costs (or your fees) of implementing the recommended strategies and products?",
-			"source": "<span class="font-weight-bold">Code Std 4</span><br><br><span class="font-weight-bold">NZCFS L5</span><br>US31869 1.4",
+			"source": "<span class='font-weight-bold'>Code Std 4</span><br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.4",
 			"comments": "Note: For risk advisers this will be captured under the new Disclosure Regulations\n\nAL: Model SoA template"
 		},
 		{
-			"question": "Do you clearly and effectively communicate any conflicts of interest that might influence your advice<br>e.g. qualification for higher commission<span class="font-weight-bold">s or</span> qualifications for overseas trips and other incentives?",
-			"source": "Disclosure Regs<br><br><span class="font-weight-bold">Code Std 2</span><br><br><span class="font-weight-bold">NZCFS L5</span><br>US31869 1.4",
+			"question": "Do you clearly and effectively communicate any conflicts of interest that might influence your advice<br>e.g. qualification for higher commission<span class='font-weight-bold'>s or</span> qualifications for overseas trips and other incentives?",
+			"source": "Disclosure Regs<br><br><span class='font-weight-bold'>Code Std 2</span><br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.4",
 			"comments": "Disclosure template(s)"
 		},
 		{
-			"question": "Is the need for the client to seek other legal or <span class="font-weight-bold">specialist advice</span> identified and noted in your advice? For example: need for Wills, EPAs etc.",
-			"source": "<span class="font-weight-bold">NZCFS L5</span><br>US31867 1.3<br>US31867 2.4",
+			"question": "Is the need for the client to seek other legal or <span class='font-weight-bold'>specialist advice</span> identified and noted in your advice? For example: need for Wills, EPAs etc.",
+			"source": "<span class='font-weight-bold'>NZCFS L5</span><br>US31867 1.3<br>US31867 2.4",
 			"comments": "AL: Model SoA template"
 		},
 		{
 			"question": "Can you evidence you meet all applicable Disclosure Regulations required at this point of the process?",
-			"source": "Disclosure Regs<br><br><span class="font-weight-bold">FSLAA</span><br>S431 O<br><br><span class="font-weight-bold">NZCFS L5</span><br>(US31869 1.1)",
+			"source": "Disclosure Regs<br><br><span class='font-weight-bold'>FSLAA</span><br>S431 O<br><br><span class='font-weight-bold'>NZCFS L5</span><br>(US31869 1.1)",
 			"comments": ""
 		}
 	],
