@@ -180,7 +180,7 @@ class Compliance extends CI_Controller
 
     public function updatecompliance(){
       $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
-      $result['result_id'] = $this->input->post('results_id');
+      $result['results_id'] = $this->input->post('results_id');
       $result['filename'] = $this->input->post('filename');
 
       if ($this->input->post() && $this->input->post() != null) {
