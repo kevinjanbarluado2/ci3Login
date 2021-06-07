@@ -78,15 +78,16 @@ $(function () {
     });
 
     $('#sendPdf').on('click', function () {
-        data = {};
+        let data = {};
         info = fetchInfo();
-        console.log(info);
+
         data.adviser = info.adviser;
         data.filename = $('[name=filename]').val();
         data.includeAdviser = ($('[name=includeAdviser]:checked').val() !== undefined) ? true : false;
         data.complianceOfficer = ($('[name=complianceOfficer]').val() !== "") ? $('[name=complianceOfficer]').val() : "";
         let link = "sendEmail";
-
+        console.log(data.includeAdviser);
+        
         $.ajax({
             url: `${base_url}/compliance/${link}`,
             type: 'post',

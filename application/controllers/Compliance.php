@@ -87,6 +87,7 @@ class Compliance extends CI_Controller
         $complianceOfficer = isset($_POST['complianceOfficer'])?$_POST['complianceOfficer']:"";
         $adviserEmail =  $adviserInfo->email;
         $production = false;
+        $includeAdviser = isset($_POST['includeAdviser'])?$_POST['includeAdviser']:false;
 
         $mail = new PHPMailer(true);
         $iflocal = strpos(base_url(), "localhost");
@@ -117,7 +118,7 @@ class Compliance extends CI_Controller
                 $mail->addAddress('omar@eliteinsure.co.nz', 'Recipient');
             }
      
-            if ($adviserEmail == true) {
+            if ($includeAdviser == "true") {
                 $mail->addCC($adviserEmail, 'adviser');
             }
             //Attachments
@@ -131,7 +132,7 @@ class Compliance extends CI_Controller
             $mail->Body    = "Hi, {$complianceOfficer}, please find attached the file review report.";
 
             $mail->send();
-            echo json_encode(array("status" => "Message has been sent successfully", "message" => "Successfully Sent"));
+            echo json_encode(array("status" => "Message has been sent successfully", "message" => "Successfully Sent","includeAdviser"=>$includeAdviser));
         } catch (Exception $e) {
             echo json_encode(array("status" => $mail->ErrorInfo));
         }

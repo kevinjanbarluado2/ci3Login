@@ -87,4 +87,12 @@ class Welcome extends CI_Controller
 		$this->load->view('pages/pdf');
 		$this->load->view('footer',$data);
 	}
+	public function editPdf()
+	{
+		$data = array();
+		$data['activeNav'] = "pdf";
+		$this->load->view('header', $data);
+		$this->load->view('pages/pdf');
+		$this->load->view('footer',$data);
+	}
 }
