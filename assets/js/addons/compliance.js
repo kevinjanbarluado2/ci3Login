@@ -78,16 +78,26 @@ $(function () {
         data.step5 = fetchStep(5);
         data.step6 = fetchStep(6);
 
-        let link = ($('name="results_id"').val()!=="")?"saveCompliance":"updateCompliance";
-
+        let link = ($('[name="results_id"]').val() === "") ? "savecompliance" : "updatecompliance";
+        let results_id = $('[name="results_id"]').val();
+        let filename = $('[name="filename"]').val();
+        
         $.ajax({
             url: `${base_url}/compliance/${link}`,
             type: 'post',
-            data: { data: data },
+            data: { 
+                data: data, 
+                results_id: results_id,
+                filename: filename
+            },
             dataType:"json",
             success: function (result) {
                 $('#complianceModal').modal('hide');
-                
+                $('#save-btn').text("Update changes");
+
+                $('[name="results_id"]').val(result.results_id);
+                $('[name="filename"]').val(result.filename);
+
                 $.notify({
                     icon: "notifications",
                     message: result.message
