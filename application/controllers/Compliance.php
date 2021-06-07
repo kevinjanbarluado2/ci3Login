@@ -78,8 +78,16 @@ class Compliance extends CI_Controller
         die();
     }
 
-    public function sendEmail($fileName = "Sample Filename", $adviserEmail = "")
+    public function sendEmail()
     {
+        $fileName = isset($_POST['filename'])?$_POST['filename']:"Sample Filename";
+        $adviser = isset($_POST['adviser'])?$_POST['adviser']:"";
+        $this->load->model('AdvisersCollection');
+        $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser);
+        $complianceOfficer = isset($_POST['complianceOfficer'])?$_POST['complianceOfficer']:"";
+        $adviserEmail =  $adviserInfo->email;
+        $production = false;
+        $includeAdviser = isset($_POST['includeAdviser'])?$_POST['includeAdviser']:false;
 
         $mail = new PHPMailer(true);
         $iflocal = strpos(base_url(), "localhost");
@@ -90,7 +98,7 @@ class Compliance extends CI_Controller
         }
         try {
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'eliteinsure.co.nz';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -101,28 +109,32 @@ class Compliance extends CI_Controller
 
             //Recipients
             $mail->setFrom('filereview@eliteinsure.co.nz', 'Compliance');
-            $mail->addAddress('compliance@eliteinsure.co.nz', 'Recipient');
-            $mail->addCC('admin@eliteinsure.co.nz', 'admin');
-            if ($adviserEmail !== "") {
+            if ($production) {
+                $mail->addAddress('compliance@eliteinsure.co.nz', 'Recipient');
+                $mail->addCC('admin@eliteinsure.co.nz', 'admin');
+            }else{
+                //for production purposes only
+                $mail->addAddress('kevin@eliteinsure.co.nz', 'Recipient');
+                $mail->addAddress('omar@eliteinsure.co.nz', 'Recipient');
+            }
+     
+            if ($includeAdviser == "true") {
                 $mail->addCC($adviserEmail, 'adviser');
             }
-
-            // $mail->addBCC('bcc@example.com');
-
             //Attachments
-            $mail->addAttachment(base_url('assets/resources/preview.pdf'),"$fileName.pdf");         //Add attachments
+        
+            $mail->addAttachment('assets/resources/preview.pdf', "$fileName.pdf");         //Add attachments
             // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            $mail->Subject = 'Compliance Test Result';
+            $mail->Body    = "Hi, {$complianceOfficer}, please find attached the file review report.";
 
             $mail->send();
-            echo 'Message has been sent';
+            echo json_encode(array("status" => "Message has been sent successfully", "message" => "Successfully Sent","includeAdviser"=>$includeAdviser));
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            echo json_encode(array("status" => $mail->ErrorInfo));
         }
     }
 

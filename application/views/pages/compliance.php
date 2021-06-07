@@ -21,9 +21,10 @@ $step6 = $json->step6;
 
 <!-- Modal -->
 
-<input type="hidden" name="results_id" value="" /> 
+<input type="hidden" name="results_id" value="" />
 <input type="hidden" name="filename" value="" />
 
+<input type="hidden" name="complianceOfficer" value="<?=$_SESSION['name'];?>">
 
 <div class="modal fade" id="complianceModal" tabindex="-1" role="dialog" aria-labelledby="complianceModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -41,6 +42,7 @@ $step6 = $json->step6;
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button id="save-btn" type="button" class="btn btn-primary">Save changes</button>
+
             </div>
         </div>
     </div>
@@ -574,7 +576,7 @@ $step6 = $json->step6;
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($step6 as $ind=>$x) { ?>
+                                <?php foreach ($step6 as $ind => $x) { ?>
                                     <tr>
                                         <td><?php echo $x->question; ?></td>
                                         <td><?php echo $x->source; ?></td>
@@ -620,20 +622,44 @@ $step6 = $json->step6;
         </div>
     </div>
     <div id="generatePDF" class="tab-pane" role="tabpanel" aria-labelledby="generatePDF">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header card-header-info">
-                    <h4 class="card-title ">Generate</h4>
-                    <p class="card-category">Compliance</p>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title ">Generate</h4>
+                        <p class="card-category">Compliance</p>
+                    </div>
+                    <!-- <div class="card-body d-flex justify-content-between"> -->
+                    <div class="card-body d-flex">
+                        <button type="button" class="btn btn-info mx-3 btn-block" id="generateCompliance">
+                            Generate Compliance
+                        </button>
+                        <button id="viewPdf" type="button" class="btn btn-primary disabled mx-3 btn-block" data-toggle="modal" data-target="#complianceModal" disabled>
+                            View PDF
+                        </button>
+
+
+                        <button id="sendPdf" type="button" class="btn btn-danger disabled mx-3 btn-block" disabled>
+                            Send PDF
+                        </button>
+
+                    </div>
+                    <div class="card-footer card-footer-info">
+                        <div class="form-group">
+                            <div class="form-check form-check-radio">
+                                <label class="form-check-label">
+                                    Include Adviser in email?
+                                    <input class="form-check-input" type="checkbox" name="includeAdviser">
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body d-flex justify-content-between">
-                    <button type="button" class="btn btn-info" id="generateCompliance">
-                        Generate Compliance
-                    </button>
-                    <button id="viewPdf" type="button" class="btn btn-primary disabled" data-toggle="modal" data-target="#complianceModal" disabled>
-                        View PDF
-                    </button>
-                </div>
+
             </div>
         </div>
     </div>
