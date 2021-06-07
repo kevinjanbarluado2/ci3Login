@@ -136,7 +136,7 @@ class Pdf extends CI_Controller {
             $sub_array = array();    
             $sub_array[] = $row->clients;  
             $sub_array[] = $row->first_name." ".$row->last_name;
-            $sub_array[] = date("d M Y",strtotime($row->date_added));
+            $sub_array[] = $row->filename;
             $sub_array[] = $row->date_added;
             
             $buttons_data .= ' data-results_id="'.$row->results_id.'" ';
