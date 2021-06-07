@@ -78,7 +78,7 @@ $(function () {
         data.step5 = fetchStep(5);
         data.step6 = fetchStep(6);
 
-        let $link = ($('#results_id').val()!=="")?"saveCompliance":"updateCompliance";
+        let link = ($('name="results_id"').val()!=="")?"saveCompliance":"updateCompliance";
 
         $.ajax({
             url: `${base_url}/compliance/${link}`,
