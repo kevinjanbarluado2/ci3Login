@@ -25,27 +25,27 @@ $step6 = $json->step6;
 <input type="hidden" name="results_id" value="" />
 <input type="hidden" name="filename" value="" />
 
+<input type="hidden" name="complianceOfficer" value="<?=$_SESSION['name'];?>">
 
-<div class="modal fade" id="complianceModal" tabindex="-1" role="dialog"
-  aria-labelledby="complianceModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="complianceModalLabel">Preview Document</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- <iframe src="http://docs.google.com/gview?url=<?php echo base_url('assets/resources/TEST.pdf'); ?>&embedded=true" style="width: 100%;height:100%"></iframe> -->
-        <iframe id="pdfHere"
-          src="<?php echo base_url('assets/resources/preview.pdf'); ?>"
-          style="width: 100%;height:100%"></iframe>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button id="save-btn" type="button" class="btn btn-primary">Save changes</button>
-      </div>
+<div class="modal fade" id="complianceModal" tabindex="-1" role="dialog" aria-labelledby="complianceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="complianceModalLabel">Preview Document</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <iframe src="http://docs.google.com/gview?url=<?= base_url("assets/resources/TEST.pdf"); ?>&embedded=true" style="width: 100%;height:100%"></iframe> -->
+                <iframe id="pdfHere" src="<?= base_url("assets/resources/preview.pdf"); ?>" style="width: 100%;height:100%"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="save-btn" type="button" class="btn btn-primary">Save changes</button>
+
+            </div>
+        </div>
     </div>
   </div>
 </div>
@@ -756,53 +756,73 @@ $step6 = $json->step6;
         </div>
       </div>
     </div>
-  </div>
-</div>
-
-<div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header card-header-info">
-        <h4 class="card-title ">Step 3</h4>
-        <p class="card-category">Research, analyse and evaluate information</p>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table">
-            <thead class="text-primary">
-              <tr>
-                <th width="30%">
-                  Elements of the process
-                </th>
-                <th width="30%">
-                  Source of the Requirement
-                </th>
-                <th width="20%">
-                  Score
-                </th>
-                <th width="20%">
-                  Notes
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($step3 as $ind => $x) { ?>
-              <tr>
-                <td class="align-top text-justify"><?php echo $x->question; ?>
-                </td>
-                <td class="align-top text-center"><?php echo $x->source; ?>
-                </td>
-                <td class="align-top">
-                  <div class="form-group">
-                    <div class="form-check form-check-radio">
-                      <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="<?php echo "
-                          s3_$ind"; ?>" value="0">
-                        0
-                        <span class="circle">
-                          <span class="check"></span>
-                        </span>
-                      </label>
+    <div id="step-6" class="tab-pane" role="tabpanel" aria-labelledby="step-6">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-info">
+                    <h4 class="card-title ">Step 6</h4>
+                    <p class="card-category">Review the client’s situation</p>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-primary">
+                                <tr>
+                                    <th width="30%">
+                                        Elements of the process
+                                    </th>
+                                    <th width="30%">
+                                        Source of the Requirement
+                                    </th>
+                                    <th width="20%">
+                                        Score
+                                    </th>
+                                    <th width="20%">
+                                        Notes
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($step6 as $ind => $x) { ?>
+                                    <tr>
+                                        <td><?php echo $x->question; ?></td>
+                                        <td><?php echo $x->source; ?></td>
+                                        <td>
+                                            <div class="form-group">
+                                                <div class="form-check form-check-radio">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="0">
+                                                        0
+                                                        <span class="circle">
+                                                            <span class="check"></span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-check-radio">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="1">
+                                                        1
+                                                        <span class="circle">
+                                                            <span class="check"></span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check form-check-radio">
+                                                    <label class="form-check-label">
+                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="2">
+                                                        2
+                                                        <span class="circle">
+                                                            <span class="check"></span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="form-check form-check-radio">
                       <label class="form-check-label">
@@ -838,83 +858,46 @@ $step6 = $json->step6;
         </div>
       </div>
     </div>
-  </div>
-</div>
+    <div id="generatePDF" class="tab-pane" role="tabpanel" aria-labelledby="generatePDF">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h4 class="card-title ">Generate</h4>
+                        <p class="card-category">Compliance</p>
+                    </div>
+                    <!-- <div class="card-body d-flex justify-content-between"> -->
+                    <div class="card-body d-flex">
+                        <button type="button" class="btn btn-info mx-3 btn-block" id="generateCompliance">
+                            Generate Compliance
+                        </button>
+                        <button id="viewPdf" type="button" class="btn btn-primary disabled mx-3 btn-block" data-toggle="modal" data-target="#complianceModal" disabled>
+                            View PDF
+                        </button>
 
-<div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
-  <div class="col-md-12">
-    <div class="card">
-      <div class="card-header card-header-info">
-        <h4 class="card-title ">Step 4</h4>
-        <p class="card-category">Develop the advice recommendations and present to the client</p>
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table">
-            <thead class="text-primary">
-              <tr>
-                <th width="30%">
-                  Elements of the process
-                </th>
-                <th width="30%">
-                  Source of the Requirement
-                </th>
-                <th width="20%">
-                  Score
-                </th>
-                <th width="20%">
-                  Notes
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($step4 as $ind => $x) { ?>
-              <tr>
-                <td class="align-top text-justify"><?php echo $x->question; ?>
-                </td>
-                <td class="align-top text-center"><?php echo $x->source; ?>
-                </td>
-                <td class="align-top">
-                  <div class="form-group">
-                    <div class="form-check form-check-radio">
-                      <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="<?php echo "
-                          s4_$ind"; ?>" value="0">
-                        0
-                        <span class="circle">
-                          <span class="check"></span>
-                        </span>
-                      </label>
+
+                        <button id="sendPdf" type="button" class="btn btn-danger disabled mx-3 btn-block" disabled>
+                            Send PDF
+                        </button>
+
                     </div>
-                    <div class="form-check form-check-radio">
-                      <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="<?php echo "
-                          s4_$ind"; ?>" value="1">
-                        1
-                        <span class="circle">
-                          <span class="check"></span>
-                        </span>
-                      </label>
+                    <div class="card-footer card-footer-info">
+                        <div class="form-group">
+                            <div class="form-check form-check-radio">
+                                <label class="form-check-label">
+                                    Include Adviser in email?
+                                    <input class="form-check-input" type="checkbox" name="includeAdviser">
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="form-check form-check-radio">
-                      <label class="form-check-label">
-                        <input class="form-check-input" type="radio" name="<?php echo "
-                          s4_$ind"; ?>" value="2">
-                        2
-                        <span class="circle">
-                          <span class="check"></span>
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-                </td>
-                <td class="align-top"><textarea class="form-control"
-                    placeholder="<?php echo $x->comments; ?>" cols="30"
-                    rows="10"></textarea></td>
-              </tr>
-              <?php } ?>
-            </tbody>
-          </table>
+                </div>
+
+            </div>
         </div>
       </div>
     </div>
