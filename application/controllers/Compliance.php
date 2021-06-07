@@ -160,7 +160,8 @@ class Compliance extends CI_Controller
     public function savecompliance()
     {
         $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
-
+        $result['result_id'] = '';
+        $result['filename'] = '';
 
         if ($this->input->post() && $this->input->post() != null) {
             $post_data = array();
@@ -169,20 +170,37 @@ class Compliance extends CI_Controller
             }
 
             $this->load->model('ComplianceCollection');
-            if ($this->ComplianceCollection->savecompliance($post_data)) {
+            if ($insert_id = $this->ComplianceCollection->savecompliance($post_data)) {
                 $result['message'] = "Successfully saved.";
+                $result['results_id'] = $insert_id;
+                $result['filename'] = date("d M Y");
             } else {
                 $result['message'] = "Failed to save details.";
             }
         }
-
-        $result['key'] = $page;
-
-
+        
         echo json_encode($result);
     }
 
-    public function updateCompliance()
-    {
+    public function updatecompliance(){
+      $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
+      $result['result_id'] = $this->input->post('results_id');
+      $result['filename'] = $this->input->post('filename');
+
+      if ($this->input->post() && $this->input->post() != null) {
+          $post_data = array();
+          foreach ($this->input->post() as $k => $v) {
+              $post_data[$k] = $this->input->post($k, true);
+          }
+
+          $this->load->model('ComplianceCollection');
+          if ($insert_id = $this->ComplianceCollection->updatecompliance($post_data)) {
+              $result['message'] = "Successfully updated.";
+          } else {
+              $result['message'] = "Failed to update details.";
+          }
+      }
+      
+      echo json_encode($result);
     }
 }
