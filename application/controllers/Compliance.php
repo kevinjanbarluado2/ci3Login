@@ -2,33 +2,37 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 use TCPDF as tcpdf;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
-class MYPDF extends TCPDF {
+class MYPDF extends TCPDF
+{
     function __construct($company)
     {
-      parent::__construct();
-  
-      $this->SetCreator(PDF_CREATOR);
-      $this->SetAuthor('Doc Generator');
-  
-      // set margins
-      $this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP / 2, PDF_MARGIN_RIGHT);
-      $this->setPageOrientation('P', true, 10);
-      $this->SetFont('dejavusans', '', 8); // set the font
-  
-      $this->setHeaderMargin(PDF_MARGIN_HEADER);
-      $this->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM - 10);
-  
-      $this->SetPrintHeader(false);
-      $this->SetPrintFooter(true);
-  
-      $this->setFontSubsetting(false);
-  
-      $this->company = $company['company'];
-      $this->fspr_number = $company['fspr'];
-      $this->trans = null;
-      $this->docref = null;
-      $this->hasPartner = null;
+        parent::__construct();
+
+        $this->SetCreator(PDF_CREATOR);
+        $this->SetAuthor('Doc Generator');
+
+        // set margins
+        $this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP / 2, PDF_MARGIN_RIGHT);
+        $this->setPageOrientation('P', true, 10);
+        $this->SetFont('dejavusans', '', 8); // set the font
+
+        $this->setHeaderMargin(PDF_MARGIN_HEADER);
+        $this->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM - 10);
+
+        $this->SetPrintHeader(false);
+        $this->SetPrintFooter(true);
+
+        $this->setFontSubsetting(false);
+
+        $this->company = $company['company'];
+        $this->fspr_number = $company['fspr'];
+        $this->trans = null;
+        $this->docref = null;
+        $this->hasPartner = null;
     }
     //Page header
     // public function Header() {
@@ -42,31 +46,30 @@ class MYPDF extends TCPDF {
     // }
 
     // Page footer
-    public function Footer() {
-        
+    public function Footer()
+    {
+
         // Position at 15 mm from bottom
         $this->SetY(-15);
         // Set font
         $this->SetFont('helvetica', 'I', 8);
         // Page number
         $image = base_url() . "img/logo.png";
-        $this->Image($image,  8, 280, 0, 10 , 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $this->Image($image,  8, 280, 0, 10, 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-        $this->Cell(0, 10, 'www.eliteinsure.co.nz | Page'.$this->getAliasNumPage(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 10, 'www.eliteinsure.co.nz | Page' . $this->getAliasNumPage(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
         //$this->Cell(0, 10, 'www.eliteinsure.co.nz | Page'.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
     }
-
-    
 }
 
 class Compliance extends CI_Controller
 {
     function __construct()
     {
-      parent::__construct();
-  
-      date_default_timezone_set('Pacific/Auckland');
-      error_reporting(0);
+        parent::__construct();
+
+        date_default_timezone_set('Pacific/Auckland');
+        error_reporting(0);
     }
 
     public function index()
@@ -74,22 +77,68 @@ class Compliance extends CI_Controller
         var_export("TEST");
         die();
     }
-    
-    
+
+    public function sendEmail($fileName = "")
+    {
+
+        $mail = new PHPMailer(true);
+        $iflocal = strpos(base_url(), "localhost");
+        if ($iflocal != false) {
+            $ports = 587;
+        } else {
+            $ports = 25;
+        }
+        try {
+            //Server settings
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'eliteinsure.co.nz';                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'filereview@eliteinsure.co.nz';                     //SMTP username
+            $mail->Password   = 'compliance2021';                               //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port       = $ports;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+            //Recipients
+            $mail->setFrom('filereview@eliteinsure.co.nz', 'Compliance');
+            $mail->addAddress('kevin@eliteinsure.co.nz', 'Recipient');     //Add a recipient
+            // $mail->addAddress('ellen@example.com');               //Name is optional
+            // $mail->addReplyTo('info@example.com', 'Information');
+            // $mail->addCC('cc@example.com');c`    
+            // $mail->addBCC('bcc@example.com');
+
+            //Attachments
+            // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+            // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = 'Here is the subject';
+            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
+            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+            $mail->send();
+            echo 'Message has been sent';
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+    }
+
+
     public function generate()
     {
         $adviser_id = $_POST['data']['info']['adviser'];
-        
+
         $this->load->model('AdvisersCollection');
         $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
-        
+
         ob_start();
         set_time_limit(300);
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $html = $this->load->view('docs/pdf-template', array(
             'data' => $_POST,
             'adviserInfo' => $adviserInfo,
-            'added_by'=>$_SESSION['name']
+            'added_by' => $_SESSION['name']
         ), true);
         // remove default header/footer
         $pdf->setPrintHeader(false);
@@ -102,26 +151,27 @@ class Compliance extends CI_Controller
         echo json_encode(array("link" => base_url('assets/resources/preview.pdf')));
     }
 
-    public function savecompliance() {   
-      $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
-      
-      
-      if($this->input->post() && $this->input->post() != null){
-        $post_data = array();
-        foreach ($this->input->post() as $k => $v) {
-          $post_data[$k] = $this->input->post($k,true);
+    public function savecompliance()
+    {
+        $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
+
+
+        if ($this->input->post() && $this->input->post() != null) {
+            $post_data = array();
+            foreach ($this->input->post() as $k => $v) {
+                $post_data[$k] = $this->input->post($k, true);
+            }
+
+            $this->load->model('ComplianceCollection');
+            if ($this->ComplianceCollection->savecompliance($post_data)) {
+                $result['message'] = "Successfully saved.";
+            } else {
+                $result['message'] = "Failed to save details.";
+            }
         }
 
-        $this->load->model('ComplianceCollection');
-        if($this->ComplianceCollection->savecompliance($post_data)) {
-          $result['message'] = "Successfully saved.";
-        } else {
-          $result['message'] = "Failed to save details.";
-        }
-      } 
+        $result['key'] = $page;
 
-      $result['key'] = $page;
-      
-      echo json_encode($result);
+        echo json_encode($result);
     }
 }
