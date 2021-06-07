@@ -78,14 +78,16 @@ $(function () {
         data.step5 = fetchStep(5);
         data.step6 = fetchStep(6);
 
+        let $link = ($('#results_id').val()!=="")?"saveCompliance":"updateCompliance";
+
         $.ajax({
-            url: `${base_url}/compliance/savecompliance`,
+            url: `${base_url}/compliance/${link}`,
             type: 'post',
             data: { data: data },
             dataType:"json",
             success: function (result) {
                 $('#complianceModal').modal('hide');
-
+                
                 $.notify({
                     icon: "notifications",
                     message: result.message
@@ -114,5 +116,11 @@ $(function () {
                 });
             }
         });
+
+
+
+
+
+
     });
 });

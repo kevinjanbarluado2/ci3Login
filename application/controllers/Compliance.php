@@ -78,7 +78,7 @@ class Compliance extends CI_Controller
         die();
     }
 
-    public function sendEmail($fileName = "", $adviserEmail = "")
+    public function sendEmail($fileName = "Sample Filename", $adviserEmail = "")
     {
 
         $mail = new PHPMailer(true);
@@ -110,7 +110,7 @@ class Compliance extends CI_Controller
             // $mail->addBCC('bcc@example.com');
 
             //Attachments
-            // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+            $mail->addAttachment(base_url('assets/resources/preview.pdf'),"$fileName.pdf");         //Add attachments
             // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
             //Content
@@ -173,7 +173,16 @@ class Compliance extends CI_Controller
         }
 
         $result['key'] = $page;
+        
 
         echo json_encode($result);
+    }
+
+    public function updateCompliance(){
+
+
+
+
+        
     }
 }
