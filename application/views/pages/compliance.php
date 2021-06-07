@@ -163,11 +163,18 @@ $step6 = $json->step6;
                         </div>
                         <div class="row">
                             <div class="col">
-
                                 <label for="">Policy Number</label>
                                 <input type="text" name="policyNumber" class="form-control">
                             </div>
-                            <div class="col"></div>
+                            <div class="col">
+                                <label for="">Replacement of Cover</label>
+                                <select name="replacement" id="" class="form-control">
+                                    <option value="" readonly="true"></option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="N/A">N/A</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
