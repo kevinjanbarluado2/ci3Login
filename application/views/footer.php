@@ -252,6 +252,7 @@
       theme: 'arrows',
       transitionEffect: 'fade',
       justified: true,
+      enableURLhash: false,
       toolbarSettings: {
         toolbarPosition: 'both', // none, top, bottom, both
         toolbarButtonPosition: 'right', // left, right, center

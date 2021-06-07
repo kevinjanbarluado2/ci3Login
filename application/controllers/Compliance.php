@@ -78,8 +78,15 @@ class Compliance extends CI_Controller
         die();
     }
 
-    public function sendEmail($fileName = "Sample Filename", $adviserEmail = "", $production = false)
+    public function sendEmail()
     {
+        $fileName = isset($_POST['fileName'])?$_POST['fileName']:"Sample Filename";
+        $adviser_id = isset($_POST['adviser'])?$_POST['adviser']:"";
+        $this->load->model('AdvisersCollection');
+        $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
+
+        $adviserEmail =  $adviserInfo->email;
+        $production = false;
 
         $mail = new PHPMailer(true);
         $iflocal = strpos(base_url(), "localhost");
@@ -111,10 +118,8 @@ class Compliance extends CI_Controller
             if ($adviserEmail !== "") {
                 $mail->addCC($adviserEmail, 'adviser');
             }
-
-
             //Attachments
-            
+        
             $mail->addAttachment('assets/resources/preview.pdf', "$fileName.pdf");         //Add attachments
             // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 

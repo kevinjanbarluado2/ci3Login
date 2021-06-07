@@ -52,23 +52,46 @@ $(function () {
             url: `${base_url}/compliance/generate`,
             type: 'post',
             data: { data: data },
-            dataType:"json",
+            dataType: "json",
             success: function (res) {
-                console.log(res);
                 var d = new Date();
-                $('#pdfHere').attr('src',res.link+`?v=${d.getTime()}`);
-                $('#viewPdf').attr('disabled',false).removeClass('disabled').text('VIEW PDF');
-                
-     
+                $('#pdfHere').attr('src', res.link + `?v=${d.getTime()}`);
+                $('#viewPdf').attr('disabled', false).removeClass('disabled').text('VIEW PDF');
+                $.notify({
+                    icon: "notifications",
+                    message: "Generated Compliance PDF"
+
+                }, {
+                    type: 'success',
+                    timer: 1000,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    }
+                });
+
             },
-            beforeSend:function(){
-                $('#viewPdf').attr('disabled',true).addClass('disabled').text('Loading...');
+            beforeSend: function () {
+                $('#viewPdf').attr('disabled', true).addClass('disabled').text('Loading...');
             }
 
         });
     });
 
-    $(document).on('click', '#save-btn', function (e) {
+    $('#sendPdf').on('click', function () {
+        data = {};
+        data.info = fetchInfo();
+
+        console.log(data.info);
+
+
+
+
+
+
+    });
+
+    $("#save-btn").on('click', function (e) {
         data = {};
         data.info = fetchInfo();
         data.step1 = fetchStep(1);
@@ -81,23 +104,23 @@ $(function () {
         let link = ($('[name="results_id"]').val() === "") ? "savecompliance" : "updatecompliance";
         let results_id = $('[name="results_id"]').val();
         let filename = $('[name="filename"]').val();
-        
+
         $.ajax({
             url: `${base_url}/compliance/${link}`,
             type: 'post',
-            data: { 
-                data: data, 
+            data: {
+                data: data,
                 results_id: results_id,
                 filename: filename
             },
-            dataType:"json",
+            dataType: "json",
             success: function (result) {
                 $('#complianceModal').modal('hide');
                 $('#save-btn').text("Update changes");
 
                 $('[name="results_id"]').val(result.results_id);
                 $('[name="filename"]').val(result.filename);
-
+                $('#sendPdf').attr('disabled', false).removeClass('disabled').text('Send Pdf');
                 $.notify({
                     icon: "notifications",
                     message: result.message
@@ -110,6 +133,9 @@ $(function () {
                         align: 'center'
                     }
                 });
+            },
+            beforeSend: function(){
+                $('#sendPdf').attr('disabled', true).addClass('disabled').text('Loading...');
             },
             error: function (result) {
                 $.notify({
