@@ -22,7 +22,7 @@ class ComplianceCollection extends CI_Model {
             "adviser_id" => $params['data']['info']['adviser'],
             "clients" => $params['data']['info']['client'],
             "replacement" => $params['data']['info']['replacement'],
-            "filename" => date("d M Y"),
+            "filename" => $params['data']['info']['filename'],
             "added_by" => $_SESSION['id'],
             "answers" => json_encode($params['data']),
             "score" => $total_score
@@ -53,7 +53,7 @@ class ComplianceCollection extends CI_Model {
             "adviser_id" => $params['data']['info']['adviser'],
             "clients" => $params['data']['info']['client'],
             "replacement" => $params['data']['info']['replacement'],
-            "filename" => date("d M Y"),
+            "filename" => $params['data']['info']['filename'],
             "added_by" => $_SESSION['id'],
             "answers" => json_encode($params['data']),
             "score" => $total_score

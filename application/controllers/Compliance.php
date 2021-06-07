@@ -174,11 +174,20 @@ class Compliance extends CI_Controller
                 $post_data[$k] = $this->input->post($k, true);
             }
 
+            $client = $post_data['data']['info']['client'];
+            $adviser_id = $post_data['data']['info']['adviser'];
+
+            $this->load->model('AdvisersCollection');
+            $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
+            $adviserName = $adviserInfo->first_name." ".$adviserInfo->last_name;
+            $filename = "File review - ".$client." by ".$adviserName;
+
+            $post_data['data']['info']['filename'] = $filename;
             $this->load->model('ComplianceCollection');
             if ($insert_id = $this->ComplianceCollection->savecompliance($post_data)) {
                 $result['message'] = "Successfully saved.";
                 $result['results_id'] = $insert_id;
-                $result['filename'] = date("d M Y");
+                $result['filename'] = $filename;
             } else {
                 $result['message'] = "Failed to save details.";
             }
@@ -189,7 +198,7 @@ class Compliance extends CI_Controller
 
     public function updatecompliance(){
       $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
-      $result['result_id'] = $this->input->post('results_id');
+      $result['results_id'] = $this->input->post('results_id');
       $result['filename'] = $this->input->post('filename');
 
       if ($this->input->post() && $this->input->post() != null) {
@@ -197,7 +206,16 @@ class Compliance extends CI_Controller
           foreach ($this->input->post() as $k => $v) {
               $post_data[$k] = $this->input->post($k, true);
           }
+          
+          $client = $post_data['data']['info']['client'];
+          $adviser_id = $post_data['data']['info']['adviser'];
 
+          $this->load->model('AdvisersCollection');
+          $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
+          $adviserName = $adviserInfo->first_name." ".$adviserInfo->last_name;
+          $filename = "File review - ".$client." by ".$adviserName;
+            
+          $post_data['data']['info']['filename'] = $filename;
           $this->load->model('ComplianceCollection');
           if ($insert_id = $this->ComplianceCollection->updatecompliance($post_data)) {
               $result['message'] = "Successfully updated.";
