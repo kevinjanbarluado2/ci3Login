@@ -642,8 +642,6 @@ $step6 = $json->step6;
                             Send PDF
                         </button>
 
-
-
                     </div>
                     <div class="card-footer card-footer-info">
                         <div class="form-group">

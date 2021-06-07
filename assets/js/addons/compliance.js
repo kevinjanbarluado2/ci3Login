@@ -60,7 +60,6 @@ $(function () {
                 $.notify({
                     icon: "notifications",
                     message: "Generated Compliance PDF"
-
                 }, {
                     type: 'success',
                     timer: 1000,
@@ -80,9 +79,12 @@ $(function () {
 
     $('#sendPdf').on('click', function () {
         data = {};
-        data.info = fetchInfo();
-
-        console.log(data.info);
+        info = fetchInfo();
+        console.log(info);
+        data.adviser = info.adviser;
+        data.filename=$('[name=filename]').val();
+        data.includeAdviser=($('[name=includeAdviser]:checked').val()!==undefined)?true:false;
+        console.log(data);
 
 
 

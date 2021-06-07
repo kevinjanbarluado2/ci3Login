@@ -81,9 +81,9 @@ class Compliance extends CI_Controller
     public function sendEmail()
     {
         $fileName = isset($_POST['fileName'])?$_POST['fileName']:"Sample Filename";
-        $adviser_id = isset($_POST['adviser'])?$_POST['adviser']:"";
+        $adviser = isset($_POST['adviser'])?$_POST['adviser']:"";
         $this->load->model('AdvisersCollection');
-        $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
+        $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser);
 
         $adviserEmail =  $adviserInfo->email;
         $production = false;
@@ -115,7 +115,7 @@ class Compliance extends CI_Controller
                 $mail->addAddress('kevin@eliteinsure.co.nz', 'Recipient');
             }
      
-            if ($adviserEmail !== "") {
+            if ($adviserEmail == true) {
                 $mail->addCC($adviserEmail, 'adviser');
             }
             //Attachments
