@@ -82,10 +82,38 @@ $(function () {
         info = fetchInfo();
         console.log(info);
         data.adviser = info.adviser;
-        data.filename=$('[name=filename]').val();
-        data.includeAdviser=($('[name=includeAdviser]:checked').val()!==undefined)?true:false;
-        console.log(data);
+        data.filename = $('[name=filename]').val();
+        data.includeAdviser = ($('[name=includeAdviser]:checked').val() !== undefined) ? true : false;
+        data.complianceOfficer = ($('[name=complianceOfficer]').val() !== "") ? $('[name=complianceOfficer]').val() : "";
+        let link = "sendEmail";
 
+        $.ajax({
+            url: `${base_url}/compliance/${link}`,
+            type: 'post',
+            data: data,
+            dataType: "json",
+            success: function (result) {
+                $('#sendPdf').attr('disabled', false).removeClass('disabled').text('Compliance was sent');
+
+                $.notify({
+                    icon: "notifications",
+                    message: "Success! Email Sent"
+
+                }, {
+                    type: 'success',
+                    timer: 1000,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    }
+                });
+            },
+            beforeSend: function () {
+                $('#sendPdf').attr('disabled', true).addClass('disabled').text('Sending Email...');
+            },
+                error: function (req, err) { console.log('my message' + err); }
+
+        });
 
 
 
@@ -136,7 +164,7 @@ $(function () {
                     }
                 });
             },
-            beforeSend: function(){
+            beforeSend: function () {
                 $('#sendPdf').attr('disabled', true).addClass('disabled').text('Loading...');
             },
             error: function (result) {

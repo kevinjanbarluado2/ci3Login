@@ -24,6 +24,7 @@ $step6 = $json->step6;
 <input type="hidden" name="results_id" value="" />
 <input type="hidden" name="filename" value="" />
 
+<input type="hidden" name="complianceOfficer" value="<?=$_SESSION['name'];?>">
 
 <div class="modal fade" id="complianceModal" tabindex="-1" role="dialog" aria-labelledby="complianceModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

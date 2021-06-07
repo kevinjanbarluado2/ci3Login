@@ -80,11 +80,11 @@ class Compliance extends CI_Controller
 
     public function sendEmail()
     {
-        $fileName = isset($_POST['fileName'])?$_POST['fileName']:"Sample Filename";
+        $fileName = isset($_POST['filename'])?$_POST['filename']:"Sample Filename";
         $adviser = isset($_POST['adviser'])?$_POST['adviser']:"";
         $this->load->model('AdvisersCollection');
         $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser);
-
+        $complianceOfficer = isset($_POST['complianceOfficer'])?$_POST['complianceOfficer']:"";
         $adviserEmail =  $adviserInfo->email;
         $production = false;
 
@@ -126,12 +126,12 @@ class Compliance extends CI_Controller
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = 'Compliance Test Result';
-            $mail->Body    = 'Hi, {compliance offer}, please find attached the file review report.';
+            $mail->Body    = "Hi, {$complianceOfficer}, please find attached the file review report.";
 
             $mail->send();
-            echo 'Message has been sent';
+            echo json_encode(array("status" => "Message has been sent successfully", "message" => "Successfully Sent"));
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            echo json_encode(array("status" => $mail->ErrorInfo));
         }
     }
 
