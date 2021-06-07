@@ -78,7 +78,7 @@ class Compliance extends CI_Controller
         die();
     }
 
-    public function sendEmail($fileName = "Sample Filename", $adviserEmail = "")
+    public function sendEmail($fileName = "Sample Filename", $adviserEmail = "", $production = false)
     {
 
         $mail = new PHPMailer(true);
@@ -90,7 +90,7 @@ class Compliance extends CI_Controller
         }
         try {
             //Server settings
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
             $mail->isSMTP();                                            //Send using SMTP
             $mail->Host       = 'eliteinsure.co.nz';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -101,23 +101,27 @@ class Compliance extends CI_Controller
 
             //Recipients
             $mail->setFrom('filereview@eliteinsure.co.nz', 'Compliance');
-            $mail->addAddress('compliance@eliteinsure.co.nz', 'Recipient');
-            $mail->addCC('admin@eliteinsure.co.nz', 'admin');
+            if ($production) {
+                $mail->addAddress('compliance@eliteinsure.co.nz', 'Recipient');
+                $mail->addCC('admin@eliteinsure.co.nz', 'admin');
+            }else{
+                $mail->addAddress('kevin@eliteinsure.co.nz', 'Recipient');
+            }
+     
             if ($adviserEmail !== "") {
                 $mail->addCC($adviserEmail, 'adviser');
             }
 
-            // $mail->addBCC('bcc@example.com');
 
             //Attachments
-            $mail->addAttachment(base_url('assets/resources/preview.pdf'),"$fileName.pdf");         //Add attachments
+            
+            $mail->addAttachment('assets/resources/preview.pdf', "$fileName.pdf");         //Add attachments
             // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            $mail->Subject = 'Compliance Test Result';
+            $mail->Body    = 'Hi, {compliance offer}, please find attached the file review report.';
 
             $mail->send();
             echo 'Message has been sent';
@@ -173,16 +177,12 @@ class Compliance extends CI_Controller
         }
 
         $result['key'] = $page;
-        
+
 
         echo json_encode($result);
     }
 
-    public function updateCompliance(){
-
-
-
-
-        
+    public function updateCompliance()
+    {
     }
 }

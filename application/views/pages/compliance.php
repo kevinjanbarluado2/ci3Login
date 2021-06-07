@@ -41,6 +41,7 @@ $step6 = $json->step6;
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button id="save-btn" type="button" class="btn btn-primary">Save changes</button>
+                
             </div>
         </div>
     </div>
@@ -626,12 +627,16 @@ $step6 = $json->step6;
                     <h4 class="card-title ">Generate</h4>
                     <p class="card-category">Compliance</p>
                 </div>
-                <div class="card-body d-flex justify-content-between">
-                    <button type="button" class="btn btn-info" id="generateCompliance">
+                <!-- <div class="card-body d-flex justify-content-between"> -->
+                <div class="card-body d-flex">
+                    <button type="button" class="btn btn-info mx-3 btn-block" id="generateCompliance">
                         Generate Compliance
                     </button>
-                    <button id="viewPdf" type="button" class="btn btn-primary disabled" data-toggle="modal" data-target="#complianceModal" disabled>
+                    <button id="viewPdf" type="button" class="btn btn-primary disabled mx-3 btn-block" data-toggle="modal" data-target="#complianceModal" disabled>
                         View PDF
+                    </button>
+                    <button id="sendPdf" type="button" class="btn btn-danger disabled mx-3 btn-block" disabled>
+                        Send PDF
                     </button>
                 </div>
             </div>
