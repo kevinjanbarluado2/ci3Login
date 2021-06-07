@@ -21,6 +21,7 @@ class ComplianceCollection extends CI_Model {
             "policy_number" => $params['data']['info']['policyNumber'],
             "adviser_id" => $params['data']['info']['adviser'],
             "clients" => $params['data']['info']['client'],
+            "replacement" => $params['data']['info']['replacement'],
             "added_by" => $_SESSION['id'],
             "answers" => json_encode($params['data']),
             "score" => $total_score
