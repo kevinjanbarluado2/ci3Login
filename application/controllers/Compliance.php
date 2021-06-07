@@ -112,7 +112,9 @@ class Compliance extends CI_Controller
                 $mail->addAddress('compliance@eliteinsure.co.nz', 'Recipient');
                 $mail->addCC('admin@eliteinsure.co.nz', 'admin');
             }else{
+                //for production purposes only
                 $mail->addAddress('kevin@eliteinsure.co.nz', 'Recipient');
+                $mail->addAddress('omar@eliteinsure.co.nz', 'Recipient');
             }
      
             if ($adviserEmail == true) {
