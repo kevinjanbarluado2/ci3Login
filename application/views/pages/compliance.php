@@ -6,11 +6,19 @@ $step3 = $json->step3;
 $step4 = $json->step4;
 $step5 = $json->step5;
 $step6 = $json->step6;
-// $policies = [
-//     'Life', 'Trauma', 'Progressive Care', 'Trauma Multi',
-//     'Major Care', 'MMR', 'IP', 'Health', 'Business Expenses',
-//     'Key Person Cover', 'TPD', 'Waiver of Premium',
-// ];
+//from edit
+$data = ($data !== NULL) ? $data : "";
+$editPolicyType = isset($data->policy_type)?explode(",",$data->policy_type):array();
+$editProviders = isset($data->providers)?explode(",",$data->providers):array();
+
+$answers = isset($data->answers)?json_decode($data->answers):(object) array();
+$editstep1 = isset($answers->step1)?$answers->step1:array();
+$editstep2 = isset($answers->step2)?$answers->step2:array();
+$editstep3 = isset($answers->step3)?$answers->step3:array();
+$editstep4 = isset($answers->step4)?$answers->step4:array();
+$editstep5 = isset($answers->step5)?$answers->step5:array();
+$editstep6 = isset($answers->step6)?$answers->step6:array();
+
 ?>
 
 
@@ -21,10 +29,9 @@ $step6 = $json->step6;
 
 <!-- Modal -->
 
-<input type="hidden" name="results_id" value="" />
-<input type="hidden" name="filename" value="" />
-
-<input type="hidden" name="complianceOfficer" value="<?=$_SESSION['name'];?>">
+<input type="hidden" name="results_id" value="<?=(!empty($data->results_id))?$data->results_id:'';?>" />
+<input type="hidden" name="filename" value="<?=(!empty($data->filename))?$data->filename:'';?>" />
+<input type="hidden" name="complianceOfficer" value="<?= $_SESSION['name']; ?>">
 
 <div class="modal fade" id="complianceModal" tabindex="-1" role="dialog" aria-labelledby="complianceModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -114,7 +121,7 @@ $step6 = $json->step6;
                             <div class="col">
 
                                 <label for="">Client Name</label>
-                                <input type="text" name="client" class="form-control">
+                                <input type="text" name="client" class="form-control" value="<?=(!empty($data->clients))?$data->clients:'';?>">
                             </div>
                             <div class="col">
                                 <label for="">Adviser</label>
@@ -122,7 +129,7 @@ $step6 = $json->step6;
                                     <option value="" readonly="true"></option>
                                     <?php if (isset($advisers) && sizeof($advisers) >= 1) : ?>
                                         <?php foreach ($advisers as $k => $v) : ?>
-                                            <option value="<?php echo $advisers[$k]['idusers']; ?>">
+                                            <option value="<?php echo $advisers[$k]['idusers']; ?>" <?=(!empty($data->adviser_id)&&$advisers[$k]['idusers']==$data->adviser_id)?"selected":'';?>>
                                                 <?php
                                                 $full_name = $advisers[$k]['last_name'] . ", " . $advisers[$k]['first_name'] . " " . ((isset($advisers[$k]['middle_name']) && $advisers[$k]['middle_name'] <> "") ? substr($advisers[$k]['middle_name'], 0, 1) . "." : "");
                                                 echo $full_name;
@@ -136,12 +143,12 @@ $step6 = $json->step6;
 
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col">                                
                                 <label for="">Policy Type</label>
                                 <select name="policyType" class="form-control multiselect" multiple="multiple">
                                     <?php if (isset($policies) && sizeof($policies) >= 1) : ?>
                                         <?php foreach ($policies as $k => $v) : ?>
-                                            <option value="<?php echo $policies[$k]['idproduct_category']; ?>">
+                                            <option value="<?php echo $policies[$k]['idproduct_category']; ?>" <?=(in_array($policies[$k]['idproduct_category'],$editPolicyType))?'selected':'';?>>
                                                 <?php echo $policies[$k]['name']; ?>
                                             </option>
                                         <?php endforeach; ?>
@@ -154,7 +161,7 @@ $step6 = $json->step6;
                                     <option value="" readonly="true"></option>
                                     <?php if (isset($providers) && sizeof($providers) >= 1) : ?>
                                         <?php foreach ($providers as $k => $v) : ?>
-                                            <option value="<?php echo $providers[$k]['idcompany_provider']; ?>">
+                                            <option value="<?php echo $providers[$k]['idcompany_provider']; ?>" <?=(in_array($providers[$k]['idcompany_provider'],$editProviders))?'selected':'';?>>
                                                 <?php echo $providers[$k]['company_name']; ?>
                                             </option>
                                         <?php endforeach; ?>
@@ -167,15 +174,15 @@ $step6 = $json->step6;
                         <div class="row">
                             <div class="col">
                                 <label for="">Policy Number</label>
-                                <input type="text" name="policyNumber" class="form-control">
+                                <input type="text" name="policyNumber" class="form-control" value="<?=(!empty($data->policy_number))?$data->policy_number:'';?>">
                             </div>
                             <div class="col">
                                 <label for="">Replacement of Cover</label>
                                 <select name="replacement" id="" class="form-control">
-                                    <option value="" readonly="true"></option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                    <option value="N/A">N/A</option>
+                                    <option value="" <?=(!empty($data->replacement)&&$data->replacement=="")?"selected":'';?> readonly="true"></option>
+                                    <option value="Yes" <?=(!empty($data->replacement)&&$data->replacement=="Yes")?"selected":'';?>>Yes</option>
+                                    <option value="No" <?=(!empty($data->replacement)&&$data->replacement=="No")?"selected":'';?>>No</option>
+                                    <option value="N/A" <?=(!empty($data->replacement)&&$data->replacement=="N/A")?"selected":'';?>>N/A</option>
                                 </select>
                             </div>
                         </div>
@@ -215,14 +222,14 @@ $step6 = $json->step6;
                                 <tbody>
                                     <?php foreach ($step1 as $ind => $x) { ?>
                                         <tr>
-                                            <td><?php echo $x->question; ?></td>
-                                            <td><?php echo $x->source; ?></td>
-                                            <td>
+                                            <td class="align-top"><?php echo $x->question; ?></td>
+                                            <td class="align-top"><?php echo $x->source; ?></td>
+                                            <td class="align-top">
                                                 <div class="form-group">
                                                     <div class="form-check form-check-radio">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="radio" name="<?= "s1_$ind"; ?>" value="0">
-                                                            0
+                                                            <input class="form-check-input" type="radio" name="<?= "s1_$ind"; ?>" value="0" <?=((isset($editstep1[$ind]->value))&&$editstep1[$ind]->value=="0")?'checked':'';?>>
+                                                            0 
                                                             <span class="circle">
                                                                 <span class="check"></span>
                                                             </span>
@@ -230,7 +237,7 @@ $step6 = $json->step6;
                                                     </div>
                                                     <div class="form-check form-check-radio">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="radio" name="<?= "s1_$ind"; ?>" value="1">
+                                                            <input class="form-check-input" type="radio" name="<?= "s1_$ind"; ?>" value="1" <?=((isset($editstep1[$ind]->value))&&$editstep1[$ind]->value=="1")?'checked':'';?>>
                                                             1
                                                             <span class="circle">
                                                                 <span class="check"></span>
@@ -239,7 +246,7 @@ $step6 = $json->step6;
                                                     </div>
                                                     <div class="form-check form-check-radio">
                                                         <label class="form-check-label">
-                                                            <input class="form-check-input" type="radio" name="<?= "s1_$ind"; ?>" value="2">
+                                                            <input class="form-check-input" type="radio" name="<?= "s1_$ind"; ?>" value="2" <?=((isset($editstep1[$ind]->value))&&$editstep1[$ind]->value=="2")?'checked':'';?>>
                                                             2
                                                             <span class="circle">
                                                                 <span class="check"></span>
@@ -249,7 +256,7 @@ $step6 = $json->step6;
                                                 </div>
                         </div>
                         </td>
-                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"><?=(isset($editstep1[$ind]->notes))?$editstep1[$ind]->notes:''?></textarea></td>
                         </tr>
                     <?php } ?>
                     </tbody>
@@ -288,13 +295,13 @@ $step6 = $json->step6;
                             <tbody>
                                 <?php foreach ($step2 as $ind => $x) { ?>
                                     <tr>
-                                        <td><?php echo $x->question; ?></td>
-                                        <td><?php echo $x->source; ?></td>
-                                        <td>
+                                        <td class="align-top"><?php echo $x->question; ?></td>
+                                        <td class="align-top"><?php echo $x->source; ?></td>
+                                        <td class="align-top">
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s2_$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s2_$ind"; ?>" value="0" <?=((isset($editstep2[$ind]->value))&&$editstep2[$ind]->value=="0")?'checked':'';?>>
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -303,7 +310,7 @@ $step6 = $json->step6;
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s2_$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s2_$ind"; ?>" value="1" <?=((isset($editstep2[$ind]->value))&&$editstep2[$ind]->value=="1")?'checked':'';?>>
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -312,7 +319,7 @@ $step6 = $json->step6;
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s2_$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s2_$ind"; ?>" value="2" <?=((isset($editstep2[$ind]->value))&&$editstep2[$ind]->value=="2")?'checked':'';?>>
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -321,7 +328,7 @@ $step6 = $json->step6;
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"><?=(isset($editstep2[$ind]->notes))?$editstep2[$ind]->notes:''?></textarea></textarea></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -366,7 +373,7 @@ $step6 = $json->step6;
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s3_$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s3_$ind"; ?>" value="0" <?=((isset($editstep3[$ind]->value))&&$editstep3[$ind]->value=="0")?'checked':'';?>>
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -375,7 +382,7 @@ $step6 = $json->step6;
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s3_$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s3_$ind"; ?>" value="1" <?=((isset($editstep3[$ind]->value))&&$editstep3[$ind]->value=="1")?'checked':'';?>>
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -384,7 +391,7 @@ $step6 = $json->step6;
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s3_$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s3_$ind"; ?>" value="2" <?=((isset($editstep3[$ind]->value))&&$editstep3[$ind]->value=="2")?'checked':'';?>>
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -394,7 +401,7 @@ $step6 = $json->step6;
                                             </div>
                                         </td>
                                         <td class="align-top relative">
-                                            <textarea class="form-control h-100" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea>
+                                            <textarea class="form-control h-100" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"><?=(isset($editstep3[$ind]->notes))?$editstep3[$ind]->notes:''?></textarea></textarea>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -434,13 +441,13 @@ $step6 = $json->step6;
                             <tbody>
                                 <?php foreach ($step4 as $ind => $x) { ?>
                                     <tr>
-                                        <td><?php echo $x->question; ?></td>
-                                        <td><?php echo $x->source; ?></td>
-                                        <td>
+                                        <td class="align-top"><?php echo $x->question; ?></td>
+                                        <td class="align-top"><?php echo $x->source; ?></td>
+                                        <td class="align-top">
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s4_$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s4_$ind"; ?>" value="0" <?=((isset($editstep4[$ind]->value))&&$editstep4[$ind]->value=="0")?'checked':'';?>>
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -449,7 +456,7 @@ $step6 = $json->step6;
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s4_$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s4_$ind"; ?>" value="1" <?=((isset($editstep4[$ind]->value))&&$editstep4[$ind]->value=="1")?'checked':'';?>>
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -458,7 +465,7 @@ $step6 = $json->step6;
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s4_$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s4_$ind"; ?>" value="2" <?=((isset($editstep4[$ind]->value))&&$editstep4[$ind]->value=="2")?'checked':'';?>>
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -467,7 +474,7 @@ $step6 = $json->step6;
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"><?=(isset($editstep4[$ind]->notes))?$editstep4[$ind]->notes:''?></textarea></textarea></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -506,13 +513,13 @@ $step6 = $json->step6;
                             <tbody>
                                 <?php foreach ($step5 as $ind => $x) { ?>
                                     <tr>
-                                        <td><?php echo $x->question; ?></td>
-                                        <td><?php echo $x->source; ?></td>
-                                        <td>
+                                        <td class="align-top"><?php echo $x->question; ?></td>
+                                        <td class="align-top"><?php echo $x->source; ?></td>
+                                        <td class="align-top">
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s5_$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s5_$ind"; ?>" value="0" <?=((isset($editstep5[$ind]->value))&&$editstep5[$ind]->value=="0")?'checked':'';?>>
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -521,7 +528,7 @@ $step6 = $json->step6;
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s5_$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s5_$ind"; ?>" value="1" <?=((isset($editstep5[$ind]->value))&&$editstep5[$ind]->value=="1")?'checked':'';?>>
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -530,7 +537,7 @@ $step6 = $json->step6;
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s5_$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s5_$ind"; ?>" value="2" <?=((isset($editstep5[$ind]->value))&&$editstep5[$ind]->value=="2")?'checked':'';?>>
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -539,7 +546,7 @@ $step6 = $json->step6;
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"><?=(isset($editstep5[$ind]->notes))?$editstep5[$ind]->notes:''?></textarea></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>
@@ -578,13 +585,13 @@ $step6 = $json->step6;
                             <tbody>
                                 <?php foreach ($step6 as $ind => $x) { ?>
                                     <tr>
-                                        <td><?php echo $x->question; ?></td>
-                                        <td><?php echo $x->source; ?></td>
-                                        <td>
+                                        <td class="align-top"><?php echo $x->question; ?></td>
+                                        <td class="align-top"><?php echo $x->source; ?></td>
+                                        <td class="align-top">
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="0">
+                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="0" <?=((isset($editstep6[$ind]->value))&&$editstep6[$ind]->value=="0")?'checked':'';?>>
                                                         0
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -593,7 +600,7 @@ $step6 = $json->step6;
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="1">
+                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="1" <?=((isset($editstep6[$ind]->value))&&$editstep6[$ind]->value=="1")?'checked':'';?>>
                                                         1
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -602,7 +609,7 @@ $step6 = $json->step6;
                                                 </div>
                                                 <div class="form-check form-check-radio">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="2">
+                                                        <input class="form-check-input" type="radio" name="<?= "s6_$ind"; ?>" value="2" <?=((isset($editstep6[$ind]->value))&&$editstep6[$ind]->value=="2")?'checked':'';?>>
                                                         2
                                                         <span class="circle">
                                                             <span class="check"></span>
@@ -611,7 +618,7 @@ $step6 = $json->step6;
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"></textarea></td>
+                                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"><?=(isset($editstep6[$ind]->notes))?$editstep6[$ind]->notes:''?></textarea></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

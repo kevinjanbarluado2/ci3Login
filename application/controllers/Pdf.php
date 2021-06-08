@@ -125,6 +125,16 @@ class Pdf extends CI_Controller {
 		echo json_encode($result);
 	}
 
+    public function updatePdfForm(){
+		$data = array();
+		$results_id=$this->input->post('results_id');
+        $this->load->model('PdfCollection');
+        $result = $this->PdfCollection->get_one_data($results_id,'results_id');
+        
+        echo json_encode(array('message'=>'working','results_id'=>$this->input->post('results_id'),'token'=>$result->token));
+        
+    }
+
 	function fetchRows(){ 
 		$this->load->model('PdfCollection');
         $fetch_data = $this->PdfCollection->make_datatables();  
