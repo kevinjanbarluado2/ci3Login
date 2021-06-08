@@ -199,56 +199,56 @@
 	],
 	"step5": [
 		{
-			"question": "Is there an appropriate place recording any client-initiated variations to the advice?",
-			"source": "Best Practice NZCFS L5 US31869 1.5",
-			"comments": "EI: Model SoA template"
+			"question": "Is there an appropriate place recording any client- initiated variations to the advice?",
+			"source": "Best Practice<br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.5",
+			"comments": "AL: Model SoA template"
 		},
 		{
 			"question": "Do you explain the process of implementation of any strategies and insurance solutions including possible time frames and impact of other requirements such as medical examinations, use of other professionals etc?",
-			"source": "Best Practice NZCFS L5 US31869 1.4 US31869 1.5",
-			"comments": "EI: Model SoA template"
+			"source": "Best Practice<br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.4<br>US31869 1.5",
+			"comments": "AL: Model SoA template"
 		},
 		{
-			"question": "Do you discuss the reasons for a review of their plans and products? Is such a review and an appropriate time frame and method recommended and agreed by the client?",
-			"source": "Best Practice NZCFS L5 US31869 1.6",
-			"comments": "EI: Model SoA template"
+			"question": "Do you discuss the reasons for a review of their plans and products? Is such a <u>review</u> and an appropriate time frame and method recommended and agreed by the client?",
+			"source": "Best Practice<br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.6",
+			"comments": "AL: Model SoA template"
 		},
 		{
-			"question": "Does the client sign an Authority to Proceed? For example: \n\nProceed with full recommendations\nProceed with noted variations\nDo not proceed with recommendations",
-			"source": "Best Practice NZCFS L5 US31869 1.5",
-			"comments": "EI: Model SoA template"
+			"question": "Does the client sign an Authority to Proceed? For example:<ul><li>Proceed with full recommendations</li><li>Proceed with noted variations</li><li>Do not proceed with recommendations</li></ul>",
+			"source": "Best Practice<br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.5",
+			"comments": "AL: Model SoA template"
 		},
 		{
 			"question": "Do you carefully support the client through the application questions to ensure they fully understand the disclosure requirements and complete all necessary documentation?",
-			"source": "Best Practice NZCFS L5 US31869 1.5 US31868 1.2 US31868 2.1-2.2",
+			"source": "Best Practice<br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.5<br>US31868 1.2<br>US31868 2.1-2.2",
 			"comments": ""
 		},
 		{
-			"question": "Do you send a copy of their application(s) and reminding them of their Duty of Disclosure? This letter could include: \n\n Matters they may have overlooked\n Health/Occupation changes since application",
-			"source": "Best Practice NZCFS L5 US31869 1.5 US31868 1.2 US31868 2.1-2.2",
-			"comments": "EI: Example letters/e-mail wording for paper and electronic applications"
+			"question": "Do you send a copy of their application(s) and reminding them of their Duty of Disclosure? This letter could include:<ul><li>Matters they may have overlooked</li><li>Health/Occupation changes since application</li></ul>",
+			"source": "Best Practice<br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.5<br>US31868 1.2<br>US31868 2.1-2.2",
+			"comments": "AL: Example letters/e-mail wording for paper and electronic applications"
 		},
 		{
-			"question": "Do you monitor and maintain tracking records (file notes) of the application and implementation process to ensure it is keeping within agreed time frames and to keep the client informed? For example:\n\nDiscussion with underwriters / new business staff\nFollow up conversations and actions on outstanding requirements\nDiscussion of variation to terms of cover and acceptance or otherwise</li>",
-			"source": "Best Practice NZCFS L5 US31869 1.5 US31868 1.2 US31868 2.1-2.2",
-			"comments": "Part of the expected communication conduct requirements set down by the FMA Most will be recorded in CRMs today EI example / manual checklist for the end to end process. EI File Note template"
+			"question": "Do you monitor and maintain tracking records (file notes) of the application and implementation process to ensure it is keeping within agreed time frames and to keep the client informed?  For example:<ul><li>Discussion with underwriters / new business staff</li><li>Follow up conversations and actions on outstanding requirements</li><li>Discussion of variation to terms of cover and acceptance or otherwise</li></ul>",
+			"source": "Best Practice<br><br><span class='font-weight-bold'>NZCFS L5</span><br>US31869 1.5<br>US31868 1.2<br>US31868 2.1-2.2",
+			"comments": "Part of the expected communication conduct requirements set down by the FMA\n\nMost will be recorded in CRMs today\n\nAL example / manual checklist for the end to end process.\nAL File Note template"
 		}
 	],
 	"step6": [
 		{
 			"question": "Can you evidence how you communicate with clients to determine if circumstances and needs have changed (triggers) and/or communicated with client and arranged a review",
-			"source": "NZCFS L 5 Best Practice",
+			"source": "<br>NZCFS L 5<br>Best Practice",
 			"comments": ""
 		},
 		{
 			"question": "Can you evidence you meet all applicable Disclosure Regulations required at this point of the process?",
-			"source": "Disclosure Regs FSLAA S431 O NZCFS L5 (US31869 1.1)",
+			"source": "Disclosure Regs<br><br><span class='font-weight-bold'>FSLAA</span><br>S431 O<br><br><span class='font-weight-bold'>NZCFS L5</span><br>(US31869 1.1)<br>",
 			"comments": ""
 		},
 		{
-			"question": "Conducted a check with the client to understand and identify changes in circumstances and /or needs that will necessitate strategy or insurance product changes. Changes may include (but not limited to) such things as: \n\nRelationship status\nFamily status and responsibilities\nEmployment\nNature and source of income\nOther financial circumstances including assets and liabilities\nInsurances in place (acquired or ended/cancelled)\nRisk tolerances and objectives\nHealth\nPastimes and habits\nGoals and aspirations\nBeneficiaries",
-			"source": "FMA Monitoring Report NZCFS L5 (US31869 1.6)",
-			"comments": "Circle back to the previous steps for the process and drafting recommendations etc. EI: Review Interview template Note: Other requirements replicate those of the full advice process but usually to a much to a lesser extent unless a full revamp of the strategies and product options is required."
+			"question": "Conducted a check with the client to understand and identify changes in circumstances and /or needs that will necessitate strategy or insurance product changes. Changes may include (but not limited to) such things as:<ul><li>Relationship status</li><li>Family status and responsibilities</li><li>Employment</li><li>Nature and source of income</li><li>Other financial circumstances including assets and liabilities</li><li>Insurances in place (acquired or ended/cancelled)</li><li>Risk tolerances and objectives</li><li>Health</li><li>Pastimes and habits</li><li>Goals and aspirations</li><li>Beneficiaries</li></ul>",
+			"source": "FMA Monitoring Report<br><br><span class='font-weight-bold'>NZCFS L5</span><br>(US31869 1.6)",
+			"comments": "Circle back to the previous steps for the process and drafting recommendations etc.\n\nAL: Review Interview template\n\nNote:\n\nOther requirements replicate those of the full advice process but usually to a much to a lesser extent unless a full revamp of the strategies and product options is required."
 		}
 	]
 }
