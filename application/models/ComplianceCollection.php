@@ -25,7 +25,8 @@ class ComplianceCollection extends CI_Model {
             "filename" => $params['data']['info']['filename'],
             "added_by" => $_SESSION['id'],
             "answers" => json_encode($params['data']),
-            "score" => $total_score
+            "score" => $total_score,
+            "token" =>md5(uniqid(rand(), true))
         );
 
         $this->db->insert('results_tbl', $params2);
