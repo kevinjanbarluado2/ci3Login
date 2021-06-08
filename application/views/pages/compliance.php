@@ -710,4 +710,4 @@ $editstep6 = isset($answers->step6)?$answers->step6:array();
         left: 0;
         right: 0;
     }
-</style>
+</style> 
