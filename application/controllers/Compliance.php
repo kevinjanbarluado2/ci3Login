@@ -86,7 +86,7 @@ class Compliance extends CI_Controller
         $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser);
         $complianceOfficer = isset($_POST['complianceOfficer'])?$_POST['complianceOfficer']:"";
         $adviserEmail =  $adviserInfo->email;
-        $production = true; //if in production, set to true 
+        $production = false; //if in production, set to true 
         $includeAdviser = isset($_POST['includeAdviser'])?$_POST['includeAdviser']:false;
 
         $mail = new PHPMailer(true);
