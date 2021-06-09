@@ -693,7 +693,7 @@ $editstep6 = isset($answers->step6)?$answers->step6:array();
             </div>
         </div>
     </div>
-</div>
+</div>  
 </div>
 
 </div>
