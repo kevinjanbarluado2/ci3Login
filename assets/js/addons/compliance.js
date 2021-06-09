@@ -71,7 +71,7 @@ $(function () {
 
             },
             beforeSend: function () {
-                $('#viewPdf').attr('disabled', true).addClass('disabled').text('Loading...');
+                $('#viewPdf').attr('disabled', true).addClass('disabled').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
             }
 
         });
@@ -110,7 +110,7 @@ $(function () {
                 });
             },
             beforeSend: function () {
-                $('#sendPdf').attr('disabled', true).addClass('disabled').text('Sending Email...');
+                $('#sendPdf').attr('disabled', true).addClass('disabled').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending Email...');
             },
                 error: function (req, err) { console.log('my message' + err); }
 
@@ -166,7 +166,7 @@ $(function () {
                 });
             },
             beforeSend: function () {
-                $('#sendPdf').attr('disabled', true).addClass('disabled').text('Loading...');
+                $('#sendPdf').attr('disabled', true).addClass('disabled').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
             },
             error: function (result) {
                 $.notify({
