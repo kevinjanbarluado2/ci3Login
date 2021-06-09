@@ -94,7 +94,7 @@ class Compliance extends CI_Controller
         if ($iflocal != false) {
             $ports = 587;
         } else {
-            $ports = 25;
+            $ports = 587;
         }
         try {
             //Server settings
