@@ -149,9 +149,14 @@ class Pdf extends CI_Controller {
             $sub_array[] = $row->filename;
             $sub_array[] = $row->date_added;
             
-            $buttons_data .= ' data-results_id="'.$row->results_id.'" ';
+            // $buttons_data .= ' data-results_id="'.$row->results_id.'" ';
+            foreach($row as $k1=>$v1){
+                if(($k1 != "answers") && ($k1 != "token"))
+                    $buttons_data .= ' data-'.$k1.'="'.$v1.'" ';
+            }
+
             $buttons .= ' <a id="viewPdfForm" ' 
-            		  . ' class="viewPdfForm" style="text-decoration: none;" '
+            		  . ' class="viewPdfForm" data-key="view" style="text-decoration: none;" '
             		  . ' href="'. base_url().'Pdf/viewPdfForm" '
             		  . $buttons_data
             		  . ' > '
@@ -177,6 +182,15 @@ class Pdf extends CI_Controller {
             		  . ' <i class="material-icons">delete</i> '
             		  . ' </button> '
             		  . ' </a> ';
+             $buttons .= ' <a id="sendEmailForm" ' 
+                      . ' class="sendEmailForm" style="text-decoration: none;" '
+                      . ' href="'. base_url().'Pdf/sendEmailForm" '
+                      . $buttons_data
+                      . ' > '
+                      . ' <button class="btn btn-warning btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Email PDF">'
+                      . ' <i class="material-icons">mail</i> '
+                      . ' </button> '
+                      . ' </a> ';
             $sub_array[] = $buttons;
             $data[] = $sub_array;  
         }  
@@ -187,5 +201,42 @@ class Pdf extends CI_Controller {
             "data"                  =>     $data  
         );  
         echo json_encode($output);  
+    }
+
+    //accessing email form
+    public function sendEmailForm() {
+        $formData = array();
+        $result = array();
+        $result['key'] = 'sendEmail';
+        $formData['key'] = $result['key'];
+
+        $results_id = $this->input->post('results_id');
+        $this->load->model('ComplianceCollection');
+        
+        $res = $this->ComplianceCollection->getComplianceResultsById($results_id);
+        $data['data'] = json_decode($res->answers, true);
+
+        $this->load->model('AdvisersCollection');
+        $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($res->adviser_id);
+        
+        ob_start();
+        set_time_limit(300);
+        $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $html = $this->load->view('docs/pdf-template', array(
+            'data' => $data,
+            'adviserInfo' => $adviserInfo,
+            'added_by'=>$_SESSION['name']
+        ), true);
+        // remove default header/footer
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(true);
+        $pdf->AddPage(); // add a page
+        $pdf->writeHTMLCell(187, 300, 12, 5, $html, 0, 0, false, true, '', true);
+        $link = FCPATH . "assets/resources/preview.pdf";
+        $pdf->Output($link, 'F');
+        ob_end_clean();
+
+        $result['form'] = $this->load->view('forms/sendmail.php', $formData, TRUE);
+        echo json_encode($result);
     }
 }

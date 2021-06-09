@@ -1,24 +1,24 @@
 <style>
-.modal {
+.pdf-preview {
   padding: 0 !important; 
 }
-.modal .modal-dialog {
+.pdf-preview .modal-dialog {
   width: 100%;
   max-width: none;
   height: 100%;
   margin: 0;
 }
-.modal .modal-content {
+.pdf-preview .modal-content {
   height: 100%;
   border: 0;
   border-radius: 0;
 }
-.modal .modal-body {
+.pdf-preview .modal-body {
   overflow-y: auto;
 }
 </style>
 <!-- Modal -->
-<div class="modal fade" id="complianceModal" tabindex="-1" role="dialog" aria-labelledby="complianceModalLabel" aria-hidden="true">
+<div class="modal fade pdf-preview" id="complianceModal" tabindex="-1" role="dialog" aria-labelledby="complianceModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
