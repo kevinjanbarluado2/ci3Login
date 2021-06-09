@@ -39,7 +39,7 @@ $privileges=explode(",",$_SESSION['privileges']);
         Tip 2: you can also add an image using data-image tag
     -->
       <div class="logo"><a href="#" class="simple-text logo-normal">
-          Compliance App
+          Compliance Checker
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -126,7 +126,7 @@ $privileges=explode(",",$_SESSION['privileges']);
                   </p>
                 </a>
               </li>
-              <li class="nav-item dropdown">
+              <!-- <li class="nav-item dropdown">
                 <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
                   <span class="notification">5</span>
@@ -141,7 +141,7 @@ $privileges=explode(",",$_SESSION['privileges']);
                   <a class="dropdown-item" href="#">Another Notification</a>
                   <a class="dropdown-item" href="#">Another One</a>
                 </div>
-              </li>
+              </li> -->
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>

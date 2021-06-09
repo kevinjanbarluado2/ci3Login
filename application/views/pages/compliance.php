@@ -1,3 +1,24 @@
+<style>
+    @keyframes spinner-border {
+      to { transform: rotate(360deg); }
+    } 
+    .spinner-border{
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+        vertical-align: text-bottom;
+        border: .2em solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner-border .75s linear infinite;
+        animation: spinner-border .75s linear infinite;
+    }
+    .spinner-border-sm{
+        height: 1rem;
+        border-width: .2em;
+    }
+</style>
+
 <?php
 $json = json_decode(file_get_contents('./assets/questions.json'));
 $step1 = $json->step1;
@@ -222,8 +243,8 @@ $editstep6 = isset($answers->step6)?$answers->step6:array();
                                 <tbody>
                                     <?php foreach ($step1 as $ind => $x) { ?>
                                         <tr>
-                                            <td class="align-top"><?php echo $x->question; ?></td>
-                                            <td class="align-top"><?php echo $x->source; ?></td>
+                                            <td class="align-top text-justify"><?php echo $x->question; ?></td>
+                                            <td class="align-top text-center"><?php echo $x->source; ?></td>
                                             <td class="align-top">
                                                 <div class="form-group">
                                                     <div class="form-check form-check-radio">
@@ -254,14 +275,16 @@ $editstep6 = isset($answers->step6)?$answers->step6:array();
                                                         </label>
                                                     </div>
                                                 </div>
-                        </div>
-                        </td>
-                        <td><textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"><?=(isset($editstep1[$ind]->notes))?$editstep1[$ind]->notes:''?></textarea></td>
-                        </tr>
-                    <?php } ?>
-                    </tbody>
-                    </table>
-                    </div>
+                        							</div>
+                        					</td>
+                        					<td>
+												<textarea class="form-control" placeholder="<?php echo $x->comments; ?>" cols="30" rows="10"><?=(isset($editstep1[$ind]->notes))?$editstep1[$ind]->notes:''?></textarea>
+											</td>
+                        				</tr>
+                    				<?php } ?>
+                    			</tbody>
+                    		</table>
+                    	</div>
                 </div>
             </div>
         </div>
@@ -295,8 +318,8 @@ $editstep6 = isset($answers->step6)?$answers->step6:array();
                             <tbody>
                                 <?php foreach ($step2 as $ind => $x) { ?>
                                     <tr>
-                                        <td class="align-top"><?php echo $x->question; ?></td>
-                                        <td class="align-top"><?php echo $x->source; ?></td>
+                                        <td class="align-top text-justify-"><?php echo $x->question; ?></td>
+                                        <td class="align-top text-center"><?php echo $x->source; ?></td>
                                         <td class="align-top">
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
@@ -367,8 +390,8 @@ $editstep6 = isset($answers->step6)?$answers->step6:array();
                             <tbody>
                                 <?php foreach ($step3 as $ind => $x) { ?>
                                     <tr>
-                                        <td class="align-top"><?php echo $x->question; ?></td>
-                                        <td class="align-top"><?php echo $x->source; ?></td>
+                                        <td class="align-top text-justify"><?php echo $x->question; ?></td>
+                                        <td class="align-top text-center"><?php echo $x->source; ?></td>
                                         <td class="align-top">
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
@@ -441,8 +464,8 @@ $editstep6 = isset($answers->step6)?$answers->step6:array();
                             <tbody>
                                 <?php foreach ($step4 as $ind => $x) { ?>
                                     <tr>
-                                        <td class="align-top"><?php echo $x->question; ?></td>
-                                        <td class="align-top"><?php echo $x->source; ?></td>
+                                        <td class="align-top text-justify"><?php echo $x->question; ?></td>
+                                        <td class="align-top text-center"><?php echo $x->source; ?></td>
                                         <td class="align-top">
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
@@ -513,8 +536,8 @@ $editstep6 = isset($answers->step6)?$answers->step6:array();
                             <tbody>
                                 <?php foreach ($step5 as $ind => $x) { ?>
                                     <tr>
-                                        <td class="align-top"><?php echo $x->question; ?></td>
-                                        <td class="align-top"><?php echo $x->source; ?></td>
+                                        <td class="align-top text-justify"><?php echo $x->question; ?></td>
+                                        <td class="align-top text-center"><?php echo $x->source; ?></td>
                                         <td class="align-top">
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
@@ -585,8 +608,8 @@ $editstep6 = isset($answers->step6)?$answers->step6:array();
                             <tbody>
                                 <?php foreach ($step6 as $ind => $x) { ?>
                                     <tr>
-                                        <td class="align-top"><?php echo $x->question; ?></td>
-                                        <td class="align-top"><?php echo $x->source; ?></td>
+                                        <td class="align-top text-justify"><?php echo $x->question; ?></td>
+                                        <td class="align-top text-center"><?php echo $x->source; ?></td>
                                         <td class="align-top">
                                             <div class="form-group">
                                                 <div class="form-check form-check-radio">
@@ -670,7 +693,7 @@ $editstep6 = isset($answers->step6)?$answers->step6:array();
             </div>
         </div>
     </div>
-</div>
+</div>  
 </div>
 
 </div>
