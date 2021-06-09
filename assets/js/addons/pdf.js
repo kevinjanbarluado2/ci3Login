@@ -125,6 +125,118 @@ $(function () {
         }).catch(swal.noop)
 
     })
+
+    //Ajax non-forms
+    //event triggered upon clicking of send pdf
+    //displays send mail form
+    $(document).on('click', '#sendEmailForm', function (e) {
+        e.preventDefault();
+
+        my = $(this)
+        results_id = my.attr('data-results_id');
+        url = my.attr('href');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                results_id : results_id
+            },
+            dataType: "json",
+            success: function(result){
+                page = my.attr('results_id');
+                if(result.hasOwnProperty("key")){
+                    switch(result.key){
+                        case 'sendEmail':
+                            $('#myModal .modal-dialog').attr('class','modal-dialog modal-md');
+                            $('#myModal .modal-title').html('System Message');
+                            $('#myModal .modal-body').html(result.form);
+                            $('#myModal').modal('show');    
+
+                            $.each(my.data(),function(i,v){
+                                $('.'+i).val(my.data(i)).change(); 
+                            });                 
+                            break;
+                    }
+                }
+            },
+            error: function(result){
+                $.notify({
+                    icon: "notifications",
+                    message: "There was an error in the connection. Please contact the administrator for updates."
+
+                }, {
+                    type: 'danger',
+                    timer: 1000,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    }
+                });
+            }
+        });
+
+    });
+
+    //Ajax Forms
+    //event triggered upon submitting form
+    $(document).on('click', '#sendEmail', function (e) {
+        my = $(this);
+        url = my.attr('href');
+
+        let data = {};
+
+        data.adviser = $('[name=adviser_id]').val();
+        data.filename = $('[name=filename]').val();
+        data.includeAdviser = ($('[name=includeAdviser]:checked').val() !== undefined) ? true : false;
+        data.complianceOfficer = ($('[name=complianceOfficer]').val() !== "") ? $('[name=complianceOfficer]').val() : "";
+        let link = "sendEmail";
+        
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: data,
+            dataType: "json",
+            success: function (result) {
+                $('#sendEmail').attr('disabled', false).removeClass('disabled').text('Compliance was sent');
+                $('input, button').removeAttr('disabled');
+                $('#myModal').modal('hide');
+
+                $.notify({
+                    icon: "notifications",
+                    message: "Success! Email Sent"
+
+                }, {
+                    type: 'success',
+                    timer: 1000,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    }
+                });
+            },
+            beforeSend: function () {
+                $('#sendEmail').attr('disabled', true).addClass('disabled').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending Email...');
+                $('input, button').attr('disabled','disabled');
+
+            },
+            error: function (req, err) { 
+                $.notify({
+                    icon: "notifications",
+                    message: "There was an error in the connection. Please contact the administrator for updates."
+
+                }, {
+                    type: 'danger',
+                    timer: 1000,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    }
+                });
+            }
+
+        });
+    });
 });
 
 //initialize table to be displayed
