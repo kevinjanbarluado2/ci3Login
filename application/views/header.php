@@ -24,6 +24,8 @@ $privileges=explode(",",$_SESSION['privileges']);
   <link href="./assets/demo/demo.css" rel="stylesheet" />
   <link href="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
   <link rel="icon" type="image/x-icon" href="./img/icon.ico" />
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/css/complianceapp.css">
 </head>
 
 <body class="">
@@ -37,7 +39,7 @@ $privileges=explode(",",$_SESSION['privileges']);
         Tip 2: you can also add an image using data-image tag
     -->
       <div class="logo"><a href="#" class="simple-text logo-normal">
-          Compliance App
+          Compliance Checker
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -65,7 +67,30 @@ $privileges=explode(",",$_SESSION['privileges']);
             </a>
           </li>
           <?php endif;?>
-
+          <?php if(in_array('advisers',$privileges)):?>
+          <li class="nav-item <?php if($activeNav=="advisers"){echo "active";} ?>">
+            <a class="nav-link" href="<?=base_url('advisers'); ?>">
+              <i class="material-icons">groups</i>
+              <p>Advisers</p>
+            </a>
+          </li>
+          <?php endif;?>
+          <?php if(in_array('fieldmanagement',$privileges)):?>
+          <li class="nav-item <?php if($activeNav=="fieldmanagement"){echo "active";} ?>">
+            <a class="nav-link" href="<?=base_url('fieldmanagement'); ?>">
+              <i class="material-icons">settings</i>
+              <p>Fieldmanagement</p>
+            </a>
+          </li>
+          <?php endif;?>
+          <?php if(in_array('pdf',$privileges)):?>
+          <li class="nav-item <?php if($activeNav=="pdf"){echo "active";} ?>">
+            <a class="nav-link" href="<?=base_url('pdf'); ?>">
+              <i class="material-icons">print</i>
+              <p>PDF</p>
+            </a>
+          </li>
+          <?php endif;?>
         </ul>
       </div>
     </div>
@@ -101,7 +126,7 @@ $privileges=explode(",",$_SESSION['privileges']);
                   </p>
                 </a>
               </li>
-              <li class="nav-item dropdown">
+              <!-- <li class="nav-item dropdown">
                 <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
                   <span class="notification">5</span>
@@ -116,7 +141,7 @@ $privileges=explode(",",$_SESSION['privileges']);
                   <a class="dropdown-item" href="#">Another Notification</a>
                   <a class="dropdown-item" href="#">Another One</a>
                 </div>
-              </li>
+              </li> -->
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>

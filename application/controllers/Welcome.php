@@ -47,10 +47,56 @@ class Welcome extends CI_Controller
 	}
 	public function compliance()
 	{
+		
+
+		$this->load->model('AdvisersCollection');
+		$this->load->model('CompanyProviderCollection');
+		$this->load->model('PolicyTypeSoldCollection');
+		$this->load->model('PdfCollection');
+
 		$data = array();
 		$data['activeNav'] = "compliance";
+		$data['advisers'] = $this->AdvisersCollection->getActiveAdvisers();
+		$data['providers'] = $this->CompanyProviderCollection->getActiveProviders();
+		$data['policies'] = $this->PolicyTypeSoldCollection->getActivePolicies();
+		
+		//encrypted id
+		$token = isset($_GET['v'])?$_GET['v']:'';
+		
+
+		//$results_id=($this->input->get('v')!=="")?$this->input->get('v'):"";
+		$result=array();
+		$result['data'] = $this->PdfCollection->get_one_data($token,'token');
+		
+	
+
 		$this->load->view('header', $data);
-		$this->load->view('pages/compliance');
+		$this->load->view('pages/compliance',$result);
 		$this->load->view('footer',$data);
 	}
+	public function advisers()
+	{
+		$data = array();
+		$data['activeNav'] = "advisers";
+		$this->load->view('header', $data);
+		$this->load->view('pages/advisers');
+		$this->load->view('footer',$data);
+	}
+	public function fieldmanagement()
+	{
+		$data = array();
+		$data['activeNav'] = "fieldmanagement";
+		$this->load->view('header', $data);
+		$this->load->view('pages/fieldmanagement');
+		$this->load->view('footer',$data);
+	}
+	public function pdf()
+	{
+		$data = array();
+		$data['activeNav'] = "pdf";
+		$this->load->view('header', $data);
+		$this->load->view('pages/pdf');
+		$this->load->view('footer',$data);
+	}
+
 }

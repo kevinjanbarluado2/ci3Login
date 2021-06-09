@@ -1,5 +1,5 @@
 <?php
-class UserProfileCollection extends CI_Model {
+class AdvisersCollection extends CI_Model {
     var $select_column = null; 
     function __construct() {
         // Call the Model constructor
@@ -10,21 +10,29 @@ class UserProfileCollection extends CI_Model {
         }
     }
     
-    //set orderable columns in user_tbl list
-    var $table = "user_tbl";   
+    //set orderable columns in advisers_tbl list
+    var $table = "advisers_tbl";   
     var $order_column = array(
-        "name",
+        "last_name",
         "email",
-        "privileges",
+        "fspr_number",
+        "address",
+        "trading_name",
+        "telephone_no",
         ""
     );
 
-    //set searchable parameters in user_tbl table
+    //set searchable parameters in advisers_tbl table
     public function getColumns(){
         $rows = array(
-            "name",
+            "last_name",
+            "first_name",
+            "middle_name",
             "email",
-            "privileges",
+            "fspr_number",
+            "address",
+            "trading_name",
+            "telephone_no",
         );
         return $rows; 
     }
@@ -41,7 +49,7 @@ class UserProfileCollection extends CI_Model {
 
     } 
     
-    //fetch list of user_tbl
+    //fetch list of advisers_tbl
     function make_query() {  
         $this->db->select(
             $this->table.'.*'
@@ -61,72 +69,64 @@ class UserProfileCollection extends CI_Model {
         if(isset($_POST["order"])) {    
             $this->db->order_by($this->order_column[$_POST['order']['0']['column']]." ". $_POST['order']['0']['dir']);
         } else {  
-            $this->db->order_by("id DESC");  
+            $this->db->order_by("idusers DESC");  
         }  
     }
 
-    //get count of all user_tbl
+    //get count of all advisers_tbl
     function get_all_data() {  
         $this->db->select($this->table."*");  
         $this->db->from($this->table);
         return $this->db->count_all_results();  
     }  
 
-    //get count of filtered user_tbl
+    //get count of filtered advisers_tbl
     function get_filtered_data(){  
          $this->make_query(); 
          $query = $this->db->get();  
          return $query->num_rows();  
     }  
 
-    //get all active privileges
-    public function getPrivileges(){
-        $this->db->select('*');
-        $this->db->from('privilege_tbl');
-        $this->db->order_by("id", "asc");
-        return $this->db->get()->result_array();
-    }
-
-    //add user
+    //add adviser
     public function addRows($params){
-        $params['password'] = md5($params['password']);
-        $params['admin'] = 1;
-
-        $this->db->insert('user_tbl', $params);
+        $this->db->insert($this->table, $params);
         if($this->db->affected_rows() > 0) 
             return true;        
         return false;
     }
 
-    //update user
-    public function updateRows($params){
-        if(!$this->isSamePassword($params['email'], $params['password']))
-            $params['password'] = md5($params['password']);
-        
-        $this->db->where('id', $params['id']);
-        if ($this->db->update('user_tbl',$params) !== FALSE)
+    //update adviser
+    public function updateRows($params){        
+        $this->db->where('idusers', $params['idusers']);
+        if ($this->db->update($this->table,$params) !== FALSE)
             return true;    
         return false;
     }
 
-    //check if password is updated
-    public function isSamePassword($email,$password){
-        $this->db->select("*");
-        $this->db->from($this->table);
-        $this->db->where('email',$email);
-        $this->db->where('password',$password);
-        if($this->db->get()->num_rows() > 0){
-            return true;
-        }
-        return false;
-    }
-
-    //delete user
+    //delete adviser
     public function deleteRows($params){
-        $this->db->where('id', $params['id']);
+        $this->db->where('idusers', $params['idusers']);
         if ($this->db->delete($this->table,$params) !== FALSE)
             return true;    
         return false;
+    }
+
+    //get all active advisers
+    public function getActiveAdvisers(){
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->order_by("last_name", "asc");
+        // $this->db->where('status', 'Active');
+        return $this->db->get()->result_array();
+    }
+
+    //get advisers by id
+    public function getActiveAdvisersById($id){
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->where('idusers', $id);
+        // $this->db->where('status', 'Active');
+        return $this->db->get()->row();
     }
 }
 ?>

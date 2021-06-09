@@ -27,6 +27,7 @@
 <!--   Core JS Files   -->
 <script src="./assets/js/core/jquery.min.js"></script>
 <script src="./assets/js/core/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="./assets/js/core/bootstrap-material-design.min.js"></script>
 <script src="./assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 <!-- Plugin for the momentJs  -->
@@ -251,6 +252,7 @@
       theme: 'arrows',
       transitionEffect: 'fade',
       justified: true,
+      enableURLhash: false,
       toolbarSettings: {
         toolbarPosition: 'both', // none, top, bottom, both
         toolbarButtonPosition: 'right', // left, right, center
@@ -273,7 +275,44 @@
     //   $('.sw-btn-next').text('Next');
     // });
 
+    $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
+      var client = $('[name=client]').val();
+      var adviser = $('[name=adviser]').val();
 
+      if(client == '') {
+        $.notify({
+            icon: "notifications",
+            message: "Client name is required."
+
+        }, {
+            type: 'danger',
+            timer: 1000,
+            placement: {
+                from: 'top',
+                align: 'center'
+            }
+        });
+        return false;
+      }
+
+      if(adviser == '') {
+        $.notify({
+            icon: "notifications",
+            message: "Adviser is required."
+
+        }, {
+            type: 'danger',
+            timer: 1000,
+            placement: {
+                from: 'top',
+                align: 'center'
+            }
+        });
+        return false;
+      }
+
+      return true;
+    });
   });
 </script>
 

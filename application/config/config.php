@@ -23,8 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/compliance_new/';
-
+//$config['base_url'] = 'http://localhost/compliance_new/';
+$config['base_url']  =  "http://".$_SERVER['HTTP_HOST'];
+$config['base_url'] .= preg_replace('@/+$@', '', dirname($_SERVER['SCRIPT_NAME'])).'/';
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -324,7 +325,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/user_guide/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = hex2bin("982f9a4bdfe225f360decd801900f485");
 
 /*
 |--------------------------------------------------------------------------
