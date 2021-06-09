@@ -1,3 +1,24 @@
+<style>
+    @keyframes spinner-border {
+      to { transform: rotate(360deg); }
+    } 
+    .spinner-border{
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+        vertical-align: text-bottom;
+        border: .2em solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        -webkit-animation: spinner-border .75s linear infinite;
+        animation: spinner-border .75s linear infinite;
+    }
+    .spinner-border-sm{
+        height: 1rem;
+        border-width: .2em;
+    }
+</style>
+
 <?php
 $json = json_decode(file_get_contents('./assets/questions.json'));
 $step1 = $json->step1;
@@ -712,4 +733,4 @@ $editstep6 = isset($answers->step6)?$answers->step6:array();
         left: 0;
         right: 0;
     }
-</style> 
+</style>

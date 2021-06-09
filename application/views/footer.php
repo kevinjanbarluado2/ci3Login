@@ -275,7 +275,44 @@
     //   $('.sw-btn-next').text('Next');
     // });
 
+    $("#smartwizard").on("leaveStep", function(e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
+      var client = $('[name=client]').val();
+      var adviser = $('[name=adviser]').val();
 
+      if(client == '') {
+        $.notify({
+            icon: "notifications",
+            message: "Client name is required."
+
+        }, {
+            type: 'danger',
+            timer: 1000,
+            placement: {
+                from: 'top',
+                align: 'center'
+            }
+        });
+        return false;
+      }
+
+      if(adviser == '') {
+        $.notify({
+            icon: "notifications",
+            message: "Adviser is required."
+
+        }, {
+            type: 'danger',
+            timer: 1000,
+            placement: {
+                from: 'top',
+                align: 'center'
+            }
+        });
+        return false;
+      }
+
+      return true;
+    });
   });
 </script>
 
