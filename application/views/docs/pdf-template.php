@@ -363,6 +363,10 @@ function createTable($step)
 		<th>Policy Number</th>
 		<th style="color: #205478"><?= $info['policyNumber']; ?></th>
 	</tr>
+	<tr style="background-color: #eee;">
+		<th>Replacement of Cover</th>
+		<th style="color: #205478"><?= $info['replacement']; ?></th>
+	</tr>
 </table>
 <p></p>
 <p></p>
