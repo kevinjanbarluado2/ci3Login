@@ -39,7 +39,13 @@ function createTable($step)
 		$one = ($x['value'] == "1") ? "checked=\"true\"" : "";
 		$two = ($x['value'] == "2") ? "checked=\"true\"" : "";
 		$num = $ind + 1;
-		echo "<td width=\"350px\">{$num}. {$x['question']}</td>";
+		echo "<td width=\"350px\">{$num}. {$x['question']}";
+
+		if($x['notes']){
+			echo "<br><br><span color=\"red\">Notes: {$x['notes']}</span>";
+		}
+		
+		echo "</td>";
 		echo "<td  width=\"175px\">";
 		echo "<input type=\"radio\" readonly=\"true\" $zero name=\"{$ind}\" id=\"rqa\" value=\"0\"/><span></span> <label style=\"color:black;\" for=\"rqa\">0</label><br />";
 		echo "<input type=\"radio\" readonly=\"true\" $one name=\"{$ind}\" id=\"rqa\" value=\"1\"/><span></span> <label style=\"color:black;\" for=\"rqa\">1</label><br />";

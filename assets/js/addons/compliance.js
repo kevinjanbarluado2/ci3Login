@@ -14,10 +14,13 @@ let fetchStep = (stepNum) => {
         data[x] = {
             'value': ($(this).find('input:checked').val() !== undefined) ? $(this).find('input:checked').val() : "",
             'question': $(this).find('td').eq(0).html(),
-            'notes': $(this).find('textarea').val()
+            'notes': $(this).find('textarea').val().trim()
         };
 
     });
+
+	console.log('data:');
+	console.log(data);
 
     return data;
 }
