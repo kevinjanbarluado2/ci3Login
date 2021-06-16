@@ -26,6 +26,33 @@ $step4_score=0;
 $step5_score=0;
 $step6_score=0;
 
+$steps = [
+	[
+		'description' => 'Establish and define the relationship with the client',
+		'score' => 0,
+	],
+	[
+		'description' => 'Collect client information (Fact Find and Needs Analysis)',
+		'score' => 0,
+	],
+	[
+		'description' => 'Research, analyse and evaluate information',
+		'score' => 0,
+	],
+	[
+		'description' => 'Develop the advice recommendations and present to the client',
+		'score' => 0,
+	],
+	[
+		'description' => 'Implement the recommendations',
+		'score' => 0,
+	],
+	[
+		'description' => 'Review the client’s situation',
+		'score' => 0,
+	],
+];
+
 for ($i = 1; $i <= 6; $i++) :
 	foreach ($data['data']['step' . $i] as $ind => $x) :
 		$total_score += $x['value'];
@@ -62,6 +89,18 @@ function createTable($step)
 
 	endforeach;
 	echo "</table>";
+}
+
+function getStepScore($step){
+	$totalItem = count($step) * 2;
+
+	$scoreValues = array_column($step, 'value');
+	$score = array_sum($scoreValues);
+
+	return [
+		'totalItem' => $totalItem,
+		'score' => $score,
+	];
 }
 
 ?>
@@ -387,45 +426,21 @@ function createTable($step)
 <p></p>
 <p></p>
 
-<table nobr="true">
-	<tr class="kevin">
-		<th width="90%"><b>Step 1 - Establish and define the relationship with the client</b><br></th>
-		<th width="10%"><b>Score: </b></th>
-	</tr>
-</table>
-<?php createTable($data['data']['step1']); ?>
-
-<table nobr="true">
-	<tr class="kevin">
-		<th><b>Step 2 - Collect client information (Fact Find and Needs Analysis)</b><br></th>
-	</tr>
-</table>
-<?php createTable($data['data']['step2']); ?>
-<p></p>
-<table nobr="true">
-	<tr class="kevin">
-		<th><b>Step 3 - Research, analyse and evaluate information</b><br></th>
-	</tr>
-</table>
-<?php createTable($data['data']['step3']); ?>
-<p></p>
-<table nobr="true">
-	<tr class="kevin">
-		<th><b>Step 4 - Develop the advice recommendations and present to the client</b><br></th>
-	</tr>
-</table>
-<?php createTable($data['data']['step4']); ?>
-<p></p>
-<table nobr="true">
-	<tr class="kevin">
-		<th><b>Step 5 - Implement the recommendations</b><br></th>
-	</tr>
-</table>
-<?php createTable($data['data']['step5']); ?>
-<p></p>
-<table nobr="true">
-	<tr class="kevin">
-		<th><b>Step 6 - Review the client’s situation</b><br></th>
-	</tr>
-</table>
-<?php createTable($data['data']['step6']); ?>
+<?php
+foreach($steps as $index => $step)
+{
+	$stepScore = getStepScore($data['data']['step' . ($index + 1)]);
+	?>
+	<table nobr="true">
+		<tr class="kevin">
+			<th width="85%"><b>Step <?php echo ($index + 1); ?> - <?php echo $step['description'] ?></b><br></th>
+			<th width="15%"><b>Score: <?php echo $stepScore['score'] . '/' . $stepScore['totalItem'] ?></b></th>
+		</tr>
+	</table>
+	<?php
+	createTable($data['data']['step' . ($index + 1)]);
+	?>
+	<br><br>
+	<?php
+}
+?>
