@@ -19,9 +19,17 @@ $total_score = 0;
 $total_question = 0;
 $max_score = 0;
 
+$step1_score=0;
+$step2_score=0;
+$step3_score=0;
+$step4_score=0;
+$step5_score=0;
+$step6_score=0;
+
 for ($i = 1; $i <= 6; $i++) :
 	foreach ($data['data']['step' . $i] as $ind => $x) :
 		$total_score += $x['value'];
+		
 	endforeach;
 	$total_question += sizeof($data['data']['step' . $i]);
 endfor;
@@ -374,12 +382,15 @@ function createTable($step)
 		<th style="color: #205478"><?= $info['replacement']; ?></th>
 	</tr>
 </table>
+
+
 <p></p>
 <p></p>
 
 <table nobr="true">
 	<tr class="kevin">
-		<th><b>Step 1 - Establish and define the relationship with the client</b><br></th>
+		<th width="90%"><b>Step 1 - Establish and define the relationship with the client</b><br></th>
+		<th width="10%"><b>Score: </b></th>
 	</tr>
 </table>
 <?php createTable($data['data']['step1']); ?>
