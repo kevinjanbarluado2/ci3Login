@@ -19,13 +19,6 @@ $total_score = 0;
 $total_question = 0;
 $max_score = 0;
 
-$step1_score=0;
-$step2_score=0;
-$step3_score=0;
-$step4_score=0;
-$step5_score=0;
-$step6_score=0;
-
 $steps = [
 	[
 		'description' => 'Establish and define the relationship with the client',
