@@ -22,27 +22,21 @@ $max_score = 0;
 $steps = [
 	[
 		'description' => 'Establish and define the relationship with the client',
-		'score' => 0,
 	],
 	[
 		'description' => 'Collect client information (Fact Find and Needs Analysis)',
-		'score' => 0,
 	],
 	[
 		'description' => 'Research, analyse and evaluate information',
-		'score' => 0,
 	],
 	[
 		'description' => 'Develop the advice recommendations and present to the client',
-		'score' => 0,
 	],
 	[
 		'description' => 'Implement the recommendations',
-		'score' => 0,
 	],
 	[
 		'description' => 'Review the client’s situation',
-		'score' => 0,
 	],
 ];
 
@@ -85,14 +79,14 @@ function createTable($step)
 }
 
 function getStepScore($step){
-	$totalItem = count($step) * 2;
+	$maxScore = count($step) * 2;
 
 	$scoreValues = array_column($step, 'value');
-	$score = array_sum($scoreValues);
+	$totalScore = array_sum($scoreValues);
 
 	return [
-		'totalItem' => $totalItem,
-		'score' => $score,
+		'value' => $totalScore,
+		'max' => $maxScore,
 	];
 }
 
@@ -422,12 +416,12 @@ function getStepScore($step){
 <?php
 foreach($steps as $index => $step)
 {
-	$stepScore = getStepScore($data['data']['step' . ($index + 1)]);
+	$score = getStepScore($data['data']['step' . ($index + 1)]);
 	?>
 	<table nobr="true">
 		<tr class="kevin">
 			<th width="85%"><b>Step <?php echo ($index + 1); ?> - <?php echo $step['description'] ?></b><br></th>
-			<th width="15%"><b>Score: <?php echo $stepScore['score'] . '/' . $stepScore['totalItem'] ?></b></th>
+			<th width="15%"><b>Score: <?php echo $score['value'] . '/' . $score['max'] ?></b></th>
 		</tr>
 	</table>
 	<?php
