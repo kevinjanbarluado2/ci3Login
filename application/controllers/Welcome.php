@@ -98,5 +98,23 @@ class Welcome extends CI_Controller
 		$this->load->view('pages/pdf');
 		$this->load->view('footer',$data);
 	}
+	public function summary()
+	{
+		$this->load->model('AdvisersCollection');
+		$this->load->model('CompanyProviderCollection');
+		$this->load->model('PolicyTypeSoldCollection');
+		$this->load->model('PdfCollection');
+
+		$data = array();
+		$data['activeNav'] = "summary";
+		$data['advisers'] = $this->AdvisersCollection->getActiveAdvisers();
+		$data['providers'] = $this->CompanyProviderCollection->getActiveProviders();
+		$data['policies'] = $this->PolicyTypeSoldCollection->getActivePolicies();
+
+
+		$this->load->view('header', $data);
+		$this->load->view('pages/summary');
+		$this->load->view('footer',$data);
+	}
 
 }
