@@ -58,4 +58,5 @@ $route['translate_uri_dashes'] = FALSE;
 $route['advisers'] = 'welcome/advisers';
 $route['fieldmanagement'] = 'welcome/fieldmanagement';
 $route['pdf'] = 'welcome/pdf';
+$route['summary'] = 'welcome/summary';
 
