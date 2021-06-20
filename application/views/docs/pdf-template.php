@@ -19,9 +19,31 @@ $total_score = 0;
 $total_question = 0;
 $max_score = 0;
 
+$steps = [
+	[
+		'description' => 'Establish and define the relationship with the client',
+	],
+	[
+		'description' => 'Collect client information (Fact Find and Needs Analysis)',
+	],
+	[
+		'description' => 'Research, analyse and evaluate information',
+	],
+	[
+		'description' => 'Develop the advice recommendations and present to the client',
+	],
+	[
+		'description' => 'Implement the recommendations',
+	],
+	[
+		'description' => 'Review the client’s situation',
+	],
+];
+
 for ($i = 1; $i <= 6; $i++) :
 	foreach ($data['data']['step' . $i] as $ind => $x) :
 		$total_score += $x['value'];
+		
 	endforeach;
 	$total_question += sizeof($data['data']['step' . $i]);
 endfor;
@@ -39,7 +61,13 @@ function createTable($step)
 		$one = ($x['value'] == "1") ? "checked=\"true\"" : "";
 		$two = ($x['value'] == "2") ? "checked=\"true\"" : "";
 		$num = $ind + 1;
-		echo "<td width=\"350px\">{$num}. {$x['question']}</td>";
+		echo "<td width=\"350px\">{$num}. {$x['question']}";
+
+		if($x['notes']){
+			echo "<br><br><span color=\"red\">Notes: {$x['notes']}</span>";
+		}
+		
+		echo "</td>";
 		echo "<td  width=\"175px\">";
 		echo "<input type=\"radio\" readonly=\"true\" $zero name=\"{$ind}\" id=\"rqa\" value=\"0\"/><span></span> <label style=\"color:black;\" for=\"rqa\">0</label><br />";
 		echo "<input type=\"radio\" readonly=\"true\" $one name=\"{$ind}\" id=\"rqa\" value=\"1\"/><span></span> <label style=\"color:black;\" for=\"rqa\">1</label><br />";
@@ -48,6 +76,18 @@ function createTable($step)
 
 	endforeach;
 	echo "</table>";
+}
+
+function getStepScore($step){
+	$maxScore = count($step) * 2;
+
+	$scoreValues = array_column($step, 'value');
+	$totalScore = array_sum($scoreValues);
+
+	return [
+		'value' => $totalScore,
+		'max' => $maxScore,
+	];
 }
 
 ?>
@@ -363,48 +403,31 @@ function createTable($step)
 		<th>Policy Number</th>
 		<th style="color: #205478"><?= $info['policyNumber']; ?></th>
 	</tr>
+	<tr style="background-color: #eee;">
+		<th>Replacement of Cover</th>
+		<th style="color: #205478"><?= $info['replacement']; ?></th>
+	</tr>
 </table>
+
+
 <p></p>
 <p></p>
 
-<table nobr="true">
-	<tr class="kevin">
-		<th><b>Step 1 - Establish and define the relationship with the client</b><br></th>
-	</tr>
-</table>
-<?php createTable($data['data']['step1']); ?>
-
-<table nobr="true">
-	<tr class="kevin">
-		<th><b>Step 2 - Collect client information (Fact Find and Needs Analysis)</b><br></th>
-	</tr>
-</table>
-<?php createTable($data['data']['step2']); ?>
-<p></p>
-<table nobr="true">
-	<tr class="kevin">
-		<th><b>Step 3 - Research, analyse and evaluate information</b><br></th>
-	</tr>
-</table>
-<?php createTable($data['data']['step3']); ?>
-<p></p>
-<table nobr="true">
-	<tr class="kevin">
-		<th><b>Step 4 - Develop the advice recommendations and present to the client</b><br></th>
-	</tr>
-</table>
-<?php createTable($data['data']['step4']); ?>
-<p></p>
-<table nobr="true">
-	<tr class="kevin">
-		<th><b>Step 5 - Implement the recommendations</b><br></th>
-	</tr>
-</table>
-<?php createTable($data['data']['step5']); ?>
-<p></p>
-<table nobr="true">
-	<tr class="kevin">
-		<th><b>Step 6 - Review the client’s situation</b><br></th>
-	</tr>
-</table>
-<?php createTable($data['data']['step6']); ?>
+<?php
+foreach($steps as $index => $step)
+{
+	$score = getStepScore($data['data']['step' . ($index + 1)]);
+	?>
+	<table nobr="true">
+		<tr class="kevin">
+			<th width="85%"><b>Step <?php echo ($index + 1); ?> - <?php echo $step['description'] ?></b><br></th>
+			<th width="15%"><b>Score: <?php echo $score['value'] . '/' . $score['max'] ?></b></th>
+		</tr>
+	</table>
+	<?php
+	createTable($data['data']['step' . ($index + 1)]);
+	?>
+	<br><br>
+	<?php
+}
+?>
