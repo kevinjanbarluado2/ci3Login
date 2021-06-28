@@ -66,63 +66,63 @@ $(function () {
         });
     });
 
-    $("#save-btn").on('click', function (e) {
-        data = {};
-        data.info = fetchInfo();
+    // $("#save-btn").on('click', function (e) {
+    //     data = {};
+    //     data.info = fetchInfo();
 
-        let link = ($('[name="results_id"]').val() === "") ? "savesummary" : "updatesummary";
-        let results_id = $('[name="results_id"]').val();
+    //     let link = ($('[name="results_id"]').val() === "") ? "savesummary" : "updatesummary";
+    //     let results_id = $('[name="results_id"]').val();
 
-        $.ajax({
-            url: `${base_url}/summary/${link}`,
-            type: 'post',
-            data: {
-                data: data,
-                results_id: results_id
-            },
-            dataType: "json",
-            success: function (result) {
-                $('#summaryModal').modal('hide');
-                $('#save-btn').text("Update changes");
+    //     $.ajax({
+    //         url: `${base_url}/summary/${link}`,
+    //         type: 'post',
+    //         data: {
+    //             data: data,
+    //             results_id: results_id
+    //         },
+    //         dataType: "json",
+    //         success: function (result) {
+    //             $('#summaryModal').modal('hide');
+    //             $('#save-btn').text("Update changes");
 
-                $('[name="results_id"]').val(result.results_id);
-                $('#sendPdf').attr('disabled', false).removeClass('disabled').text('Send Pdf');
-                $.notify({
-                    icon: "notifications",
-                    message: result.message
+    //             $('[name="results_id"]').val(result.results_id);
+    //             $('#sendPdf').attr('disabled', false).removeClass('disabled').text('Send Pdf');
+    //             $.notify({
+    //                 icon: "notifications",
+    //                 message: result.message
 
-                }, {
-                    type: 'success',
-                    timer: 1000,
-                    placement: {
-                        from: 'top',
-                        align: 'center'
-                    }
-                });
-            },
-            beforeSend: function () {
-                $('#sendPdf').attr('disabled', true).addClass('disabled').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
-            },
-            error: function (result) {
-                $.notify({
-                    icon: "notifications",
-                    message: "There was an error in the connection. Please contact the administrator for updates."
+    //             }, {
+    //                 type: 'success',
+    //                 timer: 1000,
+    //                 placement: {
+    //                     from: 'top',
+    //                     align: 'center'
+    //                 }
+    //             });
+    //         },
+    //         beforeSend: function () {
+    //             $('#sendPdf').attr('disabled', true).addClass('disabled').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+    //         },
+    //         error: function (result) {
+    //             $.notify({
+    //                 icon: "notifications",
+    //                 message: "There was an error in the connection. Please contact the administrator for updates."
 
-                }, {
-                    type: 'danger',
-                    timer: 1000,
-                    placement: {
-                        from: 'top',
-                        align: 'center'
-                    }
-                });
-            }
-        });
-
-
+    //             }, {
+    //                 type: 'danger',
+    //                 timer: 1000,
+    //                 placement: {
+    //                     from: 'top',
+    //                     align: 'center'
+    //                 }
+    //             });
+    //         }
+    //     });
 
 
 
 
-    });
+
+
+    // });
 });
