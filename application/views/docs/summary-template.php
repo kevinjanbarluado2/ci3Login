@@ -1,10 +1,9 @@
 <?php
-	print_r($result_arr);
 	foreach ($result_arr as $k => $v) {
 		if($filename == '')
-			$filename = $adviser_arr[$k]->first_name." ".$adviser_arr[$k]->last_name;
+			$filename = $result_arr[$k]['adviser_first_name']." ".$result_arr[$k]['adviser_last_name'];
 		else
-			$filename .= ', '.$adviser_arr[$k]->first_name." ".$adviser_arr[$k]->last_name;
+			$filename .= ', '.$result_arr[$k]['adviser_first_name']." ".$result_arr[$k]['adviser_last_name'];
 	}
 
 	$filename = "Summary of ".$filename;
@@ -44,13 +43,30 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach ($adviser_arr as $k => $v) : ?>
+		<?php foreach ($result_arr as $k => $v) : ?>
 			<tr>
-				<td><?php echo $adviser_arr[$k]->first_name." ".$adviser_arr[$k]->last_name; ?></td>
-				<td>test</td>
-				<td>test</td>
-				<td>test</td>
+				<td>
+					<?php 
+						echo $result_arr[$k]['adviser_first_name']." ".$result_arr[$k]['adviser_last_name']; 
+					?>
+				</td>
+				<td>
+				<?php
+					foreach ($providers_arr[$result_arr[$k]['adviser_id']] as $k1 => $v1) {
+						echo $providers_arr[$result_arr[$k]['adviser_id']][$k1]."<br>";
+					}
+				?>	
+				</td>
+				<td>
+				<?php
+					foreach ($policy_arr[$result_arr[$k]['adviser_id']] as $k1 => $v1) {
+						echo $policy_arr[$result_arr[$k]['adviser_id']][$k1]."<br>";
+					}
+				?>		
+				</td>
+				<td><?php echo $result_arr[$k]['replacement']; ?></td>
 				<td><?php echo $added_by; ?></td>
+				<td><?php echo $result_arr[$k]['score']; ?></td>
 			</tr>
 		<?php endforeach; ?>
 	</tbody>

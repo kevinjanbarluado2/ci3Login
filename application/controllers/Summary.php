@@ -190,13 +190,34 @@ class Summary extends CI_Controller
             $result_arr = $this->SummaryCollection->getResultsById($adviser_ids, $replacement);
         }
 
+
+        $providers_arr_name = array();
+        foreach ($result_arr as $k => $v) {
+            $providers_arr = isset($result_arr[$k]['providers']) ? explode(',',$result_arr[$k]['providers']) : array();
+            $providers_arr = array_unique($providers_arr);
+            foreach ($providers_arr as $k1 => $v1) {
+                $providers_arr_name[$result_arr[$k]['adviser_id']][$k1] = $this->SummaryCollection->getProvidersNameById($providers_arr[$k1]);
+            }
+        }
+
+        $policy_arr_name = array();
+        foreach ($result_arr as $k => $v) {
+            $policy_arr = isset($result_arr[$k]['providers']) ? explode(',',$result_arr[$k]['providers']) : array();
+            $policy_arr = array_unique($policy_arr);
+            foreach ($policy_arr as $k1 => $v1) {
+                $policy_arr_name[$result_arr[$k]['adviser_id']][$k1] = $this->SummaryCollection->getPolicyNameById($policy_arr[$k1]);
+            }
+        }
+
         ob_start();
         set_time_limit(300);
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $html = $this->load->view('docs/summary-template', array(
             'data' => $_POST,
             'result_arr' => $result_arr,
-            'added_by' => $_SESSION['name']
+            'added_by' => $_SESSION['name'],
+            'providers_arr' => $providers_arr_name,
+            'policy_arr' => $policy_arr_name
         ), true);
         // remove default header/footer
         $pdf->setPrintHeader(false);
@@ -211,6 +232,7 @@ class Summary extends CI_Controller
 
     public function savesummary()
     {
+        
         $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
         $result['result_id'] = '';
         $result['filename'] = '';
