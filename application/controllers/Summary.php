@@ -82,8 +82,8 @@ class Summary extends CI_Controller
     // {
     //     $fileName = isset($_POST['filename'])?$_POST['filename']:"Sample Filename";
     //     $adviser = isset($_POST['adviser'])?$_POST['adviser']:"";
-    //     $this->load->model('AdvisersCollection');
-    //     $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser);
+    //     $this->load->model('SummaryCollection');
+    //     $adviserInfo = $this->SummaryCollection->getActiveAdvisersById($adviser);
     //     $complianceOfficer = isset($_POST['complianceOfficer'])?$_POST['complianceOfficer']:"";
     //     $adviserEmail =  $adviserInfo->email;
     //     $production = false; //if in production, set to true 
@@ -144,16 +144,20 @@ class Summary extends CI_Controller
         $adviser_ids = isset($_POST['data']['info']['adviser']) ? $_POST['data']['info']['adviser'] : '';
         $replacement = isset($_POST['data']['info']['replacement']) ? $_POST['data']['info']['replacement'] : '';
         $providers = isset($_POST['data']['info']['providers']) ? $_POST['data']['info']['providers'] : '';
-        $policy_type = isset($_POST['data']['info']['policy_type']) ? $_POST['data']['info']['policy_type'] : '';
+        $policy_type = isset($_POST['data']['info']['policyType']) ? $_POST['data']['info']['policyType'] : '';
+        $date_from = isset($_POST['data']['info']['date_from']) ? $_POST['data']['info']['date_from'] : '';
+        $date_until = isset($_POST['data']['info']['date_until']) ? $_POST['data']['info']['date_until'] : '';
         $this->load->model('SummaryCollection');
 
         $result_arr = array();
-        $filter_flag = 0;
+        $provider_flag = 0;
+        $policy_type_flag = 0;
 
         if(isset($adviser_ids) && sizeof($adviser_ids) >= 1 && $adviser_ids != '') {
             foreach ($adviser_ids as $k => $v) {
                 //first filter to get result by adviser id and replacement
-                $result = $this->SummaryCollection->getResultsById($adviser_ids[$k], $replacement);
+                $result = $this->SummaryCollection->getResultsById($adviser_ids[$k], $replacement, $date_from, $date_until);
+
                 if($result != null) {
                     if($providers != '') {
                         $providers_new = isset($result->providers) ? explode(',',$result->providers) : array();
@@ -161,36 +165,73 @@ class Summary extends CI_Controller
                         //second filter to get result with a selected provider
                         foreach ($providers as $k1 => $v1) {
                             if(in_array($providers[$k1], $providers_new)) {
-                                $filter_flag = 1;
+                                $provider_flag = 1;
                                 break;
                             }     
                         }
-                    } else $filter_flag = 1;
+                    } else $provider_flag = 1;
 
                     if($policy_type != '') {
-                        if($filter_flag == 1) {
-                            $filter_flag = 0; 
-                            $policy_type_new = isset($result->policy_type) ? explode(',',$result->policy_type) : array();
-                            $policy_type_new = array_unique($policy_type_new);
-                            //third filter to get result with a selected policytype
-                            foreach ($policy_type as $k1 => $v1) {
-                                if(in_array($policy_type[$k1], $policy_type_new)) {
-                                    array_push($result_arr, $result);
-                                    break;
-                                }     
-                            }
+                        $policy_type_new = isset($result->policy_type) ? explode(',',$result->policy_type) : array();
+                        $policy_type_new = array_unique($policy_type_new);
+                        //third filter to get result with a selected policytype
+                        foreach ($policy_type as $k1 => $v1) {
+                            if(in_array($policy_type[$k1], $policy_type_new)) {
+                                $policy_type_flag = 1;
+                                break;
+                            }     
                         }
-                    } else {
-                        $filter_flag = 0;
+
+                    } else $policy_type_flag = 1;
+
+                    if($provider_flag == 1 && $policy_type_flag == 1) {
+                        $provider_flag = 0;
+                        $policy_type_flag = 0;
                         array_push($result_arr, $result);
                     }   
                 }
             }
         } else {
-            $result_arr = $this->SummaryCollection->getResultsById($adviser_ids, $replacement);
+            $result = $this->SummaryCollection->getResultsById($adviser_ids, $replacement, $date_from, $date_until);
+
+            foreach ($result as $k => $v) {
+                //first filter to get result by adviser id and replacement
+                if($result != null) {
+                    if($providers != '') {
+                        $providers_new = isset($result[$k]['providers']) ? explode(',',$result[$k]['providers']) : array();
+                        $providers_new = array_unique($providers_new);
+                        //second filter to get result with a selected provider
+                        foreach ($providers as $k1 => $v1) {
+                            if(in_array($providers[$k1], $providers_new)) {
+                                $provider_flag = 1;
+                                break;
+                            }     
+                        }
+                    } else $provider_flag = 1;
+
+                    if($policy_type != '') {
+                        $policy_type_new = isset($result[$k]['policy_type']) ? explode(',',$result[$k]['policy_type']) : array();
+                        $policy_type_new = array_unique($policy_type_new);
+                        //third filter to get result with a selected policytype
+                        foreach ($policy_type as $k1 => $v1) {
+                            if(in_array($policy_type[$k1], $policy_type_new)) {
+                                $policy_type_flag = 1;
+                                break;
+                            }     
+                        }
+
+                    } else $policy_type_flag = 1;
+                    
+                    if($provider_flag == 1 && $policy_type_flag == 1) {
+                        $provider_flag = 0;
+                        $policy_type_flag = 0;
+                        array_push($result_arr, $result[$k]);
+                    }  
+                }
+            }
         }
 
-
+        $result_arr = json_decode(json_encode($result_arr), true);
         $providers_arr_name = array();
         foreach ($result_arr as $k => $v) {
             $providers_arr = isset($result_arr[$k]['providers']) ? explode(',',$result_arr[$k]['providers']) : array();
@@ -202,11 +243,19 @@ class Summary extends CI_Controller
 
         $policy_arr_name = array();
         foreach ($result_arr as $k => $v) {
-            $policy_arr = isset($result_arr[$k]['providers']) ? explode(',',$result_arr[$k]['providers']) : array();
+            $policy_arr = isset($result_arr[$k]['policy_type']) ? explode(',',$result_arr[$k]['policy_type']) : array();
             $policy_arr = array_unique($policy_arr);
             foreach ($policy_arr as $k1 => $v1) {
                 $policy_arr_name[$result_arr[$k]['adviser_id']][$k1] = $this->SummaryCollection->getPolicyNameById($policy_arr[$k1]);
             }
+        }
+
+        $adviser_str = "";
+        foreach ($result_arr as $k => $v) {
+            if($adviser_str == "")
+                $adviser_str = $result_arr[$k]['adviser_id'];
+            else 
+                $adviser_str .= ",".$result_arr[$k]['adviser_id'];
         }
 
         ob_start();
@@ -227,15 +276,19 @@ class Summary extends CI_Controller
         $link = FCPATH . "assets/resources/preview.pdf";
         $pdf->Output($link, 'F');
         ob_end_clean();
-        echo json_encode(array("link" => base_url('assets/resources/preview.pdf')));
+        echo json_encode(array(
+            "link" => base_url('assets/resources/preview.pdf'),
+            "adviser_str" => $adviser_str
+        ));
     }
 
     public function savesummary()
     {
         
         $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
-        $result['result_id'] = '';
+        $result['summary_id'] = '';
         $result['filename'] = '';
+        $result['adviser_str'] = $this->input->post('adviser_str');
 
         if ($this->input->post() && $this->input->post() != null) {
             $post_data = array();
@@ -243,19 +296,30 @@ class Summary extends CI_Controller
                 $post_data[$k] = $this->input->post($k, true);
             }
 
-            $client = $post_data['data']['info']['client'];
-            $adviser_id = $post_data['data']['info']['adviser'];
+            $adviser_ids = $this->input->post('adviser_str');
+            $date_from = isset($_POST['data']['info']['date_from']) ? $_POST['data']['info']['date_from'] : '';
+            $date_until = isset($_POST['data']['info']['date_until']) ? $_POST['data']['info']['date_until'] : '';
 
+            $this->load->model('SummaryCollection');
             $this->load->model('AdvisersCollection');
-            $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
-            $adviserName = $adviserInfo->first_name." ".$adviserInfo->last_name;
-            $filename = "File review - ".$client." by ".$adviserName;
 
+            $filename = "Summary of Multiple Adviser ".date("d/m/Y");
+            if($adviser_ids != '') {
+                $adviser_arr = explode(',',$adviser_ids);
+
+                if(sizeof($adviser_arr) == 1) {
+                    $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
+                    $adviserName = $adviserInfo->first_name." ".$adviserInfo->last_name;
+                    $filename = "Summary of ".$adviserName." ".date("d/m/Y");
+                }
+            }            
+
+            $post_data['data']['info']['adviser'] = $adviser_ids;
             $post_data['data']['info']['filename'] = $filename;
-            $this->load->model('ComplianceCollection');
-            if ($insert_id = $this->ComplianceCollection->savecompliance($post_data)) {
+            $this->load->model('SummaryCollection');
+            if ($insert_id = $this->SummaryCollection->savesummary($post_data)) {
                 $result['message'] = "Successfully saved.";
-                $result['results_id'] = $insert_id;
+                $result['summary_id'] = $insert_id;
                 $result['filename'] = $filename;
             } else {
                 $result['message'] = "Failed to save details.";
@@ -265,33 +329,45 @@ class Summary extends CI_Controller
         echo json_encode($result);
     }
 
-    public function updatecompliance(){
-      $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
-      $result['results_id'] = $this->input->post('results_id');
-      $result['filename'] = $this->input->post('filename');
+    public function updatesummary(){
+        $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
+        $result['summary_id'] = $this->input->post('summary_id');
+        $result['filename'] = $this->input->post('filename');
+        $result['adviser_str'] = $this->input->post('adviser_str');
 
-      if ($this->input->post() && $this->input->post() != null) {
-          $post_data = array();
-          foreach ($this->input->post() as $k => $v) {
-              $post_data[$k] = $this->input->post($k, true);
-          }
+        if ($this->input->post() && $this->input->post() != null) {
+            $post_data = array();
+            foreach ($this->input->post() as $k => $v) {
+                $post_data[$k] = $this->input->post($k, true);
+            }
           
-          $client = $post_data['data']['info']['client'];
-          $adviser_id = $post_data['data']['info']['adviser'];
-
-          $this->load->model('AdvisersCollection');
-          $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
-          $adviserName = $adviserInfo->first_name." ".$adviserInfo->last_name;
-          $filename = "File review - ".$client." by ".$adviserName;
+            $adviser_ids = $this->input->post('adviser_str');
+            $date_from = isset($_POST['data']['info']['date_from']) ? $_POST['data']['info']['date_from'] : '';
+            $date_until = isset($_POST['data']['info']['date_until']) ? $_POST['data']['info']['date_until'] : '';
             
-          $post_data['data']['info']['filename'] = $filename;
-          $this->load->model('ComplianceCollection');
-          if ($insert_id = $this->ComplianceCollection->updatecompliance($post_data)) {
-              $result['message'] = "Successfully updated.";
-          } else {
-              $result['message'] = "Failed to update details.";
-          }
-      }
+
+            $this->load->model('SummaryCollection');
+            $this->load->model('AdvisersCollection');
+            $filename = "Summary of Multiple Adviser ".date("d/m/Y");
+            if($adviser_ids != '') {
+                $adviser_arr = explode(',',$adviser_ids);
+
+                if(sizeof($adviser_arr) == 1) {
+                    $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
+                    $adviserName = $adviserInfo->first_name." ".$adviserInfo->last_name;
+                    $filename = "Summary of ".$adviserName." ".date("d/m/Y");
+                }
+            }        
+            
+            $post_data['data']['info']['adviser'] = $adviser_ids;
+            $post_data['data']['info']['filename'] = $filename;
+            $this->load->model('SummaryCollection');
+            if ($insert_id = $this->SummaryCollection->updatesummary($post_data)) {
+               $result['message'] = "Successfully updated.";
+            } else {
+                $result['message'] = "Failed to update details.";
+            }
+        }
       
       echo json_encode($result);
     }
