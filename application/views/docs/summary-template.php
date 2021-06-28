@@ -8,6 +8,7 @@
     }
 
     $filename = 'Summary of ' . $filename;
+    $total_question = 0;
 ?>
 
 <style>
@@ -39,7 +40,17 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach ($result_arr as $k => $v) { ?>
+		<?php foreach ($result_arr as $k => $v) { 
+			$answers = isset($result_arr[$k]['answers']) ? json_decode($result_arr[$k]['answers'], true) : array();
+
+			for ($i = 1; $i <= 6; $i++) :
+				$total_question += sizeof($answers['step' . $i]);
+			endfor;
+
+			$max_score = $total_question * 2;
+			$score_percentage = ($result_arr[$k]['score'] / $max_score) * 100;
+			$total_question = 0;
+		?>
 			<tr>
 				<td>
 					<?php
@@ -62,9 +73,13 @@
 				</td>				
 				<td><?php echo $result_arr[$k]['replacement']; ?></td>
 				<td><?php echo $added_by; ?></td>
-				<td><?php echo $result_arr[$k]['score']; ?></td>
-				<td><?php echo $result_arr[$k]['percentage'] ?? 'N/A'; ?></td>
-				<td><?php echo $result_arr[$k]['created_at'] ?? 'N/A'; ?></td>
+				<td><?php echo $result_arr[$k]['score'] ."/".$max_score; ?></td>
+				<td>
+					<?php 
+						echo number_format($score_percentage, 2) . "%"; 
+					?>
+				</td>
+				<td><?php echo $result_arr[$k]['date_added'] ?? 'N/A'; ?></td>
 			</tr>
 		<?php } ?>
 	</tbody>
