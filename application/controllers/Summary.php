@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-use TCPDF as tcpdf;
-use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
+use TCPDF as tcpdf;
 
 class MYPDF extends TCPDF
 {
-    function __construct($company)
+    public function __construct($company)
     {
         parent::__construct();
 
@@ -16,12 +16,13 @@ class MYPDF extends TCPDF
         $this->SetAuthor('EliteInsure Ltd');
 
         // set margins
-        $this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP / 2, PDF_MARGIN_RIGHT);
+        $this->SetMargins(/* PDF_MARGIN_LEFT */0, PDF_MARGIN_TOP / 2, /* PDF_MARGIN_RIGHT */0);
         $this->setPageOrientation('P', true, 10);
-        $this->SetFont('dejavusans', '', 8); // set the font
+        $this->SetFont('CALIBRI_0', '', 11); // set the font
 
         $this->setHeaderMargin(PDF_MARGIN_HEADER);
-        $this->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM - 10);
+        // $this->setHeaderMargin(0);
+        $this->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM - 10);
 
         $this->SetPrintHeader(false);
         $this->SetPrintFooter(true);
@@ -34,37 +35,40 @@ class MYPDF extends TCPDF
         $this->docref = null;
         $this->hasPartner = null;
     }
-    //Page header
-    // public function Header() {
-    //     // Logo
-    //     $image_file = K_PATH_IMAGES.'logo_example.jpg';
-    //     $this->Image($image_file, 10, 10, 15, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-    //     // Set font
-    //     $this->SetFont('helvetica', 'B', 20);
-    //     // Title
-    //     $this->Cell(0, 15, '<< TCPDF Example 003 >>', 0, false, 'C', 0, '', 0, false, 'M', 'M');
-    // }
+
+    // Page header
+    public function Header()
+    {
+        // Page Width: 209
+        $this->SetFillColor(68, 84, 106);
+        $this->Cell(18, 18, '', 0, 0, 'L', true);
+        $this->writeHtmlCell(21, 18, 19, 6, '<img src="/img/logo-only.png" width="55">');
+        $this->SetFont('CALIBRIB_0', 'B', 18);
+        $this->SetTextColor(68, 84, 106);
+        $this->Cell(152, 18, ($this->PageNo() > 1 ? '' : 'COMPLIANCE SUMMARY  '), 0, 0, 'R');
+        $this->SetFillColor(46, 116, 185);
+        $this->Cell(18, 18, '', 0, 0, 'L', true);
+    }
 
     // Page footer
     public function Footer()
     {
-
         // Position at 15 mm from bottom
         $this->SetY(-15);
         // Set font
-        $this->SetFont('helvetica', 'I', 8);
+        $this->SetFont('CALIBRI_0', 'I', 10);
         // Page number
-        $image = base_url() . "img/logo.png";
-        $this->Image($image,  8, 280, 0, 10, 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        $image = base_url() . 'img/logo.png';
+        $this->Image($image, 8, 280, 0, 10, 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-        $this->Cell(0, 10, 'www.eliteinsure.co.nz | Page' . $this->getAliasNumPage(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 10, 'www.eliteinsure.co.nz | Page ' . $this->getAliasNumPage(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
         //$this->Cell(0, 10, 'www.eliteinsure.co.nz | Page'.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
     }
 }
 
 class Summary extends CI_Controller
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
 
@@ -74,7 +78,8 @@ class Summary extends CI_Controller
 
     public function index()
     {
-        var_export("TEST");
+        var_export('TEST');
+
         die();
     }
 
@@ -86,7 +91,7 @@ class Summary extends CI_Controller
     //     $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser);
     //     $complianceOfficer = isset($_POST['complianceOfficer'])?$_POST['complianceOfficer']:"";
     //     $adviserEmail =  $adviserInfo->email;
-    //     $production = false; //if in production, set to true 
+    //     $production = false; //if in production, set to true
     //     $includeAdviser = isset($_POST['includeAdviser'])?$_POST['includeAdviser']:false;
 
     //     $mail = new PHPMailer(true);
@@ -117,12 +122,12 @@ class Summary extends CI_Controller
     //             $mail->addAddress('kevin@eliteinsure.co.nz', 'Recipient');
     //             $mail->addAddress('omar@eliteinsure.co.nz', 'Recipient');
     //         }
-     
+
     //         if ($includeAdviser == "true") {
     //             $mail->addCC($adviserEmail, 'adviser');
     //         }
     //         //Attachments
-        
+
     //         $mail->addAttachment('assets/resources/preview.pdf', "$fileName.pdf");         //Add attachments
     //         // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
@@ -138,72 +143,79 @@ class Summary extends CI_Controller
     //     }
     // }
 
-
     public function generate()
     {
-        $adviser_ids = isset($_POST['data']['info']['adviser']) ? $_POST['data']['info']['adviser'] : '';
-        $replacement = isset($_POST['data']['info']['replacement']) ? $_POST['data']['info']['replacement'] : '';
-        $providers = isset($_POST['data']['info']['providers']) ? $_POST['data']['info']['providers'] : '';
-        $policy_type = isset($_POST['data']['info']['policy_type']) ? $_POST['data']['info']['policy_type'] : '';
+        $adviser_ids = $_POST['data']['info']['adviser'] ?? '';
+        $replacement = $_POST['data']['info']['replacement'] ?? '';
+        $providers = $_POST['data']['info']['providers'] ?? '';
+        $policy_type = $_POST['data']['info']['policy_type'] ?? '';
         $this->load->model('SummaryCollection');
 
-        $result_arr = array();
+        $result_arr = [];
         $filter_flag = 0;
 
-        if(isset($adviser_ids) && sizeof($adviser_ids) >= 1 && $adviser_ids != '') {
+        if (isset($adviser_ids) && sizeof($adviser_ids) >= 1 && '' != $adviser_ids) {
             foreach ($adviser_ids as $k => $v) {
                 //first filter to get result by adviser id and replacement
                 $result = $this->SummaryCollection->getResultsById($adviser_ids[$k], $replacement);
-                if($result != null) {
-                    if($providers != '') {
-                        $providers_new = isset($result->providers) ? explode(',',$result->providers) : array();
+
+                if (null != $result) {
+                    if ('' != $providers) {
+                        $providers_new = isset($result->providers) ? explode(',', $result->providers) : [];
                         $providers_new = array_unique($providers_new);
                         //second filter to get result with a selected provider
                         foreach ($providers as $k1 => $v1) {
-                            if(in_array($providers[$k1], $providers_new)) {
+                            if (in_array($providers[$k1], $providers_new)) {
                                 $filter_flag = 1;
-                                break;
-                            }     
-                        }
-                    } else $filter_flag = 1;
 
-                    if($policy_type != '') {
-                        if($filter_flag == 1) {
-                            $filter_flag = 0; 
-                            $policy_type_new = isset($result->policy_type) ? explode(',',$result->policy_type) : array();
+                                break;
+                            }
+                        }
+                    } else {
+                        $filter_flag = 1;
+                    }
+
+                    if ('' != $policy_type) {
+                        if (1 == $filter_flag) {
+                            $filter_flag = 0;
+                            $policy_type_new = isset($result->policy_type) ? explode(',', $result->policy_type) : [];
                             $policy_type_new = array_unique($policy_type_new);
                             //third filter to get result with a selected policytype
                             foreach ($policy_type as $k1 => $v1) {
-                                if(in_array($policy_type[$k1], $policy_type_new)) {
+                                if (in_array($policy_type[$k1], $policy_type_new)) {
                                     array_push($result_arr, $result);
+
                                     break;
-                                }     
+                                }
                             }
                         }
                     } else {
                         $filter_flag = 0;
                         array_push($result_arr, $result);
-                    }   
+                    }
                 }
             }
         } else {
             $result_arr = $this->SummaryCollection->getResultsById($adviser_ids, $replacement);
         }
 
+        $providers_arr_name = [];
 
-        $providers_arr_name = array();
         foreach ($result_arr as $k => $v) {
-            $providers_arr = isset($result_arr[$k]['providers']) ? explode(',',$result_arr[$k]['providers']) : array();
+            $providers_arr = isset($result_arr[$k]['providers']) ? explode(',', $result_arr[$k]['providers']) : [];
             $providers_arr = array_unique($providers_arr);
+
             foreach ($providers_arr as $k1 => $v1) {
                 $providers_arr_name[$result_arr[$k]['adviser_id']][$k1] = $this->SummaryCollection->getProvidersNameById($providers_arr[$k1]);
             }
         }
 
-        $policy_arr_name = array();
+        $policy_arr_name = [];
+
         foreach ($result_arr as $k => $v) {
-            $policy_arr = isset($result_arr[$k]['providers']) ? explode(',',$result_arr[$k]['providers']) : array();
+            $policy_arr = isset($result_arr[$k]['providers']) ? explode(',', $result_arr[$k]['providers']) : [];
             $policy_arr = array_unique($policy_arr);
+
             foreach ($policy_arr as $k1 => $v1) {
                 $policy_arr_name[$result_arr[$k]['adviser_id']][$k1] = $this->SummaryCollection->getPolicyNameById($policy_arr[$k1]);
             }
@@ -212,33 +224,33 @@ class Summary extends CI_Controller
         ob_start();
         set_time_limit(300);
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        $html = $this->load->view('docs/summary-template', array(
+        $html = $this->load->view('docs/summary-template', [
             'data' => $_POST,
             'result_arr' => $result_arr,
             'added_by' => $_SESSION['name'],
             'providers_arr' => $providers_arr_name,
-            'policy_arr' => $policy_arr_name
-        ), true);
+            'policy_arr' => $policy_arr_name,
+        ], true);
         // remove default header/footer
-        $pdf->setPrintHeader(false);
+        $pdf->setPrintHeader(true);
         $pdf->setPrintFooter(true);
         $pdf->AddPage(); // add a page
         $pdf->writeHTMLCell(187, 300, 12, 5, $html, 0, 0, false, true, '', true);
-        $link = FCPATH . "assets/resources/preview.pdf";
+        $link = FCPATH . 'assets/resources/preview.pdf';
         $pdf->Output($link, 'F');
         ob_end_clean();
-        echo json_encode(array("link" => base_url('assets/resources/preview.pdf')));
+        echo json_encode(['link' => base_url('assets/resources/preview.pdf')]);
     }
 
     public function savesummary()
     {
-        
-        $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
+        $result['message'] = 'There was an error in the connection. Please contact the administrator for updates.';
         $result['result_id'] = '';
         $result['filename'] = '';
 
-        if ($this->input->post() && $this->input->post() != null) {
-            $post_data = array();
+        if ($this->input->post() && null != $this->input->post()) {
+            $post_data = [];
+
             foreach ($this->input->post() as $k => $v) {
                 $post_data[$k] = $this->input->post($k, true);
             }
@@ -248,51 +260,55 @@ class Summary extends CI_Controller
 
             $this->load->model('AdvisersCollection');
             $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
-            $adviserName = $adviserInfo->first_name." ".$adviserInfo->last_name;
-            $filename = "File review - ".$client." by ".$adviserName;
+            $adviserName = $adviserInfo->first_name . ' ' . $adviserInfo->last_name;
+            $filename = 'File review - ' . $client . ' by ' . $adviserName;
 
             $post_data['data']['info']['filename'] = $filename;
             $this->load->model('ComplianceCollection');
+
             if ($insert_id = $this->ComplianceCollection->savecompliance($post_data)) {
-                $result['message'] = "Successfully saved.";
+                $result['message'] = 'Successfully saved.';
                 $result['results_id'] = $insert_id;
                 $result['filename'] = $filename;
             } else {
-                $result['message'] = "Failed to save details.";
+                $result['message'] = 'Failed to save details.';
             }
         }
-        
+
         echo json_encode($result);
     }
 
-    public function updatecompliance(){
-      $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
-      $result['results_id'] = $this->input->post('results_id');
-      $result['filename'] = $this->input->post('filename');
+    public function updatecompliance()
+    {
+        $result['message'] = 'There was an error in the connection. Please contact the administrator for updates.';
+        $result['results_id'] = $this->input->post('results_id');
+        $result['filename'] = $this->input->post('filename');
 
-      if ($this->input->post() && $this->input->post() != null) {
-          $post_data = array();
-          foreach ($this->input->post() as $k => $v) {
-              $post_data[$k] = $this->input->post($k, true);
-          }
-          
-          $client = $post_data['data']['info']['client'];
-          $adviser_id = $post_data['data']['info']['adviser'];
+        if ($this->input->post() && null != $this->input->post()) {
+            $post_data = [];
 
-          $this->load->model('AdvisersCollection');
-          $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
-          $adviserName = $adviserInfo->first_name." ".$adviserInfo->last_name;
-          $filename = "File review - ".$client." by ".$adviserName;
-            
-          $post_data['data']['info']['filename'] = $filename;
-          $this->load->model('ComplianceCollection');
-          if ($insert_id = $this->ComplianceCollection->updatecompliance($post_data)) {
-              $result['message'] = "Successfully updated.";
-          } else {
-              $result['message'] = "Failed to update details.";
-          }
-      }
-      
-      echo json_encode($result);
+            foreach ($this->input->post() as $k => $v) {
+                $post_data[$k] = $this->input->post($k, true);
+            }
+
+            $client = $post_data['data']['info']['client'];
+            $adviser_id = $post_data['data']['info']['adviser'];
+
+            $this->load->model('AdvisersCollection');
+            $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
+            $adviserName = $adviserInfo->first_name . ' ' . $adviserInfo->last_name;
+            $filename = 'File review - ' . $client . ' by ' . $adviserName;
+
+            $post_data['data']['info']['filename'] = $filename;
+            $this->load->model('ComplianceCollection');
+
+            if ($insert_id = $this->ComplianceCollection->updatecompliance($post_data)) {
+                $result['message'] = 'Successfully updated.';
+            } else {
+                $result['message'] = 'Failed to update details.';
+            }
+        }
+
+        echo json_encode($result);
     }
 }
