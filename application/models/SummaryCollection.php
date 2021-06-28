@@ -5,7 +5,7 @@ class SummaryCollection extends CI_Model {
         parent::__construct();
     }
 
-    public function getResultsById($id, $replacement){
+    public function getResultsById($id, $replacement, $date_from, $date_until){
         $this->db->select('
             adviser_id,
             advisers_tbl.last_name AS adviser_last_name,
@@ -26,6 +26,7 @@ class SummaryCollection extends CI_Model {
         if($replacement != '')
             $this->db->where('replacement',$replacement);
 
+        $this->db->where('DATE(date_added) BETWEEN "'. date('Y-m-d', strtotime($date_from)). '" AND "'. date('Y-m-d', strtotime($date_until)).'"');
         $this->db->group_by('adviser_id'); 
 
         if($id != '')
@@ -48,6 +49,40 @@ class SummaryCollection extends CI_Model {
         $this->db->from('product_category');
         $this->db->where('idproduct_category', $id);
         return $this->db->get()->row()->name;
+    }
+
+    //insert summary
+    public function savesummary($params){
+
+        $params2 = array(
+            "adviser_id" => $params['data']['info']['adviser'],
+            "filename" => $params['data']['info']['filename'],
+            "date_from" => $params['data']['info']['date_from'],
+            "date_until" => $params['data']['info']['date_until']
+        );
+
+        $this->db->insert('summary_tbl', $params2);
+        if($this->db->affected_rows() > 0) {
+            $insert_id = $this->db->insert_id();
+            return $insert_id;        
+        }
+        return false;
+    }
+
+    //update summary
+    public function updatesummary($params){
+
+        $params2 = array(
+            "adviser_id" => $params['data']['info']['adviser'],
+            "filename" => $params['data']['info']['filename'],
+            "date_from" => $params['data']['info']['date_from'],
+            "date_until" => $params['data']['info']['date_until']
+        );
+
+        $this->db->where('summary_id', $params['summary_id']);
+        if ($this->db->update('summary_tbl', $params2) !== FALSE)
+            return true;    
+        return false;
     }
 }
 ?>
