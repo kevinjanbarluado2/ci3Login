@@ -16,7 +16,9 @@ class SummaryCollection extends CI_Model {
             policy_number,
             clients,
             replacement,
-            score 
+            score, 
+            DATE_FORMAT(DATE(date_added), "%d/%m/%Y") AS date_added,
+            answers 
             ');
         $this->db->from('results_tbl');
         $this->db->join("advisers_tbl","results_tbl.adviser_id = advisers_tbl.idusers", "left");
