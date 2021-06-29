@@ -356,7 +356,7 @@ $(function () {
 function loadTable() {
     var baseurl = $('#base_url').val();
 
-    table = $('#datatables').DataTable({
+    $('.compliance-div #datatables').DataTable({
         destroy: true,
         processing: true,
         serverSide: true,
@@ -367,18 +367,18 @@ function loadTable() {
         // 	displayBuffer: 20
         // }
         initComplete: function () {
-            $('#search-table').remove();
-            var input = $('.dataTables_filter input').unbind(),
+            $('.compliance-div #search-table').remove();
+            var input = $('.compliance-div .dataTables_filter input').unbind(),
                 self = this.api(),
                 $searchButton = $('<button id="search-table" class="btn btn-primary btn-round btn-xs">')
                     .html('<i class="material-icons">search</i>')
                     .click(function () {
 
-                        if (!$('#search-table').is(':disabled')) {
-                            $('#search-table').attr('disabled', true);
+                        if (!$('.compliance-div #search-table').is(':disabled')) {
+                            $('.compliance-div #search-table').attr('disabled', true);
                             self.search(input.val()).draw();
-                            $('#datatables button').attr('disabled', true);
-                            $('.dataTables_filter').append('<div id="search-loader"><br>'
+                            $('.compliance-div #datatables button').attr('disabled', true);
+                            $('.compliance-div .dataTables_filter').append('<div id="search-loader"><br>'
                                 + '<div class="preloader pl-size-xs">'
                                 + '<div class="spinner-layer pl-red-grey">'
                                 + '<div class="circle-clipper left">'
@@ -393,13 +393,13 @@ function loadTable() {
                         }
 
                     })
-            $('.dataTables_filter').append($searchButton).addClass('pull-right');
-            $('.dataTables_paginate').addClass('pull-right');
+            $('.compliance-div .dataTables_filter').append($searchButton).addClass('pull-right');
+            $('.compliance-div .dataTables_paginate').addClass('pull-right');
         },
         drawCallback: function (settings) {
-            $('#search-loader').remove();
-            $('#search-table').removeAttr('disabled');
-            $('#datatables button').removeAttr('disabled');
+            $('.compliance-div #search-loader').remove();
+            $('.compliance-div #search-table').removeAttr('disabled');
+            $('.compliance-div #datatables button').removeAttr('disabled');
         },
         ajax: {
             url: baseurl + "Pdf/fetchRows",
@@ -419,7 +419,7 @@ function loadTable() {
         }
     });
 
-    table_summary = $('#datatables-summary').DataTable({
+    $('.summary-div #datatables-summary').DataTable({
         destroy: true,
         processing: true,
         serverSide: true,
@@ -430,18 +430,18 @@ function loadTable() {
         //  displayBuffer: 20
         // }
         initComplete: function () {
-            $('#datatables-summary search-table').remove();
-            var input = $('#datatables-summary .dataTables_filter input').unbind(),
+            $('.summary-div search-table').remove();
+            var input = $('.summary-div .dataTables_filter input').unbind(),
                 self = this.api(),
                 $searchButton = $('<button id="search-table" class="btn btn-primary btn-round btn-xs">')
                     .html('<i class="material-icons">search</i>')
                     .click(function () {
 
-                        if (!$('#datatables-summary #search-table').is(':disabled')) {
-                            $('#datatables-summary #search-table').attr('disabled', true);
+                        if (!$('.summary-div #search-table').is(':disabled')) {
+                            $('.summary-div #search-table').attr('disabled', true);
                             self.search(input.val()).draw();
-                            $('#datatables-summary #datatables button').attr('disabled', true);
-                            $('#datatables-summary .dataTables_filter').append('<div id="search-loader"><br>'
+                            $('.summary-div #datatables button').attr('disabled', true);
+                            $('.summary-div .dataTables_filter').append('<div id="search-loader"><br>'
                                 + '<div class="preloader pl-size-xs">'
                                 + '<div class="spinner-layer pl-red-grey">'
                                 + '<div class="circle-clipper left">'
@@ -456,13 +456,13 @@ function loadTable() {
                         }
 
                     })
-            $('#datatables-summary .dataTables_filter').append($searchButton).addClass('pull-right');
-            $('#datatables-summary .dataTables_paginate').addClass('pull-right');
+            $('.summary-div .dataTables_filter').append($searchButton).addClass('pull-right');
+            $('.summary-div .dataTables_paginate').addClass('pull-right');
         },
         drawCallback: function (settings) {
-            $('#datatables-summary #search-loader').remove();
-            $('#datatables-summary #search-table').removeAttr('disabled');
-            $('#datatables-summary #datatables button').removeAttr('disabled');
+            $('.summary-div #search-loader').remove();
+            $('.summary-div #search-table').removeAttr('disabled');
+            $('.summary-div #datatables button').removeAttr('disabled');
         },
         ajax: {
             url: baseurl + "Summary/fetchRows",

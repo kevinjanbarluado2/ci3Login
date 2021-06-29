@@ -136,7 +136,7 @@ class SummaryCollection extends CI_Model {
         $this->db->join("advisers_tbl","results_tbl.adviser_id = advisers_tbl.idusers", "left");
 
         if(isset($ids) && sizeof($ids) >= 1)
-            $this->db->where_in('adviser_id', $ids);
+            $this->db->where_in('results_id', $ids);
         $this->db->where('DATE(date_added) BETWEEN "'. date('Y-m-d', strtotime($date_from)). '" AND "'. date('Y-m-d', strtotime($date_until)).'"');
         $this->db->group_by('results_id'); 
 
