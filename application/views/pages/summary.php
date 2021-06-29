@@ -25,6 +25,7 @@ button:disabled {
 <input type="hidden" name="summary_id" value="" />
 <input type="hidden" name="filename" value="" />
 <input type="hidden" name="adviser_str" value="" />
+<input type="hidden" name="result_str" value="" />
 
 <div class="modal fade" id="summaryModal" tabindex="-1" role="dialog" aria-labelledby="summaryModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

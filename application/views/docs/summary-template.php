@@ -1,9 +1,17 @@
 <?php
+	$adviser_arr = array();
     foreach ($result_arr as $k => $v) {
+    	array_push($adviser_arr, $result_arr[$k]['adviser_first_name'] . ' ' . $result_arr[$k]['adviser_last_name']);
+    }
+
+    $adviser_arr = array_unique($adviser_arr);
+    $adviser_arr_new = array_values($adviser_arr);
+    
+    foreach ($adviser_arr_new as $k => $v) {
         if ('' == $filename) {
-            $filename = $result_arr[$k]['adviser_first_name'] . ' ' . $result_arr[$k]['adviser_last_name'];
+            $filename = $adviser_arr_new[$k];
         } else {
-            $filename .= ', ' . $result_arr[$k]['adviser_first_name'] . ' ' . $result_arr[$k]['adviser_last_name'];
+            $filename .= ', ' . $adviser_arr_new[$k];
         }
     }
 
@@ -59,17 +67,17 @@
 				</td>
 				<td>
 					<ul>
-						<?php foreach ($policy_arr[$result_arr[$k]['adviser_id']] as $k1 => $v1) { ?>
+						<?php foreach ($policy_arr[$result_arr[$k]['result_id']] as $k1 => $v1) { ?>
 							<li>
-								<?php echo $policy_arr[$result_arr[$k]['adviser_id']][$k1]; ?>
+								<?php echo $policy_arr[$result_arr[$k]['result_id']][$k1]; ?>
 							</li>
 						<?php } ?>
 					</ul>
 				</td>
 				<td>
 					<ul>
-						<?php foreach ($providers_arr[$result_arr[$k]['adviser_id']] as $k1 => $v1) { ?>
-							<li><?php echo $providers_arr[$result_arr[$k]['adviser_id']][$k1]; ?></li>
+						<?php foreach ($providers_arr[$result_arr[$k]['result_id']] as $k1 => $v1) { ?>
+							<li><?php echo $providers_arr[$result_arr[$k]['result_id']][$k1]; ?></li>
 						<?php } ?>
 					</ul>
 				</td>				

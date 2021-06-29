@@ -1,5 +1,6 @@
 const baseurl = $('#base_url').val();
 $(function () {
+    $('.select2').select2();
     loadTable();
 
     //view pdf
@@ -237,6 +238,118 @@ $(function () {
 
         });
     });
+
+    //delete pdf
+    $(document).on('click', '#deleteSummary', function (e) {
+        e.preventDefault();
+
+        me = $(this)
+        summary_id = me.attr('data-summary_id');
+        url = me.attr('href');
+
+        content = "Are you sure you want to proceed?";
+        if (me.hasClass("deleteSummary")) {
+            content = "Are you sure you want to delete this Summary?";
+        }
+
+        swal({
+            text: content,
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            buttonsStyling: false
+        }).then(function (result) {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        summary_id: summary_id
+                    },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.hasOwnProperty("key")) {
+                            switch (result.key) {
+                                case 'deleteSummary':
+                                    loadTable();
+                                    $.notify({
+                                        icon: "notifications",
+                                        message: result.message
+
+                                    }, {
+                                        type: 'success',
+                                        timer: 1000,
+                                        placement: {
+                                            from: 'top',
+                                            align: 'center'
+                                        }
+                                    });
+                                    $('#myModal .modal-body').html('');
+                                    $('#myModal').modal('hide');
+
+                                    break;
+                            }
+                        }
+                    },
+                    error: function (result) {
+                        $.notify({
+                            icon: "notifications",
+                            message: "There was an error in the connection. Please contact the administrator for updates."
+
+                        }, {
+                            type: 'danger',
+                            timer: 1000,
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                    }
+                });
+            }
+        }).catch(swal.noop)
+
+    })
+
+    //view pdf
+    $(document).on('click', '#viewSummaryForm', function (e) {
+        e.preventDefault();
+
+        me = $(this)
+        summary_id = me.attr('data-summary_id');
+        url = me.attr('href');
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: {
+                summary_id: summary_id
+            },
+            dataType: "json",
+            success: function (res) {
+                console.log(res);
+                var d = new Date();
+                $('#pdfHere').attr('src', res.link + `?v=${d.getTime()}`);
+                $('#complianceModal').modal('show');
+
+            }
+        });
+    });
+
+    //change filter
+    $(document).on('change', '#filter', function (e) {
+        var filter = $(this).val();
+        if(filter == "summary") {
+            $('.compliance-div').hide();
+            $('.summary-div').show();
+        } else {
+            $('.compliance-div').show();
+            $('.summary-div').hide();
+        }
+    });
 });
 
 //initialize table to be displayed
@@ -290,6 +403,69 @@ function loadTable() {
         },
         ajax: {
             url: baseurl + "Pdf/fetchRows",
+            type: "POST",
+        },
+        oLanguage: {
+            sProcessing: '<div class="preloader pl-size-sm">'
+                + '<div class="spinner-layer pl-red-grey">'
+                + '<div class="circle-clipper left">'
+                + '<div class="circle"></div>'
+                + '</div>'
+                + '<div class="circle-clipper right">'
+                + '<div class="circle"></div>'
+                + '</div>'
+                + '</div>'
+                + '</div>'
+        }
+    });
+
+    table_summary = $('#datatables-summary').DataTable({
+        destroy: true,
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        order: [],
+        columnDefs: [{ orderable: false, targets: -1 }],
+        // scroller: {
+        //  displayBuffer: 20
+        // }
+        initComplete: function () {
+            $('#datatables-summary search-table').remove();
+            var input = $('#datatables-summary .dataTables_filter input').unbind(),
+                self = this.api(),
+                $searchButton = $('<button id="search-table" class="btn btn-primary btn-round btn-xs">')
+                    .html('<i class="material-icons">search</i>')
+                    .click(function () {
+
+                        if (!$('#datatables-summary #search-table').is(':disabled')) {
+                            $('#datatables-summary #search-table').attr('disabled', true);
+                            self.search(input.val()).draw();
+                            $('#datatables-summary #datatables button').attr('disabled', true);
+                            $('#datatables-summary .dataTables_filter').append('<div id="search-loader"><br>'
+                                + '<div class="preloader pl-size-xs">'
+                                + '<div class="spinner-layer pl-red-grey">'
+                                + '<div class="circle-clipper left">'
+                                + '<div class="circle"></div>'
+                                + '</div>'
+                                + '<div class="circle-clipper right">'
+                                + '<div class="circle"></div>'
+                                + '</div>'
+                                + '</div>'
+                                + '</div>'
+                                + '&emsp;Please Wait..</div>');
+                        }
+
+                    })
+            $('#datatables-summary .dataTables_filter').append($searchButton).addClass('pull-right');
+            $('#datatables-summary .dataTables_paginate').addClass('pull-right');
+        },
+        drawCallback: function (settings) {
+            $('#datatables-summary #search-loader').remove();
+            $('#datatables-summary #search-table').removeAttr('disabled');
+            $('#datatables-summary #datatables button').removeAttr('disabled');
+        },
+        ajax: {
+            url: baseurl + "Summary/fetchRows",
             type: "POST",
         },
         oLanguage: {
