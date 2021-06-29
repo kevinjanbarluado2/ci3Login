@@ -58,18 +58,20 @@
                     ?>
 				</td>
 				<td>
-				<?php
-                    foreach ($policy_arr[$result_arr[$k]['adviser_id']] as $k1 => $v1) {
-                        echo $policy_arr[$result_arr[$k]['adviser_id']][$k1] . '<br>';
-                    }
-                ?>		
+					<ul>
+						<?php foreach ($policy_arr[$result_arr[$k]['adviser_id']] as $k1 => $v1) { ?>
+							<li>
+								<?php echo $policy_arr[$result_arr[$k]['adviser_id']][$k1]; ?>
+							</li>
+						<?php } ?>
+					</ul>
 				</td>
 				<td>
-				<?php
-                    foreach ($providers_arr[$result_arr[$k]['adviser_id']] as $k1 => $v1) {
-                        echo $providers_arr[$result_arr[$k]['adviser_id']][$k1] . '<br>';
-                    }
-                ?>	
+					<ul>
+						<?php foreach ($providers_arr[$result_arr[$k]['adviser_id']] as $k1 => $v1) { ?>
+							<li><?php echo $providers_arr[$result_arr[$k]['adviser_id']][$k1]; ?></li>
+						<?php } ?>
+					</ul>
 				</td>				
 				<td><?php echo $result_arr[$k]['replacement']; ?></td>
 				<td><?php echo $added_by; ?></td>
