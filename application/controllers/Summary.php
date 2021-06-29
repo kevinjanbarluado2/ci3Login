@@ -151,14 +151,14 @@ class Summary extends CI_Controller
         $this->load->model('SummaryCollection');
         
         $res = $this->SummaryCollection->getSummaryById($summary_id);
-        $adviser_ids = explode(',',$res->adviser_id);
+        $result_ids = explode(',',$res->result_id);
         $date_from = $res->date_from;
         $date_until = $res->date_until;
         $replacement = '';
 
         $result_arr = array();
 
-        $result_arr = $this->SummaryCollection->getResultsByIds($adviser_ids, $date_from, $date_until);
+        $result_arr = $this->SummaryCollection->getResultsByIds($result_ids, $date_from, $date_until);
         
         $result_arr = json_decode(json_encode($result_arr), true);
 
@@ -400,8 +400,10 @@ class Summary extends CI_Controller
             $filename = "Summary of Multiple Adviser ".date("d/m/Y");
             if($adviser_ids != '') {
                 $adviser_arr = explode(',',$adviser_ids);
-                if(sizeof($adviser_arr) == 1) {
-                    $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_arr[0]);
+                $adviser_arr = array_unique($adviser_arr);
+                $adviser_arr_new = array_values($adviser_arr);
+                if(sizeof($adviser_arr_new) == 1) {
+                    $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_arr_new[0]);
                     $adviserName = $adviserInfo->first_name." ".$adviserInfo->last_name;
                     $filename = "Summary of ".$adviserName." ".date("d/m/Y");
                 }
@@ -447,14 +449,15 @@ class Summary extends CI_Controller
             $filename = "Summary of Multiple Adviser ".date("d/m/Y");
             if($adviser_ids != '') {
                 $adviser_arr = explode(',',$adviser_ids);
-
-                if(sizeof($adviser_arr) == 1) {
-                    $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
+                $adviser_arr = array_unique($adviser_arr);
+                $adviser_arr_new = array_values($adviser_arr);
+                if(sizeof($adviser_arr_new) == 1) {
+                    $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_arr_new[0]);
                     $adviserName = $adviserInfo->first_name." ".$adviserInfo->last_name;
                     $filename = "Summary of ".$adviserName." ".date("d/m/Y");
                 }
             }        
-            
+
             $post_data['data']['info']['adviser'] = $adviser_ids;
             $post_data['data']['info']['result'] = $result_ids;
             $post_data['data']['info']['filename'] = $filename;
