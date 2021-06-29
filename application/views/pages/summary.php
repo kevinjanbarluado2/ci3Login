@@ -22,7 +22,9 @@ button:disabled {
 }
 </style>
 
-<input type="hidden" name="results_id" value="<?=(!empty($data->results_id))?$data->results_id:'';?>" />
+<input type="hidden" name="summary_id" value="" />
+<input type="hidden" name="filename" value="" />
+<input type="hidden" name="adviser_str" value="" />
 
 <div class="modal fade" id="summaryModal" tabindex="-1" role="dialog" aria-labelledby="summaryModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -126,6 +128,17 @@ button:disabled {
 
                             </div>
 
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <label for="">Date From</label>
+                                <input type="date" id="date_from" class="form-control date_from" name="date_from" value="<?php echo date("Y-m-d"); ?>">
+                            </div>
+                            <div class="col">
+                                <label for="">Date Until</label>
+                                <input type="date" id="date_until" class="form-control date_until" name="date_until" value="<?php echo date("Y-m-d"); ?>">
+                            </div>
                         </div>
                     </div>
                 </div>

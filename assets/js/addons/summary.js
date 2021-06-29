@@ -36,7 +36,7 @@ $(function () {
     $('#generateSummary').on('click', function () {
         data = {};
         data.info = fetchInfo();
-
+        
         $.ajax({
             url: `${base_url}/summary/generate`,
             type: 'post',
@@ -44,19 +44,37 @@ $(function () {
             dataType: "json",
             success: function (res) {
                 var d = new Date();
-                $('#pdfHere').attr('src', res.link + `?v=${d.getTime()}`);
-                $('#viewPdf').attr('disabled', false).removeClass('disabled').text('VIEW PDF');
-                $.notify({
-                    icon: "notifications",
-                    message: "Generated Summary PDF"
-                }, {
-                    type: 'success',
-                    timer: 1000,
-                    placement: {
-                        from: 'top',
-                        align: 'center'
-                    }
-                });
+                if(res.adviser_str != "") {
+                    $('[name="adviser_str"]').val(res.adviser_str);
+
+                    $('#pdfHere').attr('src', res.link + `?v=${d.getTime()}`);
+                    $('#viewPdf').attr('disabled', false).removeClass('disabled').text('VIEW PDF');
+                    $.notify({
+                        icon: "notifications",
+                        message: "Generated Summary PDF"
+                    }, {
+                        type: 'success',
+                        timer: 1000,
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        }
+                    });
+                } else {
+                    $.notify({
+                        icon: "notifications",
+                        message: "No Records Found"
+                    }, {
+                        type: 'danger',
+                        timer: 1000,
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        }
+                    });  
+
+                    $('#viewPdf').attr('disabled', true).addClass('disabled').text('VIEW PDF');
+                }
 
             },
             beforeSend: function () {
@@ -70,22 +88,24 @@ $(function () {
         data = {};
         data.info = fetchInfo();
 
-        let link = ($('[name="results_id"]').val() === "") ? "savesummary" : "updatesummary";
-        let results_id = $('[name="results_id"]').val();
+        let link = ($('[name="summary_id"]').val() === "") ? "savesummary" : "updatesummary";
+        let summary_id = $('[name="summary_id"]').val();
+        let adviser_str = $('[name="adviser_str"]').val();
 
         $.ajax({
             url: `${base_url}/summary/${link}`,
             type: 'post',
             data: {
                 data: data,
-                results_id: results_id
+                summary_id: summary_id,
+                adviser_str: adviser_str
             },
             dataType: "json",
             success: function (result) {
                 $('#summaryModal').modal('hide');
                 $('#save-btn').text("Update changes");
 
-                $('[name="results_id"]').val(result.results_id);
+                $('[name="summary_id"]').val(result.summary_id);
                 $('#sendPdf').attr('disabled', false).removeClass('disabled').text('Send Pdf');
                 $.notify({
                     icon: "notifications",
@@ -119,10 +139,21 @@ $(function () {
             }
         });
 
-
-
-
-
-
     });
+
+    $('#sendPdf').on('click', function () {
+        $.notify({
+            icon: "notifications",
+            message: "This feature is currently unavailable."
+
+        }, {
+            type: 'danger',
+            timer: 1000,
+            placement: {
+                from: 'top',
+                align: 'center'
+            }
+        });
+    });
+
 });
