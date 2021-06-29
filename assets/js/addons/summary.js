@@ -44,8 +44,9 @@ $(function () {
             dataType: "json",
             success: function (res) {
                 var d = new Date();
-                if(res.adviser_str != "") {
+                if(res.result_str != "") {
                     $('[name="adviser_str"]').val(res.adviser_str);
+                    $('[name="result_str"]').val(res.result_str);
 
                     $('#pdfHere').attr('src', res.link + `?v=${d.getTime()}`);
                     $('#viewPdf').attr('disabled', false).removeClass('disabled').text('VIEW PDF');
@@ -91,6 +92,7 @@ $(function () {
         let link = ($('[name="summary_id"]').val() === "") ? "savesummary" : "updatesummary";
         let summary_id = $('[name="summary_id"]').val();
         let adviser_str = $('[name="adviser_str"]').val();
+        let result_str = $('[name="result_str"]').val();
 
         $.ajax({
             url: `${base_url}/summary/${link}`,
@@ -98,7 +100,8 @@ $(function () {
             data: {
                 data: data,
                 summary_id: summary_id,
-                adviser_str: adviser_str
+                adviser_str: adviser_str,
+                result_str: result_str
             },
             dataType: "json",
             success: function (result) {

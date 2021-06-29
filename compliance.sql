@@ -222,6 +222,7 @@ INSERT INTO `results_tbl` (`results_id`, `adviser_id`, `providers`, `policy_type
 -- Dumping structure for table compliance.summary_tbl
 CREATE TABLE IF NOT EXISTS `summary_tbl` (
   `summary_id` int(11) NOT NULL AUTO_INCREMENT,
+  `result_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `adviser_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `filename` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date_from` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -229,15 +230,15 @@ CREATE TABLE IF NOT EXISTS `summary_tbl` (
   `date_generated` datetime DEFAULT current_timestamp(),
   `date_modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`summary_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table compliance.summary_tbl: ~0 rows (approximately)
 /*!40000 ALTER TABLE `summary_tbl` DISABLE KEYS */;
-INSERT INTO `summary_tbl` (`summary_id`, `adviser_id`, `filename`, `date_from`, `date_until`, `date_generated`, `date_modified`) VALUES
-	(1, '110,111', 'Summary of Multiple Adviser 28/06/2021', '2021-06-01', '2021-06-28', '2021-06-28 14:51:58', '2021-06-28 14:52:14'),
-	(2, '', 'Summary of Multiple Adviser 28/06/2021', '2021-06-01', '2021-06-28', '2021-06-28 14:58:53', '2021-06-28 14:58:53'),
-	(3, '110,111', 'Summary of Multiple Adviser 28/06/2021', '2021-06-01', '2021-06-28', '2021-06-28 15:09:20', '2021-06-28 15:09:20'),
-	(4, '110,111', 'Summary of Multiple Adviser 28/06/2021', '2021-06-01', '2021-06-28', '2021-06-28 15:14:22', '2021-06-28 15:14:22');
+INSERT INTO `summary_tbl` (`summary_id`, `result_id`, `adviser_id`, `filename`, `date_from`, `date_until`, `date_generated`, `date_modified`) VALUES
+	(1, '4,5', '111', 'Summary of Omar Khay Margen 29/06/2021', '2021-06-01', '2021-06-29', '2021-06-29 14:07:32', '2021-06-29 14:07:32'),
+	(2, '2,3', '110', 'Summary of Sam Adviser Test 29/06/2021', '2021-06-01', '2021-06-29', '2021-06-29 14:07:43', '2021-06-29 14:07:43'),
+	(3, '2,3,4,5', '110,111', 'Summary of Multiple Adviser 29/06/2021', '2021-06-01', '2021-06-29', '2021-06-29 14:07:54', '2021-06-29 14:07:54'),
+	(4, '2,3,4,5', '110,110,111,111', 'Summary of Multiple Adviser 29/06/2021', '2021-06-01', '2021-06-29', '2021-06-29 14:31:04', '2021-06-29 14:31:04');
 /*!40000 ALTER TABLE `summary_tbl` ENABLE KEYS */;
 
 -- Dumping structure for table compliance.user_tbl

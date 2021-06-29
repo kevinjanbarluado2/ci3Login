@@ -44,8 +44,24 @@
 				<div class="card-header card-header-info">
 					<h4 class="card-title">PDF</h4>
 					<p class="card-category">Manage PDF Files</p>
-
 				</div>
+
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-6">
+                            <label for="">Filter</label>
+                            <select name="filter" id="filter" class="form-control filter select2">
+                                <option value="compliance" selected>Compliance PDF</option>
+                                <option value="summary">Summary PDF</option>
+                            </select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-12 compliance-div">
+			<div class="card">
 				<div class="card-body">
 					<div class="row">
 						<div class="col-md-12">
@@ -66,6 +82,29 @@
 					</div>
 							
 
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-12 summary-div" style="display:none">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="table-responsive" style="width:100%;overflow-x: hidden;">
+								<table id="datatables-summary" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+									<thead class=" text-primary">
+										<tr>
+											<th width="35%">File Name</th>
+											<th width="35%">Adviser/s</th>
+											<th>Date Created</th>
+											<th width="15%">Action</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
