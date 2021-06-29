@@ -29,6 +29,8 @@ class MYPDF extends TCPDF
 
         $this->setFontSubsetting(false);
 
+		$this->setListIndentWidth(3);
+
         $this->company = $company['company'];
         $this->fspr_number = $company['fspr'];
         $this->trans = null;
