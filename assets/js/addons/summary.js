@@ -109,6 +109,7 @@ $(function () {
                 $('#save-btn').text("Update changes");
 
                 $('[name="summary_id"]').val(result.summary_id);
+                $('[name="filename"]').val(result.filename);
                 $('#sendPdf').attr('disabled', false).removeClass('disabled').text('Send Pdf');
                 $.notify({
                     icon: "notifications",
@@ -145,17 +146,39 @@ $(function () {
     });
 
     $('#sendPdf').on('click', function () {
-        $.notify({
-            icon: "notifications",
-            message: "This feature is currently unavailable."
+        let data = {};
+        info = fetchInfo();
 
-        }, {
-            type: 'danger',
-            timer: 1000,
-            placement: {
-                from: 'top',
-                align: 'center'
-            }
+        data.filename = $('[name=filename]').val();
+        data.complianceOfficer = ($('[name=complianceOfficer]').val() !== "") ? $('[name=complianceOfficer]').val() : "";
+        let link = "sendEmail";
+        
+        $.ajax({
+            url: `${base_url}/summary/${link}`,
+            type: 'post',
+            data: data,
+            dataType: "json",
+            success: function (result) {
+                $('#sendPdf').attr('disabled', false).removeClass('disabled').text('Compliance was sent');
+
+                $.notify({
+                    icon: "notifications",
+                    message: "Success! Email Sent"
+
+                }, {
+                    type: 'success',
+                    timer: 1000,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    }
+                });
+            },
+            beforeSend: function () {
+                $('#sendPdf').attr('disabled', true).addClass('disabled').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending Email...');
+            },
+                error: function (req, err) { console.log('my message' + err); }
+
         });
     });
 
