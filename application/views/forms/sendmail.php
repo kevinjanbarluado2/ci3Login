@@ -31,25 +31,33 @@
 			</div>
 		</div>
 	</div>
-	<div class="row clearfix">
-		<div class="col-md-12">
-			<div class="form-group">
-	            <div class="form-check form-check-radio">
-	                <label class="form-check-label">
-	                    Include Adviser in email?
-	                    <input class="form-check-input" type="checkbox" name="includeAdviser">
-	                    <span class="circle">
-	                        <span class="check"></span>
-	                    </span>
-	                </label>
-	            </div>
-	        </div>
-		</div>
-	</div>
+    <?php if($key != "sendSummaryEmail") : ?>
+    	<div class="row clearfix">
+    		<div class="col-md-12">
+    			<div class="form-group">
+    	            <div class="form-check form-check-radio">
+    	                <label class="form-check-label">
+    	                    Include Adviser in email?
+    	                    <input class="form-check-input" type="checkbox" name="includeAdviser">
+    	                    <span class="circle">
+    	                        <span class="check"></span>
+    	                    </span>
+    	                </label>
+    	            </div>
+    	        </div>
+    		</div>
+    	</div>
+    <?php endif; ?>
 </div>
 
+<?php
+    if($key != "sendSummaryEmail")
+        $href = base_url().'Compliance/'.$key;
+    else
+        $href = base_url().'Summary/sendEmail';
+?>
 <div class="text-right" style="width:100%;">
-    <button id="<?php echo $key; ?>" class="btn btn-primary btn-sm waves-effect" type="button" href="<?php echo base_url().'Compliance/'.$key; ?>">
+    <button id="<?php echo $key; ?>" class="btn btn-primary btn-sm waves-effect" type="button" href="<?php echo $href; ?>">
         <i class="material-icons">mail</i><span> Yes</span>
     </button>
     <button id="cancelUpdateForm" class="btn btn-default btn-sm waves-effect" data-dismiss="modal" type="button">

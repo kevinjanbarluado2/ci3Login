@@ -549,6 +549,15 @@ class Summary extends CI_Controller
                       . ' <i class="material-icons">delete</i> '
                       . ' </button> '
                       . ' </a> ';
+            $buttons .= ' <a id="sendSummaryEmailForm" ' 
+                      . ' class="sendSummaryEmailForm" style="text-decoration: none;" '
+                      . ' href="'. base_url().'Pdf/sendSummaryEmailForm" '
+                      . $buttons_data
+                      . ' > '
+                      . ' <button class="btn btn-warning btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Email PDF">'
+                      . ' <i class="material-icons">mail</i> '
+                      . ' </button> '
+                      . ' </a> ';
             $sub_array[] = $buttons;
             $data[] = $sub_array;  
         }  
