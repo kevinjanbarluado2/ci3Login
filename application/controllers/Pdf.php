@@ -239,4 +239,82 @@ class Pdf extends CI_Controller {
         $result['form'] = $this->load->view('forms/sendmail.php', $formData, TRUE);
         echo json_encode($result);
     }
+
+    //accessing email form
+    public function sendSummaryEmailForm() {
+        $formData = array();
+        $result = array();
+        $result['key'] = 'sendSummaryEmail';
+        $formData['key'] = $result['key'];
+
+        $summary_id = $this->input->post('summary_id');
+        $this->load->model('SummaryCollection');
+        
+        $res = $this->SummaryCollection->getSummaryById($summary_id);
+        $result_ids = explode(',',$res->result_id);
+        $date_from = $res->date_from;
+        $date_until = $res->date_until;
+        $replacement = '';
+
+        $result_arr = array();
+
+        $result_arr = $this->SummaryCollection->getResultsByIds($result_ids, $date_from, $date_until);
+        
+        $result_arr = json_decode(json_encode($result_arr), true);
+
+        $providers_arr_name = array();
+        foreach ($result_arr as $k => $v) {
+            $providers_arr = isset($result_arr[$k]['providers']) ? explode(',', $result_arr[$k]['providers']) : [];
+            $providers_arr = array_unique($providers_arr);
+
+            foreach ($providers_arr as $k1 => $v1) {
+                $providers_arr_name[$result_arr[$k]['result_id']][$k1] = $this->SummaryCollection->getProvidersNameById($providers_arr[$k1]);
+            }
+        }
+
+        $policy_arr_name = [];
+
+        foreach ($result_arr as $k => $v) {
+            $policy_arr = isset($result_arr[$k]['policy_type']) ? explode(',',$result_arr[$k]['policy_type']) : array();
+            $policy_arr = array_unique($policy_arr);
+
+            foreach ($policy_arr as $k1 => $v1) {
+                $policy_arr_name[$result_arr[$k]['result_id']][$k1] = $this->SummaryCollection->getPolicyNameById($policy_arr[$k1]);
+            }
+        }
+
+        $adviser_str = "";
+        $result_str = "";
+        foreach ($result_arr as $k => $v) {
+            if($adviser_str == "") {
+                $adviser_str = $result_arr[$k]['adviser_id'];
+                $result_str = $result_arr[$k]['result_id'];
+            } else {
+                $adviser_str .= ",".$result_arr[$k]['adviser_id'];
+                $result_str .= ",".$result_arr[$k]['result_id'];
+            }
+        }
+        
+        ob_start();
+        set_time_limit(300);
+        $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $html = $this->load->view('docs/summary-template', [
+            'data' => $_POST,
+            'result_arr' => $result_arr,
+            'added_by' => $_SESSION['name'],
+            'providers_arr' => $providers_arr_name,
+            'policy_arr' => $policy_arr_name,
+        ], true);
+        // remove default header/footer
+        $pdf->setPrintHeader(true);
+        $pdf->setPrintFooter(true);
+        $pdf->AddPage(); // add a page
+        $pdf->writeHTMLCell(187, 300, 12, 5, $html, 0, 0, false, true, '', true);
+        $link = FCPATH . 'assets/resources/preview.pdf';
+        $pdf->Output($link, 'F');
+        ob_end_clean();
+
+        $result['form'] = $this->load->view('forms/sendmail.php', $formData, TRUE);
+        echo json_encode($result);
+    }
 }
