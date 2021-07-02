@@ -11,7 +11,7 @@
 			<div class="col-md-12">
 				<div class="form-group bmd-form-group">
 					<label class="bmd-label-floating">Middle Name</label>
-					<input type="text" id="middle_name" name="middle_name" class="form-control middle_name" required>
+					<input type="text" id="middle_name" name="middle_name" class="form-control middle_name">
 				</div>
 			</div>
 			<div class="col-md-12">

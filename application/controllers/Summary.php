@@ -84,65 +84,58 @@ class Summary extends CI_Controller
         die();
     }
 
-    // public function sendEmail()
-    // {
-    //     $fileName = isset($_POST['filename'])?$_POST['filename']:"Sample Filename";
-    //     $adviser = isset($_POST['adviser'])?$_POST['adviser']:"";
-    //     $this->load->model('SummaryCollection');
-    //     $adviserInfo = $this->SummaryCollection->getActiveAdvisersById($adviser);
-    //     $complianceOfficer = isset($_POST['complianceOfficer'])?$_POST['complianceOfficer']:"";
-    //     $adviserEmail =  $adviserInfo->email;
-    //     $production = false; //if in production, set to true
-    //     $includeAdviser = isset($_POST['includeAdviser'])?$_POST['includeAdviser']:false;
+    public function sendEmail()
+    {
+        $fileName = isset($_POST['filename'])?$_POST['filename']:"Sample Filename";
+        $complianceOfficer = isset($_POST['complianceOfficer'])?$_POST['complianceOfficer']:"";
+        $production = false; //if in production, set to true
 
-    //     $mail = new PHPMailer(true);
-    //     $iflocal = strpos(base_url(), "localhost");
-    //     if ($iflocal != false) {
-    //         $ports = 587;
-    //     } else {
-    //         $ports = 587;
-    //     }
-    //     try {
-    //         //Server settings
-    //         //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-    //         $mail->isSMTP();                                            //Send using SMTP
-    //         $mail->Host       = 'eliteinsure.co.nz';                     //Set the SMTP server to send through
-    //         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    //         $mail->Username   = 'filereview@eliteinsure.co.nz';                     //SMTP username
-    //         $mail->Password   = 'compliance2021';                               //SMTP password
-    //         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-    //         $mail->Port       = $ports;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+        $mail = new PHPMailer(true);
+        $iflocal = strpos(base_url(), "localhost");
+        if ($iflocal != false) {
+            $ports = 587;
+        } else {
+            $ports = 587;
+        }
+        try {
+            //Server settings
+            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'eliteinsure.co.nz';                     //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'filereview@eliteinsure.co.nz';                     //SMTP username
+            $mail->Password   = 'compliance2021';                               //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port       = $ports;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
-    //         //Recipients
-    //         $mail->setFrom('filereview@eliteinsure.co.nz', 'Compliance');
-    //         if ($production) {
-    //             $mail->addAddress('compliance@eliteinsure.co.nz', 'Recipient');
-    //             $mail->addCC('admin@eliteinsure.co.nz', 'admin');
-    //         }else{
-    //             //for production purposes only
-    //             $mail->addAddress('kevin@eliteinsure.co.nz', 'Recipient');
-    //             $mail->addAddress('omar@eliteinsure.co.nz', 'Recipient');
-    //         }
+            //Recipients
+            $mail->setFrom('filereview@eliteinsure.co.nz', 'Compliance');
+            if ($production) {
+                $mail->addAddress('compliance@eliteinsure.co.nz', 'Recipient');
+                $mail->addCC('admin@eliteinsure.co.nz', 'admin');
+            }else{
+                //for production purposes only
+                $mail->addAddress('kevin@eliteinsure.co.nz', 'Recipient');
+                $mail->addAddress('omar@eliteinsure.co.nz', 'Recipient');
+            }
 
-    //         if ($includeAdviser == "true") {
-    //             $mail->addCC($adviserEmail, 'adviser');
-    //         }
-    //         //Attachments
 
-    //         $mail->addAttachment('assets/resources/preview.pdf', "$fileName.pdf");         //Add attachments
-    //         // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+            //Attachments
+            $mail->addAttachment('assets/resources/preview.pdf', "$fileName.pdf");         //Add attachments
+            // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
-    //         //Content
-    //         $mail->isHTML(true);                                  //Set email format to HTML
-    //         $mail->Subject = 'Compliance Test Result';
-    //         $mail->Body    = "Hi, {$complianceOfficer}, please find attached the file review report.";
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = 'Summary Test Result';
+            $mail->Body    = "Hi, {$complianceOfficer}, please find attached the file review report.";
 
-    //         $mail->send();
-    //         echo json_encode(array("status" => "Message has been sent successfully", "message" => "Successfully Sent","includeAdviser"=>$includeAdviser));
-    //     } catch (Exception $e) {
-    //         echo json_encode(array("status" => $mail->ErrorInfo));
-    //     }
-    // }
+            $mail->send();
+            echo json_encode(array("status" => "Message has been sent successfully", "message" => "Successfully Sent"));
+        } catch (Exception $e) {
+            echo json_encode(array("status" => $mail->ErrorInfo));
+        }
+    }
+
     //view pdf
 
     public function viewSummaryForm()
@@ -485,6 +478,8 @@ class Summary extends CI_Controller
             $this->load->model('SummaryCollection');
 
             if ($insert_id = $this->SummaryCollection->updatesummary($post_data)) {
+               $result['message'] = "Successfully updated.";
+               $result['filename'] = $filename;
                 $result['message'] = 'Successfully updated.';
             } else {
                 $result['message'] = 'Failed to update details.';
@@ -582,6 +577,15 @@ class Summary extends CI_Controller
                       . ' > '
                       . ' <button class="btn btn-danger btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Delete Summary">'
                       . ' <i class="material-icons">delete</i> '
+                      . ' </button> '
+                      . ' </a> ';
+            $buttons .= ' <a id="sendSummaryEmailForm" ' 
+                      . ' class="sendSummaryEmailForm" style="text-decoration: none;" '
+                      . ' href="'. base_url().'Pdf/sendSummaryEmailForm" '
+                      . $buttons_data
+                      . ' > '
+                      . ' <button class="btn btn-warning btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Email PDF">'
+                      . ' <i class="material-icons">mail</i> '
                       . ' </button> '
                       . ' </a> ';
             $sub_array[] = $buttons;
