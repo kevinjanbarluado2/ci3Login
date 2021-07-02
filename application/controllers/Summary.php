@@ -48,7 +48,7 @@ class MYPDF extends TCPDF
         // $this->SetFont('CALIBRIB_0', 'B', 18);
         // $this->SetTextColor(68, 84, 106);
         // $this->Cell(152, 18, ($this->PageNo() > 1 ? '' : 'COMPLIANCE SUMMARY  '), 0, 0, 'R');
-        $this->writeHTML('<div align="right"><img src="' . base_url() . 'img/img.png" width="70"></div>', true, false, true, false);
+        $this->writeHTML('<div align="right"><img src="' . str_replace('\\', '', base_url()) . 'img/img.png" width="70"></div>', true, false, true, false);
         // $this->SetFillColor(46, 116, 185);
         $this->setTopMargin(30);
     }
@@ -61,7 +61,7 @@ class MYPDF extends TCPDF
         // Set font
         $this->SetFont('CALIBRI_0', 'I', 10);
         // Page number
-        $this->writeHTMLCell(0, 10, 8, 280, '<img src="' . base_url() . 'img/logo.png" height="30">');
+        $this->writeHTMLCell(0, 10, 8, 280, '<img src="' . str_replace('\\', '', base_url()) . 'img/logo.png" height="30">');
 
         $this->Cell(0, 10, 'www.eliteinsure.co.nz | Page ' . $this->getAliasNumPage(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
     }
@@ -86,17 +86,19 @@ class Summary extends CI_Controller
 
     public function sendEmail()
     {
-        $fileName = isset($_POST['filename'])?$_POST['filename']:"Sample Filename";
-        $complianceOfficer = isset($_POST['complianceOfficer'])?$_POST['complianceOfficer']:"";
+        $fileName = $_POST['filename'] ?? 'Sample Filename';
+        $complianceOfficer = $_POST['complianceOfficer'] ?? '';
         $production = false; //if in production, set to true
 
         $mail = new PHPMailer(true);
-        $iflocal = strpos(base_url(), "localhost");
-        if ($iflocal != false) {
+        $iflocal = strpos(base_url(), 'localhost');
+
+        if (false != $iflocal) {
             $ports = 587;
         } else {
             $ports = 587;
         }
+
         try {
             //Server settings
             //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
@@ -106,19 +108,19 @@ class Summary extends CI_Controller
             $mail->Username   = 'filereview@eliteinsure.co.nz';                     //SMTP username
             $mail->Password   = '2021@eliteinsure';                               //SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-            $mail->Port       = $ports;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+            $mail->Port = $ports;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
             //Recipients
             $mail->setFrom('filereview@eliteinsure.co.nz', 'Compliance');
+
             if ($production) {
                 $mail->addAddress('compliance@eliteinsure.co.nz', 'Recipient');
                 $mail->addCC('admin@eliteinsure.co.nz', 'admin');
-            }else{
+            } else {
                 //for production purposes only
                 $mail->addAddress('kevin@eliteinsure.co.nz', 'Recipient');
                 $mail->addAddress('omar@eliteinsure.co.nz', 'Recipient');
             }
-
 
             //Attachments
             $mail->addAttachment('assets/resources/preview.pdf', "$fileName.pdf");         //Add attachments
@@ -127,12 +129,12 @@ class Summary extends CI_Controller
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = 'Summary Test Result';
-            $mail->Body    = "Hi, {$complianceOfficer}, please find attached the file review report.";
+            $mail->Body = "Hi, {$complianceOfficer}, please find attached the file review report.";
 
             $mail->send();
-            echo json_encode(array("status" => "Message has been sent successfully", "message" => "Successfully Sent"));
+            echo json_encode(['status' => 'Message has been sent successfully', 'message' => 'Successfully Sent']);
         } catch (Exception $e) {
-            echo json_encode(array("status" => $mail->ErrorInfo));
+            echo json_encode(['status' => $mail->ErrorInfo]);
         }
     }
 
@@ -207,8 +209,9 @@ class Summary extends CI_Controller
         // remove default header/footer
         $pdf->setPrintHeader(true);
         $pdf->setPrintFooter(true);
-        $pdf->AddPage(); // add a page
-        $pdf->writeHTMLCell(187, 300, 12, 5, $html, 0, 0, false, true, '', true);
+        $pdf->AddPage('', '', true); // add a page
+        // $pdf->writeHTMLCell(187, 300, 12, 5, $html, 0, 0, false, true, '', true);
+        $pdf->writeHTML($html, true, false, true, false);
         $link = FCPATH . 'assets/resources/preview.pdf';
         $pdf->Output($link, 'F');
         ob_end_clean();
@@ -478,8 +481,8 @@ class Summary extends CI_Controller
             $this->load->model('SummaryCollection');
 
             if ($insert_id = $this->SummaryCollection->updatesummary($post_data)) {
-               $result['message'] = "Successfully updated.";
-               $result['filename'] = $filename;
+                $result['message'] = 'Successfully updated.';
+                $result['filename'] = $filename;
                 $result['message'] = 'Successfully updated.';
             } else {
                 $result['message'] = 'Failed to update details.';
@@ -579,9 +582,9 @@ class Summary extends CI_Controller
                       . ' <i class="material-icons">delete</i> '
                       . ' </button> '
                       . ' </a> ';
-            $buttons .= ' <a id="sendSummaryEmailForm" ' 
+            $buttons .= ' <a id="sendSummaryEmailForm" '
                       . ' class="sendSummaryEmailForm" style="text-decoration: none;" '
-                      . ' href="'. base_url().'Pdf/sendSummaryEmailForm" '
+                      . ' href="' . base_url() . 'Pdf/sendSummaryEmailForm" '
                       . $buttons_data
                       . ' > '
                       . ' <button class="btn btn-warning btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Email PDF">'
