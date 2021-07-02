@@ -478,12 +478,9 @@ class Summary extends CI_Controller
             $this->load->model('SummaryCollection');
 
             if ($insert_id = $this->SummaryCollection->updatesummary($post_data)) {
-<<<<<<< HEAD
                $result['message'] = "Successfully updated.";
                $result['filename'] = $filename;
-=======
                 $result['message'] = 'Successfully updated.';
->>>>>>> c38eeaa5f0000c829cee75b79eef3302d26c3891
             } else {
                 $result['message'] = 'Failed to update details.';
             }
