@@ -48,7 +48,7 @@ class MYPDF extends TCPDF
         // $this->SetFont('CALIBRIB_0', 'B', 18);
         // $this->SetTextColor(68, 84, 106);
         // $this->Cell(152, 18, ($this->PageNo() > 1 ? '' : 'COMPLIANCE SUMMARY  '), 0, 0, 'R');
-        $this->writeHTML('<div align="right"><img src="/img/img.png" width="70"></div>', true, false, true, false);
+        $this->writeHTML('<div align="right"><img src="' . base_url() . 'img/img.png" width="70"></div>', true, false, true, false);
         // $this->SetFillColor(46, 116, 185);
         $this->setTopMargin(30);
     }
@@ -61,7 +61,7 @@ class MYPDF extends TCPDF
         // Set font
         $this->SetFont('CALIBRI_0', 'I', 10);
         // Page number
-        $this->writeHTMLCell(0, 10, 8, 280, '<img src="/img/logo.png" height="30">');
+        $this->writeHTMLCell(0, 10, 8, 280, '<img src="' . base_url() . 'img/logo.png" height="30">');
 
         $this->Cell(0, 10, 'www.eliteinsure.co.nz | Page ' . $this->getAliasNumPage(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
     }
