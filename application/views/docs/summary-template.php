@@ -25,6 +25,16 @@
 	  border: 1px solid black;
 	  border-collapse: collapse;
 	}
+
+	.sectionn-title {
+		padding: 0%;
+		margin: 0%;
+		color: #205478;
+		letter-spacing: 3px;
+		font-weight: 300;
+		text-transform: uppercase;
+		border-bottom: 1px solid #205478;
+	}
 </style>
 
 	<h2 class="sectionn-title" align="center"><?php echo strtoupper(trim($filename, ' ')); ?></h2>
