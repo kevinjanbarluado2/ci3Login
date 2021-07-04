@@ -210,7 +210,7 @@ class Summary extends CI_Controller
         $pdf->setPrintHeader(true);
         $pdf->setPrintFooter(true);
         $pdf->AddPage('', '', true); // add a page
-        // $pdf->writeHTMLCell(187, 300, 12, 5, $html, 0, 0, false, true, '', true);
+        // $pdf->writeHTMLCell(187, 300, 12, 0, $html, 0, 0, false, true, '', true);
         $pdf->writeHTML($html, true, false, true, false);
         $link = FCPATH . 'assets/resources/preview.pdf';
         $pdf->Output($link, 'F');
