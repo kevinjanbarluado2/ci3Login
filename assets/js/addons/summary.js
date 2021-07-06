@@ -145,7 +145,10 @@ $(function () {
 
     });
 
-    $('#sendPdf').on('click', function () {
+    $('#sendPdf').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
         let data = {};
         info = fetchInfo();
 
@@ -161,6 +164,7 @@ $(function () {
             success: function (result) {
                 $('#sendPdf').attr('disabled', false).removeClass('disabled').text('Compliance was sent');
 
+                console.log('email sent. (summary)');
                 $.notify({
                     icon: "notifications",
                     message: "Success! Email Sent"
