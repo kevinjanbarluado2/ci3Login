@@ -234,6 +234,9 @@ $(function () {
     //Ajax Forms
     //event triggered upon submitting form
     $(document).on('click', '#sendEmail', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
         my = $(this);
         url = my.attr('href');
 
@@ -255,6 +258,7 @@ $(function () {
                 $('input, button').removeAttr('disabled');
                 $('#myModal').modal('hide');
 
+                console.log('email sent. (pdf-compliance)');
                 $.notify({
                     icon: "notifications",
                     message: "Success! Email Sent"
@@ -294,6 +298,9 @@ $(function () {
     //Ajax Forms
     //event triggered upon submitting form
     $(document).on('click', '#sendSummaryEmail', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
         my = $(this);
         url = my.attr('href');
 
@@ -311,6 +318,7 @@ $(function () {
                 $('#sendSummaryEmail').attr('disabled', false).removeClass('disabled').text('Summary was sent');
                 $('#myModal').modal('hide');
 
+                console.log('email sent. (pdf-summary)');
                 $.notify({
                     icon: "notifications",
                     message: "Success! Email Sent"
