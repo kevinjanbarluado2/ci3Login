@@ -148,10 +148,29 @@ class Pdf extends CI_Controller {
         	$buttons = "";
         	$buttons_data = "";
 
+            $answers = json_decode($row->answers, true);
+
+            $total_score = 0;
+            $total_question = 0;
+            $max_score = 0;
+
+            for ($i = 1; $i <= 6; $i++) :
+                foreach ($answers['step' . $i] as $ind => $x) :
+                    $total_score += $x['value'];
+                    
+                endforeach;
+                $total_question += sizeof($answers['step' . $i]);
+            endfor;
+
+            $max_score = $total_question * 2;
+            $score_percentage = ($total_score / $max_score) * 100;
+            $score_disp = $row->score."/".$max_score." (".number_format($score_percentage, 2)."%)";
+
             $sub_array = array();    
             $sub_array[] = $row->clients;  
             $sub_array[] = $row->first_name." ".$row->last_name;
             $sub_array[] = $row->filename;
+            $sub_array[] = $score_disp;
             $sub_array[] = $row->date_added;
             
             // $buttons_data .= ' data-results_id="'.$row->results_id.'" ';

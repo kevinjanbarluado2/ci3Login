@@ -87,9 +87,10 @@
 								<table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
 									<thead class=" text-primary">
 										<tr>
-											<th width="25%">Client Name</th>
-											<th width="25%">Adviser</th>
+											<th width="20%">Client Name</th>
+											<th width="20%">Adviser</th>
 											<th>File Name</th>
+											<th width="10%">Score</th>
 											<th>Date Created</th>
 											<th width="15%">Action</th>
 										</tr>
