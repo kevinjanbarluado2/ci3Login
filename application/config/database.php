@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
+use Dotenv\Dotenv;
+$dotenv = Dotenv::createImmutable(FCPATH);
+$dotenv->load();
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
@@ -76,10 +78,10 @@ $iflocal = strpos(base_url(), "localhost");
 if ($iflocal != false) {
 	$db['default'] = array(
 		'dsn'	=> '',
-		'hostname' => 'localhost',
-		'username' => 'root',
-		'password' => '',
-		'database' => 'compliance',
+		'hostname' => $_ENV['dev_hostname'],
+		'username' => $_ENV['dev_username'],
+		'password' => $_ENV['dev_password'],
+		'database' => $_ENV['dev_database'],
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
 		'pconnect' => FALSE,
@@ -98,10 +100,10 @@ if ($iflocal != false) {
 } else {
 	$db['default'] = array(
 		'dsn'	=> '',
-		'hostname' => 'localhost',
-		'username' => 'onlinei1_compliance',
-		'password' => 'vv5hpLBYsm.)',
-		'database' => 'onlinei1_compliance',
+		'hostname' => $_ENV['prod_hostname'],
+		'username' => $_ENV['prod_username'],
+		'password' => $_ENV['prod_password'],
+		'database' => $_ENV['prod_database'],
 		'dbdriver' => 'mysqli',
 		'dbprefix' => '',
 		'pconnect' => FALSE,
