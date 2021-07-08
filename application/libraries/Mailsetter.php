@@ -23,6 +23,6 @@ class Mailsetter
         $mailer->SMTPSecure = $_ENV['mail_secure'];
         $mailer->Port = $_ENV['mail_port'];
 
-		return $mailer;
+        return $mailer;
     }
 }
