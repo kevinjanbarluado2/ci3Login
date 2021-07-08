@@ -91,24 +91,11 @@ class Summary extends CI_Controller
         $production = false; //if in production, set to true
 
         $mail = new PHPMailer(true);
-        $iflocal = strpos(base_url(), 'localhost');
-
-        if (false != $iflocal) {
-            $ports = 587;
-        } else {
-            $ports = 587;
-        }
 
         try {
-            //Server settings
-            //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'eliteinsure.co.nz';                     //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'filereview@eliteinsure.co.nz';                     //SMTP username
-            $mail->Password   = '2021@eliteinsure';                               //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         //Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-            $mail->Port = $ports;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+            $this->load->library('mailsetter');
+
+            $mail = $this->mailsetter->set($mail);
 
             //Recipients
             $mail->setFrom('filereview@eliteinsure.co.nz', 'Compliance');
