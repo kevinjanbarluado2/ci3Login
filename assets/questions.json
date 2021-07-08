@@ -48,7 +48,7 @@
 	],
 	"step2": [
 		{
-			"question": "Do you use a formal Fact Find Needs Analysis Document or Technology Platform that is designed to <span class='font-weight-bold'>uncover all client circumstances</span> having a bearing on the advice as per the agreed nature and scope of the engagement?",
+			"question": "Did the adviser use a formal fact find, needs analysis document or technology platform?",
 			"source": "FMA Capability Requirement<br><br><span class='font-weight-bold'>Code Std 3</span><br><span class='font-weight-bold'>Code Std 1</span><br><br>Best Practice",
 			"comments": "Note: The extent and level to which information is gathered will be determined by the agreed nature and scope of advice for the engagement.\n\nCode Std 1 talks about “listening to clients, considering their views and responding to their concerns and preferences.” This applies to several aspects of the needs analysis process below including the ‘Know your client’, act with integrity and ‘Treat clients fairly’ expectations.\n\nAL Fact Find Needs Analysis Template"
 		},
