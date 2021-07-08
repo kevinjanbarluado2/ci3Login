@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use Dotenv\Dotenv;
+
 class Welcome extends CI_Controller
 {
 
@@ -17,15 +19,16 @@ class Welcome extends CI_Controller
 	 *
 	 * So any other public methods not prefixed with an underscore will
 	 * map to /index.php/welcome/<method_name>
-	 * @see https://codeigniter.com/user_guide/general/urls.html
+	 * @see https://codeigniter.com/user_guide/general/urls.htmls
 	 */
 
 	public function __construct()
 	{
 		parent::__construct();
 		if (!$this->session->userdata('admin')) {
-			redirect('login');
+			redirect('login');	
 		}
+
 	}
 
 
@@ -47,7 +50,7 @@ class Welcome extends CI_Controller
 	}
 	public function compliance()
 	{
-		
+
 
 		$this->load->model('AdvisersCollection');
 		$this->load->model('CompanyProviderCollection');
@@ -59,20 +62,20 @@ class Welcome extends CI_Controller
 		$data['advisers'] = $this->AdvisersCollection->getActiveAdvisers();
 		$data['providers'] = $this->CompanyProviderCollection->getActiveProviders();
 		$data['policies'] = $this->PolicyTypeSoldCollection->getActivePolicies();
-		
+
 		//encrypted id
-		$token = isset($_GET['v'])?$_GET['v']:'';
-		
+		$token = isset($_GET['v']) ? $_GET['v'] : '';
+
 
 		//$results_id=($this->input->get('v')!=="")?$this->input->get('v'):"";
-		$result=array();
-		$result['data'] = $this->PdfCollection->get_one_data($token,'token');
-		
-	
+		$result = array();
+		$result['data'] = $this->PdfCollection->get_one_data($token, 'token');
+
+
 
 		$this->load->view('header', $data);
-		$this->load->view('pages/compliance',$result);
-		$this->load->view('footer',$data);
+		$this->load->view('pages/compliance', $result);
+		$this->load->view('footer', $data);
 	}
 	public function advisers()
 	{
@@ -80,7 +83,7 @@ class Welcome extends CI_Controller
 		$data['activeNav'] = "advisers";
 		$this->load->view('header', $data);
 		$this->load->view('pages/advisers');
-		$this->load->view('footer',$data);
+		$this->load->view('footer', $data);
 	}
 	public function fieldmanagement()
 	{
@@ -88,7 +91,7 @@ class Welcome extends CI_Controller
 		$data['activeNav'] = "fieldmanagement";
 		$this->load->view('header', $data);
 		$this->load->view('pages/fieldmanagement');
-		$this->load->view('footer',$data);
+		$this->load->view('footer', $data);
 	}
 	public function pdf()
 	{
@@ -96,7 +99,7 @@ class Welcome extends CI_Controller
 		$data['activeNav'] = "pdf";
 		$this->load->view('header', $data);
 		$this->load->view('pages/pdf');
-		$this->load->view('footer',$data);
+		$this->load->view('footer', $data);
 	}
 	public function summary()
 	{
@@ -114,7 +117,6 @@ class Welcome extends CI_Controller
 
 		$this->load->view('header', $data);
 		$this->load->view('pages/summary');
-		$this->load->view('footer',$data);
+		$this->load->view('footer', $data);
 	}
-
 }
