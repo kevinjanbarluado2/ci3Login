@@ -1,3 +1,4 @@
+.env
 .DS_Store
 
 application/cache/*
@@ -30,4 +31,3 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /tests/results/
 
 .htaccess
-.env
