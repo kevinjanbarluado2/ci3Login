@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 use Dotenv\Dotenv;
 
-class MailSetter
+class Mailsetter
 {
     public function set($mailer)
     {
