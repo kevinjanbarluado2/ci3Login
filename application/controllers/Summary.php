@@ -98,7 +98,7 @@ class Summary extends CI_Controller
             $mail = $this->mailsetter->set($mail);
 
             //Recipients
-            $mail->setFrom('filereview@eliteinsure.co.nz', 'Compliance');
+            $mail->setFrom('filereview@onlineinsure.co.nz', 'Compliance');
 
             if ($production) {
                 $mail->addAddress('compliance@eliteinsure.co.nz', 'Recipient');
