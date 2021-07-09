@@ -17,7 +17,7 @@ class Mailsetter
         }
 
         $mailer->Host = $_ENV['mail_host'];
-        $mailer->SMTPAuth = $_ENV['mail_auth'];
+        $mailer->SMTPAuth = ($_ENV['mail_auth'] == "true") ? true : false;
         $mailer->Username = $_ENV['mail_username'];
         $mailer->Password = $_ENV['mail_password'];
         $mailer->SMTPSecure = $_ENV['mail_secure'];
