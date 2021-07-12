@@ -730,24 +730,24 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
 </div>
 </div>
 <style>
-    #complianceModal .modal {
+    .modal {
         padding: 0 !important;
     }
 
-    #complianceModal .modal .modal-dialog {
+    .modal .modal-dialog {
         width: 100%;
         max-width: none;
         height: 100%;
         margin: 0;
     }
 
-    #complianceModal .modal .modal-content {
+    .modal .modal-content {
         height: 100%;
         border: 0;
         border-radius: 0;
     }
 
-    #complianceModal .modal .modal-body {
+    .modal .modal-body {
         overflow-y: auto;
     }
 

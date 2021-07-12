@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use TCPDF as tcpdf;
+use Dotenv\Dotenv;
 
 class MYPDF extends TCPDF
 {
@@ -70,6 +71,8 @@ class Compliance extends CI_Controller
 
         date_default_timezone_set('Pacific/Auckland');
         error_reporting(0);
+        $dotenv = Dotenv::createImmutable(FCPATH);
+        $dotenv->load();
     }
 
     public function index()

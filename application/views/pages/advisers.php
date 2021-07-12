@@ -1,9 +1,9 @@
 <style>
 	@media (min-width: 768px) {
-	  .modal-xl {
-	    width: 90%;
-	   max-width:1200px;
-	  }
+		.modal-xl {
+			width: 90%;
+			max-width: 1200px;
+		}
 	}
 </style>
 <div class="container-fluid">
@@ -16,15 +16,21 @@
 
 				</div>
 				<div class="card-body">
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-md-12">
-							<a id="addAdvisersForm" style="text-decoration:none;" href="<?php echo base_url().'/Advisers/addAdvisersForm'; ?>">
+							<a id="addAdvisersForm" style="text-decoration:none;" href="<?php echo base_url() . '/Advisers/addAdvisersForm'; ?>">
 	                            <button type="button" class="btn btn-info btn-raised btn-round pull-right">
 	                                <i class="material-icons">person_add</i>&nbsp;&nbsp;
 	                                <span> Add Record</span>
 	                            </button>
 	                        </a>
 						</div>
+					</div> -->
+					<div class="row">
+						<div class="col-md-12">
+							<span class="text-danger font-weight-bold">Fetched from adviceprocess</span>
+						</div>
+
 					</div>
 					<div class="row">
 						<div class="col-md-12">
@@ -45,7 +51,7 @@
 							</div>
 						</div>
 					</div>
-							
+
 
 				</div>
 			</div>
