@@ -37,7 +37,7 @@
       </label>
     </div>
     <input type="submit" name="submit" value="Sign in" class="btn btn-lg btn-primary btn-block text-light" type="submit" />
-    <p class="mt-5 mb-3 text-muted">&copy; EliteInsure <?= date('Y'); ?> | ver 1.0.0. </p>
+    <p class="mt-5 mb-3 text-muted">&copy; EliteInsure <?= date('Y'); ?> | <?=$version;?> </p>
   </form>
 </body>
 

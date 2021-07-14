@@ -1,12 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+use TCPDF as tcpdf;
+use Dotenv\Dotenv;
 
 class Login extends CI_Controller {
 
 	public function __construct()
 	{
         parent::__construct();
-        
+        $dotenv = Dotenv::createImmutable(FCPATH);
+        $dotenv->load();
 		
      }
 
@@ -14,7 +17,7 @@ class Login extends CI_Controller {
      if($this->session->userdata('admin')){
         	redirect('welcome');
         }
-     	$this->load->view('login');
+     	$this->load->view('login',array('version'=>$_ENV['version']));
      	
      }
 
