@@ -68,11 +68,23 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
                 </button>
             </div>
             <div class="modal-body">
+                <div class="table-responsive" style="width:100%;overflow-x: hidden;">
+                    <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th width="20%">Client Name</th>
+                                <th width="20%">File Name</th>
+                                <th width="20%">Date</th>
+                                <th width="20%">Action</th>
 
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button id="addInfo-btn" type="button" class="btn btn-primary">Fetch Info</button>
+                <!-- <button id="addInfo-btn" type="button" class="btn btn-primary">Fetch Info</button> -->
 
             </div>
         </div>
@@ -189,8 +201,8 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
                                             </option>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
-                                </select><button id="fetchAdviceProcess" type="button" class="btn btn-warning btn-block" data-toggle="modal" data-target="#adviserModal"><small><i class="material-icons">search</i></small>Search from adviceprocess</button>
-                             
+                                </select><button id="fetchAdviceProcess" type="button" class="btn btn-warning btn-block"><small><i class="material-icons">search</i></small>Search from adviceprocess</button>
+
                             </div>
 
                         </div>
@@ -730,6 +742,8 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
 </div>
 </div>
 <style>
+
+
     .modal {
         padding: 0 !important;
     }

@@ -227,4 +227,54 @@ class Compliance extends CI_Controller
 
         echo json_encode($result);
     }
+
+    function fetchRows()
+    {
+        $this->load->model('ComplianceCollection');
+        $adviserId = isset($_POST['adviserId']) ? $_POST['adviserId'] : null;
+        $fetch_data = $this->ComplianceCollection->make_datatables($adviserId);
+        $data = array();
+
+        foreach ($fetch_data as $k => $row) {
+            $buttons = "";
+            $buttons_data = "";
+            
+            $myJSON = json_decode($row->soa_data);
+            $clientName = $myJSON->clientFirstname.' '.$myJSON->clientSurname;
+            $sub_array = array();
+            $sub_array[] = $clientName;
+            $sub_array[] = $row->title;
+            $replacementOfCover = ucfirst($myJSON->first->disclosure->replacementOfCover);
+            $provider = $row->provider;
+            $policyType = implode(",",$myJSON->first->lookid);
+            $sub_array[] = date("d M Y", $row->timestamp);
+
+
+            //  foreach($row as $k1=>$v1){
+            //  	$buttons_data .= ' data-'.$k1.'="'.$v1.'" ';
+            //  }
+
+            $buttons .= ' <a id="viewAdvisersForm" target="_blank"'
+                . ' class="viewAdvisersForm" style="text-decoration: none;" '
+                . ' href="' . urldecode($row->actual_link)
+                . ' "> '
+                . ' <button class="btn btn-primary btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="View Plan">'
+                . ' <i class="material-icons">remove_red_eye</i> '
+                . ' </button> '
+                . ' </a> ';
+            $buttons .= '<button id="fetchPlan" data-policyType="'.$policyType.'" data-provider="'.$provider.'" data-clientName="'.$clientName.'" data-replacementOfCover="'.$replacementOfCover.'" class="btn btn-warning btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Import Plan">'
+                . ' <i class="material-icons">done_all</i> '
+                . ' </button> ';
+    
+            $sub_array[] = $buttons;
+            $data[] = $sub_array;
+        }
+        $output = array(
+            "draw"                  =>     intval($_POST["draw"]),
+            "recordsTotal"          =>      $this->ComplianceCollection->get_all_data($adviserId),
+            "recordsFiltered"         =>     $this->ComplianceCollection->get_filtered_data($adviserId),
+            "data"                  =>     $data
+        );
+        echo json_encode($output);
+    }
 }

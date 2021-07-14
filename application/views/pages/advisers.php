@@ -28,7 +28,7 @@
 					</div> -->
 					<div class="row">
 						<div class="col-md-12">
-							<span class="text-danger font-weight-bold">Fetched from adviceprocess</span>
+							<span class="text-warning font-weight-bold">Fetched from Adviceprocess</span>
 						</div>
 
 					</div>
