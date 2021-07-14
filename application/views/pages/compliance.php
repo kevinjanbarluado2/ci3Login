@@ -58,6 +58,39 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
 <input type="hidden" name="filename" value="<?= (!empty($data->filename)) ? $data->filename : ''; ?>" />
 <input type="hidden" name="complianceOfficer" value="<?= $_SESSION['name']; ?>">
 
+<div class="modal fade" id="adviserModal" tabindex="-1" role="dialog" aria-labelledby="adviserModalModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="complianceModalLabel">Fetch from AdviceProcess</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive" style="width:100%;overflow-x: hidden;">
+                    <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                        <thead class=" text-primary">
+                            <tr>
+                                <th width="20%">Client Name</th>
+                                <th width="20%">File Name</th>
+                                <th width="20%">Date</th>
+                                <th width="20%">Action</th>
+
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <!-- <button id="addInfo-btn" type="button" class="btn btn-primary">Fetch Info</button> -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="complianceModal" tabindex="-1" role="dialog" aria-labelledby="complianceModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -145,7 +178,7 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                
+
                             </div>
                         </div>
                         <div class="row">
@@ -168,8 +201,7 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
                                             </option>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
-                                </select>
-                                <button type="button" alt="sample" class="btn btn-warning float-right btn-block"><small><i class="material-icons">search</i></small>Search from adviceprocess</button>
+                                </select><button id="fetchAdviceProcess" type="button" class="btn btn-warning btn-block"><small><i class="material-icons">search</i></small>Search from adviceprocess</button>
 
                             </div>
 
@@ -710,6 +742,8 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
 </div>
 </div>
 <style>
+
+
     .modal {
         padding: 0 !important;
     }

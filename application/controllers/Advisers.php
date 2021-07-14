@@ -144,24 +144,24 @@ class Advisers extends CI_Controller {
             		  . ' <i class="material-icons">remove_red_eye</i> '
             		  . ' </button> '
             		  . ' </a> ';
-            $buttons .= ' <a id="updateAdvisersForm" ' 
-            		  . ' class="updateAdvisersForm" style="text-decoration: none;" '
-            		  . ' href="'. base_url().'Advisers/updateAdvisersForm" '
-            		  . $buttons_data
-            		  . ' > '
-            		  . ' <button class="btn btn-info btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Update">'
-            		  . ' <i class="material-icons">mode_edit</i> '
-            		  . ' </button> '
-            		  . ' </a> ';
-            $buttons .= ' <a id="deleteAdvisers" ' 
-            		  . ' class="deleteAdvisers" style="text-decoration: none;" '
-            		  . ' href="'. base_url().'Advisers/deleteAdvisers" '
-            		  . $buttons_data
-            		  . ' > '
-            		  . ' <button class="btn btn-danger btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Delete">'
-            		  . ' <i class="material-icons">delete</i> '
-            		  . ' </button> '
-            		  . ' </a> ';
+            // $buttons .= ' <a id="updateAdvisersForm" ' 
+            		//   . ' class="updateAdvisersForm" style="text-decoration: none;" '
+            		//   . ' href="'. base_url().'Advisers/updateAdvisersForm" '
+            		//   . $buttons_data
+            		//   . ' > '
+            		//   . ' <button class="btn btn-info btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Update">'
+            		//   . ' <i class="material-icons">mode_edit</i> '
+            		//   . ' </button> '
+            		//   . ' </a> ';
+            // $buttons .= ' <a id="deleteAdvisers" ' 
+            		//   . ' class="deleteAdvisers" style="text-decoration: none;" '
+            		//   . ' href="'. base_url().'Advisers/deleteAdvisers" '
+            		//   . $buttons_data
+            		//   . ' > '
+            		//   . ' <button class="btn btn-danger btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Delete">'
+            		//   . ' <i class="material-icons">delete</i> '
+            		//   . ' </button> '
+            		//   . ' </a> ';
             $sub_array[] = $buttons;
             $data[] = $sub_array;  
         }  
