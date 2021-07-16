@@ -43,7 +43,7 @@ $steps = [
 for ($i = 1; $i <= 6; $i++) :
 	foreach ($data['data']['step' . $i] as $ind => $x) :
 		$total_score += $x['value'];
-		
+
 	endforeach;
 	$total_question += sizeof($data['data']['step' . $i]);
 endfor;
@@ -63,10 +63,10 @@ function createTable($step)
 		$num = $ind + 1;
 		echo "<td width=\"350px\">{$num}. {$x['question']}";
 
-		if($x['notes']){
+		if ($x['notes']) {
 			echo "<br><br><span color=\"red\">Notes: {$x['notes']}</span>";
 		}
-		
+
 		echo "</td>";
 		echo "<td  width=\"175px\">";
 		echo "<input type=\"radio\" readonly=\"true\" $zero name=\"{$ind}\" id=\"rqa\" value=\"0\"/><span></span> <label style=\"color:black;\" for=\"rqa\">0</label><br />";
@@ -78,7 +78,8 @@ function createTable($step)
 	echo "</table>";
 }
 
-function getStepScore($step){
+function getStepScore($step)
+{
 	$maxScore = count($step) * 2;
 
 	$scoreValues = array_column($step, 'value');
@@ -294,7 +295,7 @@ function getStepScore($step){
 	</tr>
 </table>
 
-<h2 class="sectionn-title" align="center"><?= strtoupper('file review - ' . $client_name . ' - for '. trim($adviser_name," ")); ?></h2>
+<h2 class="sectionn-title" align="center"><?= strtoupper('file review - ' . $client_name . ' - for ' . trim($adviser_name, " ")); ?></h2>
 
 <p></p>
 <table class="table ff-table" style="font-size:115%" cellpadding="5" nobr="true">
@@ -414,20 +415,30 @@ function getStepScore($step){
 <p></p>
 
 <?php
-foreach($steps as $index => $step)
-{
-	$score = getStepScore($data['data']['step' . ($index + 1)]);
-	?>
+foreach ($steps as $index => $step) {
+
+	$stepNum = $index + 1;
+	$score = getStepScore($data['data']['step' . ($stepNum)]);
+
+
+?>
 	<table nobr="true">
 		<tr class="kevin">
-			<th width="85%"><b>Step <?php echo ($index + 1); ?> - <?php echo $step['description'] ?></b><br></th>
+			<th width="85%"><b>Step <?php echo ($stepNum); ?> - <?php echo $step['description'] ?></b><br></th>
 			<th width="15%"><b>Score: <?php echo $score['value'] . '/' . $score['max'] ?></b></th>
 		</tr>
 	</table>
 	<?php
-	createTable($data['data']['step' . ($index + 1)]);
+	if ($info["showstep_{$stepNum}"] == "true") :
+		createTable($data['data']['step' . ($stepNum)]);
+	else :
+		echo "<table width=\"100%\" cellpadding=\"5\">";
+		echo "<tr class=\"ff-tbl-alt\"><td style=\"color:red\"><strong>Results currently pending. </strong> </td></tr>";
+		echo "</table>";
+	endif;
 	?>
 	<br><br>
-	<?php
+<?php
+
 }
 ?>
