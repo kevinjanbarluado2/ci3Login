@@ -31,6 +31,8 @@ $step3 = $json->step3;
 $step4 = $json->step4;
 $step5 = $json->step5;
 $step6 = $json->step6;
+
+
 //from edit
 $data = ($data !== NULL) ? $data : "";
 $editPolicyType = isset($data->policy_type) ? explode(",", $data->policy_type) : array();
@@ -43,6 +45,15 @@ $editstep3 = isset($answers->step3) ? $answers->step3 : array();
 $editstep4 = isset($answers->step4) ? $answers->step4 : array();
 $editstep5 = isset($answers->step5) ? $answers->step5 : array();
 $editstep6 = isset($answers->step6) ? $answers->step6 : array();
+
+$info = isset($answers->info)?$answers->info:array();
+
+$showstep_1 = isset($info->showstep_1) ? $info->showstep_1 : 'true';
+$showstep_2 = isset($info->showstep_2) ? $info->showstep_2 : 'true';
+$showstep_3 = isset($info->showstep_3) ? $info->showstep_3 : 'true';
+$showstep_4 = isset($info->showstep_4) ? $info->showstep_4 : 'true';
+$showstep_5 = isset($info->showstep_5) ? $info->showstep_5 : 'true';
+$showstep_6 = isset($info->showstep_6) ? $info->showstep_6 : 'true';
 
 ?>
 
@@ -265,6 +276,13 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
                         <p class="card-category"> Establish and define the relationship with the client</p>
                     </div>
                     <div class="card-body">
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="showstep_1" id="showstep_1" <?=($showstep_1=='false')?'':'checked';?>>
+                                <label class="custom-control-label text-dark" for="showstep_1">Show this step on PDF</label>
+                            </div>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class="text-primary">
@@ -341,6 +359,12 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                    <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="showstep_2" id="showstep_2" <?=($showstep_2=='false')?'':'checked';?>>
+                                <label class="custom-control-label text-dark" for="showstep_2">Show this step on PDF</label>
+                            </div>
+                        </div>
                         <table class="table">
                             <thead class="text-primary">
                                 <tr>
@@ -413,6 +437,12 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                    <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="showstep_3" id="showstep_3" <?=($showstep_3=='false')?'':'checked';?>>
+                                <label class="custom-control-label text-dark" for="showstep_3">Show this step on PDF</label>
+                            </div>
+                        </div>
                         <table class="table">
                             <thead class="text-primary">
                                 <tr>
@@ -486,6 +516,12 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
                     <p class="card-category">Develop the advice recommendations and present to the client</p>
                 </div>
                 <div class="card-body">
+                <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="showstep_4" id="showstep_4" <?=($showstep_4=='false')?'':'checked';?>>
+                                <label class="custom-control-label text-dark" for="showstep_4">Show this step on PDF</label>
+                            </div>
+                        </div>
                     <div class="table-responsive">
                         <table class="table">
                             <thead class="text-primary">
@@ -558,6 +594,12 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
                     <p class="card-category">Implement the recommendations</p>
                 </div>
                 <div class="card-body">
+                <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="showstep_5" id="showstep_5" <?=($showstep_5=='false')?'':'checked';?>>
+                                <label class="custom-control-label text-dark" for="showstep_5">Show this step on PDF</label>
+                            </div>
+                        </div>
                     <div class="table-responsive">
                         <table class="table">
                             <thead class="text-primary">
@@ -630,6 +672,12 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
                     <p class="card-category">Review the client’s situation</p>
                 </div>
                 <div class="card-body">
+                <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" name="showstep_6" id="showstep_6" <?=($showstep_6=='false')?'':'checked';?>>
+                                <label class="custom-control-label text-dark" for="showstep_6">Show this step on PDF</label>
+                            </div>
+                        </div>
                     <div class="table-responsive">
                         <table class="table">
                             <thead class="text-primary">
@@ -742,8 +790,6 @@ $editstep6 = isset($answers->step6) ? $answers->step6 : array();
 </div>
 </div>
 <style>
-
-
     .modal {
         padding: 0 !important;
     }

@@ -2,9 +2,15 @@ let fetchInfo = () => {
     let data = {};
     $('#info').find('input,select').each(function () {
         data[$(this).attr('name')] = $(this).val();
-
+       
 
     });
+    data['showstep_1']=($('#showstep_1').is(':checked'))?'true':'false';
+    data['showstep_2']=($('#showstep_2').is(':checked'))?'true':'false';
+    data['showstep_3']=($('#showstep_3').is(':checked'))?'true':'false';
+    data['showstep_4']=($('#showstep_4').is(':checked'))?'true':'false';
+    data['showstep_5']=($('#showstep_5').is(':checked'))?'true':'false';
+    data['showstep_6']=($('#showstep_6').is(':checked'))?'true':'false';
     return data;
 }
 
@@ -19,8 +25,8 @@ let fetchStep = (stepNum) => {
 
     });
 
-    console.log('data:');
-    console.log(data);
+    // console.log('data:');
+    // console.log(data);
 
     return data;
 }
@@ -64,7 +70,7 @@ $(function () {
         data.step5 = fetchStep(5);
         data.step6 = fetchStep(6);
 
-        console.log(data, base_url);
+        //console.log(data, base_url);
         $.ajax({
             url: `${base_url}/compliance/generate`,
             type: 'post',
@@ -106,7 +112,7 @@ $(function () {
         data.includeAdviser = ($('[name=includeAdviser]:checked').val() !== undefined) ? true : false;
         data.complianceOfficer = ($('[name=complianceOfficer]').val() !== "") ? $('[name=complianceOfficer]').val() : "";
         let link = "sendEmail";
-        console.log(data.includeAdviser);
+        //console.log(data.includeAdviser);
 
         $.ajax({
             url: `${base_url}/compliance/${link}`,
@@ -116,7 +122,7 @@ $(function () {
             success: function (result) {
                 $('#sendPdf').attr('disabled', false).removeClass('disabled').text('Compliance was sent');
 
-                console.log('email sent. (compliance)');
+                //console.log('email sent. (compliance)');
                 $.notify({
                     icon: "notifications",
                     message: "Success! Email Sent"
@@ -152,7 +158,7 @@ $(function () {
         data.step4 = fetchStep(4);
         data.step5 = fetchStep(5);
         data.step6 = fetchStep(6);
-
+        // console.log(data);
         let link = ($('[name="results_id"]').val() === "") ? "savecompliance" : "updatecompliance";
         let results_id = $('[name="results_id"]').val();
         let filename = $('[name="filename"]').val();
