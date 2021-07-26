@@ -29,16 +29,7 @@ class ComplianceCollection extends CI_Model {
  
      //set searchable parameters in advisers_tbl table
      public function getColumns(){
-         $rows = array(
-             "last_name",
-             "first_name",
-             "middle_name",
-             "email",
-             "fspr_number",
-             "address",
-             "trading_name",
-             "telephone_no",
-         );
+         $rows = array();
          return $rows; 
      }
  
@@ -55,6 +46,10 @@ class ComplianceCollection extends CI_Model {
  
      } 
      function make_query($adviserId="") {  
+        $this->select_column[] = 'JSON_EXTRACT(t.soa_data, "$.clientFirstname")';
+        $this->select_column[] = 'JSON_EXTRACT(t.soa_data, "$.clientSurname")';
+        $this->select_column[] = 't.title';
+        $this->select_column[] = 'DATE_FORMAT(FROM_UNIXTIME(t.timestamp), "%d %M %Y")';
 
         $this->adviceprocess_db->select('*');  
         $this->adviceprocess_db->from('document d');
@@ -65,15 +60,15 @@ class ComplianceCollection extends CI_Model {
         $this->adviceprocess_db->order_by("iddocument DESC");  
         //$this->adviceprocess_db->where('idusers',$adviserId);
 
-        // if(isset($_POST["search"]["value"])) {  
-        //     $this->adviceprocess_db->group_start();
+        if(isset($_POST["search"]["value"])) {  
+            $this->adviceprocess_db->group_start();
 
-        //     foreach ($this->select_column as $key => $value) {
-        //         $this->adviceprocess_db->or_like($value, $_POST["search"]["value"]);  
-        //     }
+            foreach ($this->select_column as $key => $value) {
+                $this->adviceprocess_db->or_like($value, $_POST["search"]["value"]);  
+            }
             
-        //     $this->adviceprocess_db->group_end(); 
-        // }
+            $this->adviceprocess_db->group_end(); 
+        }
 
         // if(isset($_POST["order"])) {    
         //     $this->adviceprocess_db->order_by($this->order_column[$_POST['order']['0']['column']]." ". $_POST['order']['0']['dir']);
