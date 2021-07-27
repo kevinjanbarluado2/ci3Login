@@ -424,7 +424,11 @@ foreach ($steps as $index => $step) {
 ?>
 	<table nobr="true">
 		<tr class="kevin">
-			<th width="85%"><b>Step <?php echo ($stepNum); ?> - <?php echo $step['description'] ?></b><br></th>
+			<th width="85%">
+				<b>Step <?php echo ($stepNum); ?> - <?php echo $step['description'] ?> </b>
+				<i><?php echo ($info["training_needed_{$stepNum}"]) == "true" ? "<span color=\"red\">(Training is needed)</span>" : "" ?></i>
+				<br>
+			</th>
 			<th width="15%"><b>Score: <?php echo $score['value'] . '/' . $score['max'] ?></b></th>
 		</tr>
 	</table>

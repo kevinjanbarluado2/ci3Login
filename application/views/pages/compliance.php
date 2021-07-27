@@ -55,6 +55,13 @@ $showstep_4 = isset($info->showstep_4) ? $info->showstep_4 : 'true';
 $showstep_5 = isset($info->showstep_5) ? $info->showstep_5 : 'true';
 $showstep_6 = isset($info->showstep_6) ? $info->showstep_6 : 'true';
 
+$training_needed_1 = isset($info->training_needed_1) ? $info->training_needed_1 : 'true';
+$training_needed_2 = isset($info->training_needed_2) ? $info->training_needed_2 : 'true';
+$training_needed_3 = isset($info->training_needed_3) ? $info->training_needed_3 : 'true';
+$training_needed_4 = isset($info->training_needed_4) ? $info->training_needed_4 : 'true';
+$training_needed_5 = isset($info->training_needed_5) ? $info->training_needed_5 : 'true';
+$training_needed_6 = isset($info->training_needed_6) ? $info->showstep_6 : 'true';
+
 ?>
 
 
@@ -277,9 +284,12 @@ $showstep_6 = isset($info->showstep_6) ? $info->showstep_6 : 'true';
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" name="showstep_1" id="showstep_1" <?=($showstep_1=='false')?'':'checked';?>>
-                                <label class="custom-control-label text-dark" for="showstep_1">Show this step on PDF</label>
+                            <div class="col-xs-4">
+                                <input type="checkbox" class="checkbox-inline" name="showstep_1" id="showstep_1" <?=($showstep_1=='false')?'':'checked';?>> 
+                                <strong>Show this step on PDF</strong>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox" class="checkbox-inline" name="training_needed_1" id="training_needed_1" <?=($training_needed_1=='false')?'':'checked';?>/> 
+                                <strong>Training is needed</strong>
                             </div>
                         </div>
 
@@ -359,10 +369,13 @@ $showstep_6 = isset($info->showstep_6) ? $info->showstep_6 : 'true';
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                    <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" name="showstep_2" id="showstep_2" <?=($showstep_2=='false')?'':'checked';?>>
-                                <label class="custom-control-label text-dark" for="showstep_2">Show this step on PDF</label>
+                        <div class="form-group">
+                            <div class="col-xs-4">
+                                <input type="checkbox" class="checkbox-inline" name="showstep_2" id="showstep_2" <?=($showstep_2=='false')?'':'checked';?>> 
+                                <strong>Show this step on PDF</strong>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox" class="checkbox-inline" name="training_needed_2" id="training_needed_2" <?=($training_needed_2=='false')?'':'checked';?>/> 
+                                <strong>Training is needed</strong>
                             </div>
                         </div>
                         <table class="table">
@@ -437,10 +450,13 @@ $showstep_6 = isset($info->showstep_6) ? $info->showstep_6 : 'true';
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                    <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" name="showstep_3" id="showstep_3" <?=($showstep_3=='false')?'':'checked';?>>
-                                <label class="custom-control-label text-dark" for="showstep_3">Show this step on PDF</label>
+                        <div class="form-group">
+                            <div class="col-xs-4">
+                                <input type="checkbox" class="checkbox-inline" name="showstep_3" id="showstep_3" <?=($showstep_3=='false')?'':'checked';?>> 
+                                <strong>Show this step on PDF</strong>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="checkbox" class="checkbox-inline" name="training_needed_3" id="training_needed_3" <?=($training_needed_3=='false')?'':'checked';?>/> 
+                                <strong>Training is needed</strong>
                             </div>
                         </div>
                         <table class="table">
@@ -516,12 +532,15 @@ $showstep_6 = isset($info->showstep_6) ? $info->showstep_6 : 'true';
                     <p class="card-category">Develop the advice recommendations and present to the client</p>
                 </div>
                 <div class="card-body">
-                <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" name="showstep_4" id="showstep_4" <?=($showstep_4=='false')?'':'checked';?>>
-                                <label class="custom-control-label text-dark" for="showstep_4">Show this step on PDF</label>
-                            </div>
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <input type="checkbox" class="checkbox-inline" name="showstep_4" id="showstep_4" <?=($showstep_4=='false')?'':'checked';?>> 
+                            <strong>Show this step on PDF</strong>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox" class="checkbox-inline" name="training_needed_4" id="training_needed_4" <?=($training_needed_4=='false')?'':'checked';?>/> 
+                            <strong>Training is needed</strong>
                         </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table">
                             <thead class="text-primary">
@@ -594,12 +613,15 @@ $showstep_6 = isset($info->showstep_6) ? $info->showstep_6 : 'true';
                     <p class="card-category">Implement the recommendations</p>
                 </div>
                 <div class="card-body">
-                <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" name="showstep_5" id="showstep_5" <?=($showstep_5=='false')?'':'checked';?>>
-                                <label class="custom-control-label text-dark" for="showstep_5">Show this step on PDF</label>
-                            </div>
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <input type="checkbox" class="checkbox-inline" name="showstep_5" id="showstep_5" <?=($showstep_5=='false')?'':'checked';?>> 
+                            <strong>Show this step on PDF</strong>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox" class="checkbox-inline" name="training_needed_5" id="training_needed_5" <?=($training_needed_5=='false')?'':'checked';?>/> 
+                            <strong>Training is needed</strong>
                         </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table">
                             <thead class="text-primary">
@@ -672,12 +694,15 @@ $showstep_6 = isset($info->showstep_6) ? $info->showstep_6 : 'true';
                     <p class="card-category">Review the client’s situation</p>
                 </div>
                 <div class="card-body">
-                <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" name="showstep_6" id="showstep_6" <?=($showstep_6=='false')?'':'checked';?>>
-                                <label class="custom-control-label text-dark" for="showstep_6">Show this step on PDF</label>
-                            </div>
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                            <input type="checkbox" class="checkbox-inline" name="showstep_6" id="showstep_6" <?=($showstep_6=='false')?'':'checked';?>> 
+                            <strong>Show this step on PDF</strong>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="checkbox" class="checkbox-inline" name="training_needed_6" id="training_needed_6" <?=($training_needed_6=='false')?'':'checked';?>/> 
+                            <strong>Training is needed</strong>
                         </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table">
                             <thead class="text-primary">
