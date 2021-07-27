@@ -11,6 +11,13 @@ let fetchInfo = () => {
     data['showstep_4']=($('#showstep_4').is(':checked'))?'true':'false';
     data['showstep_5']=($('#showstep_5').is(':checked'))?'true':'false';
     data['showstep_6']=($('#showstep_6').is(':checked'))?'true':'false';
+
+    data['training_needed_1']=($('#training_needed_1').is(':checked'))?'true':'false';
+    data['training_needed_2']=($('#training_needed_2').is(':checked'))?'true':'false';
+    data['training_needed_3']=($('#training_needed_3').is(':checked'))?'true':'false';
+    data['training_needed_4']=($('#training_needed_4').is(':checked'))?'true':'false';
+    data['training_needed_5']=($('#training_needed_5').is(':checked'))?'true':'false';
+    data['training_needed_6']=($('#training_needed_6').is(':checked'))?'true':'false';
     return data;
 }
 
