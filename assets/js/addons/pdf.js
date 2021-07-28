@@ -9,13 +9,15 @@ $(function () {
 
         me = $(this)
         results_id = me.attr('data-results_id');
+        results_token = me.attr('data-token');
         url = me.attr('href');
 
         $.ajax({
             url: url,
             type: 'post',
             data: {
-                results_id: results_id
+                results_id: results_id,
+                results_token: results_token
             },
             dataType: "json",
             success: function (res) {
@@ -135,13 +137,15 @@ $(function () {
 
         my = $(this)
         results_id = my.attr('data-results_id');
+        results_token = my.attr('data-token');
         url = my.attr('href');
 
         $.ajax({
             type: "POST",
             url: url,
             data: {
-                results_id : results_id
+                results_id : results_id,
+                results_token: results_token
             },
             dataType: "json",
             success: function(result){
