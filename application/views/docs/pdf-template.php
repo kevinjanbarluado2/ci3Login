@@ -1,4 +1,6 @@
 <?php
+
+$chat = (isset($chat) && sizeof($chat) >= 1) ? $chat : '';
 $info = $data['data']['info'];
 
 $client_name = isset($info) ? $info['client'] : "client name";
@@ -443,6 +445,27 @@ foreach ($steps as $index => $step) {
 	?>
 	<br><br>
 <?php
-
 }
+
 ?>
+
+<?php if($chat != '') : ?>
+	<table nobr="true">
+		<thead>
+			<tr class="kevin">
+				<th><b>Notes:</b></th>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($chat as $k => $v) : $datetime = date_format(date_create($chat[$k]['timestamp']),"d F Y - h:i:s A"); ?>
+			<tr><td>&nbsp;</td></tr>
+			<tr>
+				<td><?php echo $chat[$k]['user_name']." (".$datetime.") "; ?></td>
+			</tr>
+			<tr>
+				<td style="text-align:justify;"><?php echo "- ".$chat[$k]['message']; ?></td>
+			</tr>
+		<?php endforeach; ?>
+		</tbody>
+	</table>
+<?php endif; ?>   

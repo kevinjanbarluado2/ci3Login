@@ -139,6 +139,9 @@ class Compliance extends CI_Controller
         $this->load->model('AdvisersCollection');
         $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
 
+        $this->load->model('ComplianceCollection');
+        $chat = $this->ComplianceCollection->get_chat($_POST['results_token']);
+
         ob_start();
         set_time_limit(300);
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -146,6 +149,7 @@ class Compliance extends CI_Controller
             'data' => $_POST,
             'adviserInfo' => $adviserInfo,
             'added_by' => $_SESSION['name'],
+            'chat' => $chat
         ], true);
         // remove default header/footer
         $pdf->setPrintHeader(false);

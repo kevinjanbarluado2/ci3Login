@@ -77,11 +77,16 @@ $(function () {
         data.step5 = fetchStep(5);
         data.step6 = fetchStep(6);
 
+        let token = $('[name="token"]').val();
+
         //console.log(data, base_url);
         $.ajax({
             url: `${base_url}/compliance/generate`,
             type: 'post',
-            data: { data: data },
+            data: { 
+                data: data,
+                results_token: token 
+            },
             dataType: "json",
             success: function (res) {
                 var d = new Date();
@@ -310,7 +315,7 @@ $(function () {
             $("#sendChat").click();
         }
     });
-    
+
     $(document).on('click','#sendChat',function(e){
         data = {};
         data.info = fetchInfo();
