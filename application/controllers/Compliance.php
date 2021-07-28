@@ -163,6 +163,7 @@ class Compliance extends CI_Controller
         $result['message'] = 'There was an error in the connection. Please contact the administrator for updates.';
         $result['result_id'] = '';
         $result['filename'] = '';
+        $result['token'] = '';
 
         if ($this->input->post() && null != $this->input->post()) {
             $post_data = [];
@@ -178,14 +179,18 @@ class Compliance extends CI_Controller
             $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser_id);
             $adviserName = $adviserInfo->first_name . ' ' . $adviserInfo->last_name;
             $filename = 'File review - ' . $client . ' by ' . $adviserName;
+            $token = md5(uniqid(rand(), true));
 
             $post_data['data']['info']['filename'] = $filename;
+            $post_data['data']['info']['token'] = $token;
+
             $this->load->model('ComplianceCollection');
 
             if ($insert_id = $this->ComplianceCollection->savecompliance($post_data)) {
                 $result['message'] = 'Successfully saved.';
                 $result['results_id'] = $insert_id;
                 $result['filename'] = $filename;
+                $result['token'] = $token;
             } else {
                 $result['message'] = 'Failed to save details.';
             }
@@ -199,6 +204,7 @@ class Compliance extends CI_Controller
         $result['message'] = 'There was an error in the connection. Please contact the administrator for updates.';
         $result['results_id'] = $this->input->post('results_id');
         $result['filename'] = $this->input->post('filename');
+        $result['token'] = $this->input->post('token');
 
         if ($this->input->post() && null != $this->input->post()) {
             $post_data = [];
@@ -276,5 +282,27 @@ class Compliance extends CI_Controller
             "data"                  =>     $data
         );
         echo json_encode($output);
+    }
+
+    public function savechat()
+    {
+        $result['message'] = 'There was an error in the connection. Please contact the administrator for updates.';
+        if ($this->input->post() && null != $this->input->post()) {
+            $post_data = [];
+
+            foreach ($this->input->post() as $k => $v) {
+                $post_data[$k] = $this->input->post($k, true);
+            }
+
+            $this->load->model('ComplianceCollection');
+
+            if ($insert_id = $this->ComplianceCollection->savechat($post_data)) {
+                $result['message'] = 'Successfully saved.';
+            } else {
+                $result['message'] = 'Failed to save details.';
+            }
+        }
+
+        echo json_encode($result);
     }
 }
