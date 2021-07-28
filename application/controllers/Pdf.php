@@ -15,18 +15,15 @@ class MYPDF extends TCPDF
         // set margins
         $this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP / 2, PDF_MARGIN_RIGHT);
         $this->setPageOrientation('P', true, 10);
-        $this->SetFont('CALIBRI_0', '', 11); // set the font
+        $this->SetFont('dejavusans', '', 8); // set the font
 
         $this->setHeaderMargin(PDF_MARGIN_HEADER);
-        // $this->setHeaderMargin(0);
         $this->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM - 10);
 
-        $this->SetPrintHeader(true);
+        $this->SetPrintHeader(false);
         $this->SetPrintFooter(true);
 
         $this->setFontSubsetting(false);
-
-        $this->setListIndentWidth(3);
 
         $this->company = $company['company'];
         $this->fspr_number = $company['fspr'];
@@ -35,32 +32,31 @@ class MYPDF extends TCPDF
         $this->hasPartner = null;
     }
 
-    // Page header
-    public function Header()
-    {
-        // Page Width: 209
-        // $this->SetFillColor(68, 84, 106);
-        // $this->Cell(18, 18, '', 0, 0, 'L');
-        // $this->writeHtmlCell(21, 18, 19, 6, '<img src="/img/logo-only.png" width="55">');
-        // $this->SetFont('CALIBRIB_0', 'B', 18);
-        // $this->SetTextColor(68, 84, 106);
-        // $this->Cell(152, 18, ($this->PageNo() > 1 ? '' : 'COMPLIANCE SUMMARY  '), 0, 0, 'R');
-        $this->writeHTML('<div align="right"><img src="' . base_url() . 'img/img.png" width="70"></div>', true, false, true, false);
-        // $this->SetFillColor(46, 116, 185);
-        $this->setTopMargin(30);
-    }
+    //Page header
+    // public function Header() {
+    //     // Logo
+    //     $image_file = K_PATH_IMAGES.'logo_example.jpg';
+    //     $this->Image($image_file, 10, 10, 15, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+    //     // Set font
+    //     $this->SetFont('helvetica', 'B', 20);
+    //     // Title
+    //     $this->Cell(0, 15, '<< TCPDF Example 003 >>', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+    // }
 
     // Page footer
     public function Footer()
     {
+
         // Position at 15 mm from bottom
         $this->SetY(-15);
         // Set font
-        $this->SetFont('CALIBRI_0', 'I', 10);
+        $this->SetFont('helvetica', 'I', 8);
         // Page number
-        $this->writeHTMLCell(0, 10, 8, 280, '<img src="' . base_url() . 'img/logo.png" height="30">');
+        $image = base_url() . 'img/logo.png';
+        $this->Image($image, 8, 280, 0, 10, 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-        $this->Cell(0, 10, 'www.eliteinsure.co.nz | Page ' . $this->getAliasNumPage(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 10, 'www.eliteinsure.co.nz | Page' . $this->getAliasNumPage(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
+        //$this->Cell(0, 10, 'www.eliteinsure.co.nz | Page'.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
     }
 }
 
@@ -78,6 +74,7 @@ class Pdf extends CI_Controller {
 	public function viewPdfForm()
     {
         $results_id = $this->input->post('results_id');
+        $results_token = $this->input->post('results_token');
         $this->load->model('ComplianceCollection');
         
         $res = $this->ComplianceCollection->getComplianceResultsById($results_id);
@@ -86,14 +83,18 @@ class Pdf extends CI_Controller {
         $this->load->model('AdvisersCollection');
         $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($res->adviser_id);
         
+        $this->load->model('ComplianceCollection');
+        $chat = $this->ComplianceCollection->get_chat($results_token);
+
         ob_start();
         set_time_limit(300);
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        $html = $this->load->view('docs/pdf-template', array(
+        $html = $this->load->view('docs/pdf-template', [
             'data' => $data,
             'adviserInfo' => $adviserInfo,
-            'added_by'=>$_SESSION['name']
-        ), true);
+            'added_by'=>$_SESSION['name'],
+            'chat' => $chat
+        ], true);
         // remove default header/footer
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(true);
@@ -102,7 +103,7 @@ class Pdf extends CI_Controller {
         $link = FCPATH . "assets/resources/preview.pdf";
         $pdf->Output($link, 'F');
         ob_end_clean();
-        echo json_encode(array("link" => base_url('assets/resources/preview.pdf')));
+        echo json_encode(["link" => base_url('assets/resources/preview.pdf')]);
     }
 
 	//function responsible for deleting records
@@ -175,7 +176,7 @@ class Pdf extends CI_Controller {
             
             // $buttons_data .= ' data-results_id="'.$row->results_id.'" ';
             foreach($row as $k1=>$v1){
-                if(($k1 != "answers") && ($k1 != "token"))
+                if($k1 != "answers")
                     $buttons_data .= ' data-'.$k1.'="'.$v1.'" ';
             }
 
@@ -235,6 +236,7 @@ class Pdf extends CI_Controller {
         $formData['key'] = $result['key'];
 
         $results_id = $this->input->post('results_id');
+        $results_token = $this->input->post('results_token');
         $this->load->model('ComplianceCollection');
         
         $res = $this->ComplianceCollection->getComplianceResultsById($results_id);
@@ -243,13 +245,17 @@ class Pdf extends CI_Controller {
         $this->load->model('AdvisersCollection');
         $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($res->adviser_id);
         
+        $this->load->model('ComplianceCollection');
+        $chat = $this->ComplianceCollection->get_chat($results_token);
+
         ob_start();
         set_time_limit(300);
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $html = $this->load->view('docs/pdf-template', array(
             'data' => $data,
             'adviserInfo' => $adviserInfo,
-            'added_by'=>$_SESSION['name']
+            'added_by'=>$_SESSION['name'],
+            'chat' => $chat
         ), true);
         // remove default header/footer
         $pdf->setPrintHeader(false);

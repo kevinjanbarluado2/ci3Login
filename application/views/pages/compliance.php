@@ -861,7 +861,7 @@ $chat = ($chat != NULL) ? $chat : "";
                 <div class="card">
                     <div class="card-body">
                         <div class="chat-holder">
-                        <?php if($chat != '') : foreach ($chat as $k => $v) : $datetime = date_format(date_create($chat[$k]['timestamp']),"d F Y - h:i A"); ?>
+                        <?php if($chat != '') : foreach ($chat as $k => $v) : $datetime = date_format(date_create($chat[$k]['timestamp']),"d F Y - h:i:s A"); ?>
                             <div class="container-chat">
                                 <p class="p-left"><?php echo $chat[$k]['user_name']; ?><span class="time-right"><?php echo $datetime; ?></span></p>
                                 <span class="msg-left"><?php echo $chat[$k]['message']; ?></span>
