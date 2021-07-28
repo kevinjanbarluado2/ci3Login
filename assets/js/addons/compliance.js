@@ -169,6 +169,7 @@ $(function () {
         let link = ($('[name="results_id"]').val() === "") ? "savecompliance" : "updatecompliance";
         let results_id = $('[name="results_id"]').val();
         let filename = $('[name="filename"]').val();
+        let token = $('[name="token"]').val();
 
         $.ajax({
             url: `${base_url}/compliance/${link}`,
@@ -176,7 +177,8 @@ $(function () {
             data: {
                 data: data,
                 results_id: results_id,
-                filename: filename
+                filename: filename,
+                token: token
             },
             dataType: "json",
             success: function (result) {
@@ -185,7 +187,10 @@ $(function () {
 
                 $('[name="results_id"]').val(result.results_id);
                 $('[name="filename"]').val(result.filename);
+                $('[name="token"]').val(result.token);
                 $('#sendPdf').attr('disabled', false).removeClass('disabled').text('Send Pdf');
+
+                $('.inputField').prop("disabled", false);
                 $.notify({
                     icon: "notifications",
                     message: result.message
@@ -217,12 +222,6 @@ $(function () {
                 });
             }
         });
-
-
-
-
-
-
     });
 
 
@@ -306,4 +305,47 @@ $(function () {
 
     });
 
+    $(document).on('keyup','.inputField',function(e){
+        if (e.keyCode === 13) {
+            $("#sendChat").click();
+        }
+    });
+    
+    $(document).on('click','#sendChat',function(e){
+        data = {};
+        data.info = fetchInfo();
+        var adviser_id = data.info.adviser;
+        var results_token = $('[name="token"]').val();
+
+        var msg = $('.inputField').val();
+        var complianceOfficer = ($('[name=complianceOfficer]').val() !== "") ? $('[name=complianceOfficer]').val() : "";
+        var currentTime = moment().format("DD MMMM YYYY - hh:mm A");
+        if(msg != '') {
+            $.ajax({
+                url: `${base_url}/compliance/savechat`,
+                type: 'post',
+                data: { 
+                    adviser_id: adviser_id,
+                    results_token: results_token,
+                    message: msg 
+                },
+                dataType: "json",
+                success: function (res) {
+                    $('.inputField').prop("disabled", false);
+                    $('.chat-holder').append(
+                        '<div class="container-chat">'+
+                            '<p class="p-left">'+ complianceOfficer +'<span class="time-right">'+ currentTime +'</span></p>'+
+                            '<span class="msg-left">'+ msg +'</span>'+
+                        '</div>')
+
+                    $(".chat-holder").animate({ scrollTop: $('.chat-holder').prop("scrollHeight")}, 500);
+                    $(".inputField").val('');
+                },
+                beforeSend: function () {
+                    $('.inputField').prop("disabled", true);
+                }
+
+            });
+        }        
+    });
 });
