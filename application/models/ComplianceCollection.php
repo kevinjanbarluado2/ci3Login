@@ -112,7 +112,7 @@ class ComplianceCollection extends CI_Model {
             "added_by" => $_SESSION['id'],
             "answers" => json_encode($params['data']),
             "score" => $total_score,
-            "token" =>md5(uniqid(rand(), true))
+            "token" => $params['data']['info']['token']
         );
 
         $this->db->insert('results_tbl', $params2);
@@ -152,6 +152,16 @@ class ComplianceCollection extends CI_Model {
         return false;
     }
 
+    //insert compliance chat/notes
+    public function savechat($params){
+
+        $params['user_id'] = $_SESSION['id'];
+        $this->db->insert('chat_tbl', $params);
+        if($this->db->affected_rows() > 0) 
+            return true;        
+        return false;
+    }
+
     //get compliance result by id
     public function getComplianceResultsById($results_id){
         $this->db->select('*');
@@ -159,6 +169,20 @@ class ComplianceCollection extends CI_Model {
         $this->db->where('results_id', $results_id);
         // $this->db->where('status', 'Active');
         return $this->db->get()->row();
+    }
+
+    //get all chat/notes by token
+    public function get_chat($token){
+        $this->db->select('
+            chat_tbl.*,
+            user_tbl.name AS user_name
+        ');
+        $this->db->from('chat_tbl');
+        $this->db->join('user_tbl','user_tbl.id = chat_tbl.user_id');
+        $this->db->where('chat_tbl.results_token', $token);
+        $this->db->order_by("chat_tbl.timestamp", "asc");
+        
+        return $this->db->get()->result_array();
     }
 }
 ?>

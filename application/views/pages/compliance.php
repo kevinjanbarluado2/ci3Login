@@ -21,6 +21,54 @@
         height: 1rem;
         border-width: .2em;
     }
+
+    .container-chat {
+        border: 2px solid #dedede;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        padding: 2px;
+        margin: 2px 2px;
+    }
+
+    .darker {
+        border-color: #ccc;
+        background-color: #ddd;
+    }
+
+    .container-chat::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .time-right {
+        float: right;
+        color: #aaa;
+    }
+
+    .p-left {
+        color: #999;
+    }
+
+    .msg-left {
+        float: left;
+    }
+
+    .flexContainer {
+        display: flex;
+    }
+
+    .inputField {
+        flex: 1;
+    }
+
+    .chat-holder {
+        border-style: inset; 
+        padding: 5px;
+        height: 250px;
+        max-height: 250px;
+        overflow-y: scroll;
+    }
 </style>
 
 <?php
@@ -62,6 +110,7 @@ $training_needed_4 = isset($info->training_needed_4) ? $info->training_needed_4 
 $training_needed_5 = isset($info->training_needed_5) ? $info->training_needed_5 : 'true';
 $training_needed_6 = isset($info->training_needed_6) ? $info->showstep_6 : 'true';
 
+$chat = ($chat != NULL) ? $chat : "";
 ?>
 
 
@@ -74,6 +123,7 @@ $training_needed_6 = isset($info->training_needed_6) ? $info->showstep_6 : 'true
 
 <input type="hidden" name="results_id" value="<?= (!empty($data->results_id)) ? $data->results_id : ''; ?>" />
 <input type="hidden" name="filename" value="<?= (!empty($data->filename)) ? $data->filename : ''; ?>" />
+<input type="hidden" name="token" value="<?= (!empty($data->token)) ? $data->token : ''; ?>" />
 <input type="hidden" name="complianceOfficer" value="<?= $_SESSION['name']; ?>">
 
 <div class="modal fade" id="adviserModal" tabindex="-1" role="dialog" aria-labelledby="adviserModalModalLabel" aria-hidden="true">
@@ -802,6 +852,26 @@ $training_needed_6 = isset($info->training_needed_6) ? $info->showstep_6 : 'true
                                 </label>
                             </div>
 
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="chat-holder">
+                        <?php if($chat != '') : foreach ($chat as $k => $v) : $datetime = date_format(date_create($chat[$k]['timestamp']),"d F Y - h:i A"); ?>
+                            <div class="container-chat">
+                                <p class="p-left"><?php echo $chat[$k]['user_name']; ?><span class="time-right"><?php echo $datetime; ?></span></p>
+                                <span class="msg-left"><?php echo $chat[$k]['message']; ?></span>
+                            </div>
+                        <?php endforeach; endif; ?>    
+                        </div>
+                        <br>
+                        <div class="flexContainer">
+                            <input type="text" class="inputField" <?php echo $chat != '' ? '' : 'disabled="disabled"'; ?>>
+                            <button type="button" id="sendChat">Send</button>
                         </div>
                     </div>
                 </div>

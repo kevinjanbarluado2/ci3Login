@@ -53,6 +53,7 @@ class Welcome extends CI_Controller
 		$this->load->model('CompanyProviderCollection');
 		$this->load->model('PolicyTypeSoldCollection');
 		$this->load->model('PdfCollection');
+		$this->load->model('ComplianceCollection');
 
 		$data = array();
 		$data['activeNav'] = "compliance";
@@ -67,7 +68,7 @@ class Welcome extends CI_Controller
 		//$results_id=($this->input->get('v')!=="")?$this->input->get('v'):"";
 		$result=array();
 		$result['data'] = $this->PdfCollection->get_one_data($token,'token');
-		
+		$result['chat'] = $this->ComplianceCollection->get_chat($token);
 	
 
 		$this->load->view('header', $data);
