@@ -178,7 +178,7 @@ class ComplianceCollection extends CI_Model {
             user_tbl.name AS user_name
         ');
         $this->db->from('chat_tbl');
-        $this->db->join('user_tbl','user_tbl.id = chat_tbl.user_id');
+        $this->db->join('user_tbl','user_tbl.id = chat_tbl.user_id','left');
         $this->db->where('chat_tbl.results_token', $token);
         $this->db->order_by("chat_tbl.timestamp", "asc");
         

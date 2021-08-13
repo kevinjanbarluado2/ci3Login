@@ -26,7 +26,7 @@
         border: 2px solid #dedede;
         background-color: #f1f1f1;
         border-radius: 5px;
-        padding: 2px;
+        padding: 10px;
         margin: 2px 2px;
     }
 
@@ -125,6 +125,7 @@ $chat = ($chat != NULL) ? $chat : "";
 <input type="hidden" name="filename" value="<?= (!empty($data->filename)) ? $data->filename : ''; ?>" />
 <input type="hidden" name="token" value="<?= (!empty($data->token)) ? $data->token : ''; ?>" />
 <input type="hidden" name="complianceOfficer" value="<?= $_SESSION['name']; ?>">
+<input type="hidden" name="complianceId" value="<?= $_SESSION['id']; ?>">
 
 <div class="modal fade" id="adviserModal" tabindex="-1" role="dialog" aria-labelledby="adviserModalModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -861,15 +862,17 @@ $chat = ($chat != NULL) ? $chat : "";
                 <div class="card">
                     <div class="card-body">
                         <div class="chat-holder">
-                          
+                        <!--
                         <?php if($chat != '') : foreach ($chat as $k => $v) : $datetime = date_format(date_create($chat[$k]['timestamp']),"d F Y - h:i:s A"); ?>
 
                             <div class="container-chat">
                                 <p class="p-left"><?php echo $chat[$k]['user_name']; ?><span class="time-right"><?php echo $datetime; ?></span></p>
                                 <span class="msg-left"><?php echo $chat[$k]['message']; ?></span>
                             </div>
-                        <?php endforeach; endif; ?>    
+                        <?php endforeach; endif; ?>
+                        -->    
                         </div>
+                        <input type="hidden" name="timestamp" value="">   
                         <br>
                         <div class="flexContainer">
                             <input type="text" class="inputField" <?php echo $chat != '' ? '' : 'disabled="disabled"'; ?>>
