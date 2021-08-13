@@ -113,7 +113,18 @@ class Compliance extends CI_Controller
                 $mail->addCC('admin@eliteinsure.co.nz', 'admin');
                 
                 if ('true' == $includeAdviser) {
-                    $mail->addCC($adviserEmail, 'adviser');
+                    $advisermail->addAddress($adviserEmail, 'adviser');
+                     //Content
+                    $advisermail->isHTML(true);                                  
+                    //Set email format to HTML
+                    $advisermail->Subject = 'Compliance Test Result';
+                    $advisermail->Body = "Hello Adviser $adviserName,<br><br>   
+                    After you review the attached compliance result and you have your questions / feedback, kindly click the link below to communicate with the Compliance Officer.
+                    <br><br>
+                    <a href=\"".base_url()."Compliance/replyEmail?v=".$results_token."&adviser=".$adviser."\" onclick=\"window.open(this.href,'newwindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600'); return false;\">Click here to reply</a>
+                    ";
+
+                    $advisermail->send();
                 }
             } else {
                 //for production purposes only
