@@ -88,10 +88,14 @@ class Compliance extends CI_Controller
         $adviser = $_POST['adviser'] ?? '';
         $this->load->model('AdvisersCollection');
         $adviserInfo = $this->AdvisersCollection->getActiveAdvisersById($adviser);
+        $adviserName = $adviserInfo->first_name." ".$adviserInfo->last_name;
+
         $complianceOfficer = $_POST['complianceOfficer'] ?? '';
         $adviserEmail = $adviserInfo->email;
         $production = false; //if in production, set to true
         $includeAdviser = $_POST['includeAdviser'] ?? false;
+
+        $results_token = $_POST['results_token'] ?? '';
 
         $mail = new PHPMailer(true);
 
@@ -99,6 +103,7 @@ class Compliance extends CI_Controller
             $this->load->library('mailsetter');
 
             $mail = $this->mailsetter->set($mail);
+            $advisermail = $this->mailsetter->set($mail);
 
             //Recipients
             $mail->setFrom('filereview@onlineinsure.co.nz', 'Compliance');
@@ -106,14 +111,41 @@ class Compliance extends CI_Controller
             if ($production) {
                 $mail->addAddress('compliance@eliteinsure.co.nz', 'Recipient');
                 $mail->addCC('admin@eliteinsure.co.nz', 'admin');
+                
+                if ('true' == $includeAdviser) {
+                    $advisermail->addAddress($adviserEmail, 'adviser');
+                     //Content
+                    $advisermail->isHTML(true);                                  
+                    //Set email format to HTML
+                    $advisermail->Subject = 'Compliance Test Result';
+                    $advisermail->Body = "Hello Adviser $adviserName,<br><br>   
+                    After you review the attached compliance result and you have your questions / feedback, kindly click the link below to communicate with the Compliance Officer.
+                    <br><br>
+                    <a href=\"".base_url()."Compliance/replyEmail?v=".$results_token."&adviser=".$adviser."\" onclick=\"window.open(this.href,'newwindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600'); return false;\">Click here to reply</a>
+                    ";
+
+                    $advisermail->send();
+                }
             } else {
                 //for production purposes only
                 $mail->addAddress('kevin@eliteinsure.co.nz', 'Recipient');
                 $mail->addAddress('omar@eliteinsure.co.nz', 'Recipient');
-            }
 
-            if ('true' == $includeAdviser) {
-                $mail->addCC($adviserEmail, 'adviser');
+                //will add this to previous "if" condition when done.
+                if ('true' == $includeAdviser) {
+                    $advisermail->addAddress($adviserEmail, 'adviser');
+                     //Content
+                    $advisermail->isHTML(true);                                  
+                    //Set email format to HTML
+                    $advisermail->Subject = 'Compliance Test Result';
+                    $advisermail->Body = "Hello Adviser $adviserName,<br><br>   
+                    After you review the attached compliance result and you have your questions / feedback, kindly click the link below to communicate with the Compliance Officer.
+                    <br><br>
+                    <a href=\"".base_url()."Compliance/replyEmail?v=".$results_token."&adviser=".$adviser."\" onclick=\"window.open(this.href,'newwindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600'); return false;\">Click here to reply</a>
+                    ";
+
+                    $advisermail->send();
+                }
             }
             //Attachments
 
@@ -290,6 +322,7 @@ class Compliance extends CI_Controller
 
     public function savechat()
     {
+        $result['token'] = '';
         $result['message'] = 'There was an error in the connection. Please contact the administrator for updates.';
         if ($this->input->post() && null != $this->input->post()) {
             $post_data = [];
@@ -302,11 +335,60 @@ class Compliance extends CI_Controller
 
             if ($insert_id = $this->ComplianceCollection->savechat($post_data)) {
                 $result['message'] = 'Successfully saved.';
+                $result['token'] = $post_data['results_token'];
             } else {
                 $result['message'] = 'Failed to save details.';
             }
         }
 
         echo json_encode($result);
+    }
+
+    //accessing chat/notes
+    public function get_chat() {
+        $this->load->model('ComplianceCollection');
+        $result['data'] = $this->ComplianceCollection->get_chat($_POST['results_token']);
+
+        echo json_encode($result);
+    }
+
+    //load replyEmail gui
+    public function replyEmail() {
+        $data['adviser'] = isset($_GET['adviser']) && $_GET['adviser'] != '' ? $_GET['adviser'] : '';
+        $data['token'] = isset($_GET['v']) && $_GET['v'] != '' ? $_GET['v'] : '';
+        $data['page'] = "redirect-page";
+        $view = $this->load->view('pages/replyEmail',$data,true);
+        echo $view;
+    }
+
+    //load chatbox
+    public function loadChatBox() {
+        $token = isset($_GET['v']) && $_GET['v'] != '' ? $_GET['v'] : '';
+        $adviser = isset($_GET['adviser']) && $_GET['adviser'] != '' ? $_GET['adviser'] : '';
+
+        $this->load->model('ComplianceCollection');
+        $data['chat'] = $this->ComplianceCollection->get_chat($token);
+
+        $this->load->model('AdvisersCollection');
+        $data['adviser'] = $this->AdvisersCollection->getActiveAdvisersById($adviser);
+        
+        $data['token'] = isset($_GET['v']) && $_GET['v'] != '' ? $_GET['v'] : '';
+        $data['page'] = "actual-page";
+        $view = $this->load->view('pages/replyEmail',$data,true);
+        echo $view;
+    }
+
+    //accessing chat/notes
+    public function fetchNotification() {
+        $this->load->model('ComplianceCollection');
+        $result['data'] = $this->ComplianceCollection->fetchNotification($_POST['session_id']);
+
+        echo json_encode($result);
+    }
+
+    //accessing chat/notes
+    public function updateNotification() {
+        $this->load->model('ComplianceCollection');
+        $result['data'] = $this->ComplianceCollection->updateNotification($_POST['token']);
     }
 }

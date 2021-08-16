@@ -250,6 +250,8 @@ $(function () {
         data.filename = $('[name=filename]').val();
         data.includeAdviser = ($('[name=includeAdviser]:checked').val() !== undefined) ? true : false;
         data.complianceOfficer = ($('[name=complianceOfficer]').val() !== "") ? $('[name=complianceOfficer]').val() : "";
+        data.results_token = $('[name="token"]').val();
+        
         let link = "sendEmail";
         
         $.ajax({

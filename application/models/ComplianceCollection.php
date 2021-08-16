@@ -178,11 +178,46 @@ class ComplianceCollection extends CI_Model {
             user_tbl.name AS user_name
         ');
         $this->db->from('chat_tbl');
-        $this->db->join('user_tbl','user_tbl.id = chat_tbl.user_id');
+        $this->db->join('user_tbl','user_tbl.id = chat_tbl.user_id','left');
         $this->db->where('chat_tbl.results_token', $token);
         $this->db->order_by("chat_tbl.timestamp", "asc");
         
         return $this->db->get()->result_array();
+    }
+
+    //get all unread chat/notes notifications
+    public function fetchNotification($user_id){
+        $c_db = $_ENV['db_database'];
+        $ap_db = $_ENV['ap_database'];
+
+        $this->db->select(
+            $c_db.'.chat_tbl.*,'.
+            $ap_db.'.users.last_name,'.
+            $ap_db.'.users.first_name,'.
+            $ap_db.'.users.middle_name'
+        );
+        $this->db->from($c_db.'.chat_tbl');
+        $this->db->join($c_db.'.results_tbl',$c_db.'.results_tbl.token = '.$c_db.'.chat_tbl.results_token','left');
+        $this->db->join($ap_db.'.users',$ap_db.'.users.idusers = '.$c_db.'.chat_tbl.adviser_id','left');
+        $this->db->where($c_db.'.results_tbl.added_by', $user_id);
+        $this->db->where($c_db.'.chat_tbl.sender', '1');
+        $this->db->where($c_db.'.chat_tbl.read', '0');
+        $this->db->group_by($c_db.'.chat_tbl.results_token'); 
+        $this->db->order_by($c_db.".chat_tbl.timestamp", "desc");
+        
+        return $this->db->get()->result_array();
+    }
+
+    //update chat/notes notification status
+    public function updateNotification($tokens){
+        $params = array(
+            "read" => 1 
+        );        
+
+        $this->db->where('results_token', $tokens);
+        if ($this->db->update('chat_tbl', $params) !== FALSE)
+            return true;    
+        return false;
     }
 }
 ?>

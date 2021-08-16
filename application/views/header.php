@@ -30,6 +30,7 @@ $privileges=explode(",",$_SESSION['privileges']);
 
 <body class="">
   <input type="hidden" value="<?= base_url(); ?>" id="base_url" />
+  <input type="hidden" value="<?= $_SESSION['id'] ?>" id="session_id" />
   <div class="wrapper ">
   
     <div class="sidebar" data-color="azure" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
@@ -134,22 +135,15 @@ $privileges=explode(",",$_SESSION['privileges']);
                   </p>
                 </a>
               </li>
-              <!-- <li class="nav-item dropdown">
-                <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <li id="navbarDropdownMenuLink_li" class="nav-item dropdown">
+                <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">notifications</i>
-                  <span class="notification">5</span>
                   <p class="d-lg-none d-md-block">
                     Some Actions
                   </p>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                  <a class="dropdown-item" href="#">You have 5 new tasks</a>
-                  <a class="dropdown-item" href="#">You're now friend with Andrew</a>
-                  <a class="dropdown-item" href="#">Another Notification</a>
-                  <a class="dropdown-item" href="#">Another One</a>
-                </div>
-              </li> -->
+                <div id="navbarDropdownMenuLink_div" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink" style="display:none"></div>
+              </li>
               <li class="nav-item dropdown">
                 <a class="nav-link" href="javascript:;" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="material-icons">person</i>

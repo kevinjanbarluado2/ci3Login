@@ -457,10 +457,14 @@ foreach ($steps as $index => $step) {
 			</tr>
 		</thead>
 		<tbody>
-		<?php foreach ($chat as $k => $v) : $datetime = date_format(date_create($chat[$k]['timestamp']),"d F Y - h:i:s A"); ?>
+		<?php 
+			foreach ($chat as $k => $v) : 
+				$datetime = date_format(date_create($chat[$k]['timestamp']),"d F Y - h:i:s A"); 
+				$sender_name = $chat[$k]['sender'] == 0 ? $chat[$k]['user_name'] : $adviser_name;
+		?>
 			<tr><td>&nbsp;</td></tr>
 			<tr>
-				<td><?php echo $chat[$k]['user_name']." (".$datetime.") "; ?></td>
+				<td><?php echo $sender_name." (".$datetime.") "; ?></td>
 			</tr>
 			<tr>
 				<td style="text-align:justify;"><?php echo "- ".$chat[$k]['message']; ?></td>
