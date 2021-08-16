@@ -40,6 +40,35 @@ let fetchStep = (stepNum) => {
 
 
 $(function () {
+    const base_url = $('#base_url').val();
+    var load_chat = $('[name=load_chat]').val();
+    var token = $('[name="token"]').val();
+
+    if(load_chat == 'chat') {
+        $('#smartwizard').smartWizard({
+            theme: 'arrows',
+            transitionEffect: 'fade',
+            justified: true,
+            enableURLhash: false,
+            toolbarSettings: {
+                toolbarPosition: 'both', // none, top, bottom, both
+                toolbarButtonPosition: 'right', // left, right, center
+                showNextButton: true, // show/hide a Next button
+                showPreviousButton: true, // show/hide a Previous button
+                toolbarExtraButtons: [] // Extra buttons to show on toolbar, array of jQuery input/buttons elements
+            },
+            anchorSettings: {
+                anchorClickable: true, // Enable/Disable anchor navigation
+                enableAllAnchors: true, // Activates all anchors clickable all times
+                markDoneStep: true, // add done css
+                enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
+            },
+        });
+    
+        $('#smartwizard .nav-link').addClass('done');
+        $('#smartwizard .last-page').click();
+    }
+    
     setInterval(function(){ 
         updatechat(); 
     }, 3000);
@@ -58,8 +87,6 @@ $(function () {
         loadTable();
     });
 
-
-    const base_url = $('#base_url').val();
     $(document).ready(function () {
         $('.multiselect').select2({
             placeholder: "Select Multiple",
@@ -410,5 +437,14 @@ function updatechat() {
                 $(".chat-holder").animate({ scrollTop: $('.chat-holder').prop("scrollHeight")}, 500);     
             }   
         }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: `${base_url}/compliance/updateNotification`,
+        data: {
+            token : results_token
+        },
+        dataType: "json"
     });
 }

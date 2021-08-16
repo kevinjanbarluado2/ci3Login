@@ -111,6 +111,7 @@ $training_needed_5 = isset($info->training_needed_5) ? $info->training_needed_5 
 $training_needed_6 = isset($info->training_needed_6) ? $info->showstep_6 : 'true';
 
 $chat = ($chat != NULL) ? $chat : "";
+$load_chat = isset($_GET['page']) ? $_GET['page'] : "";
 ?>
 
 
@@ -126,6 +127,7 @@ $chat = ($chat != NULL) ? $chat : "";
 <input type="hidden" name="token" value="<?= (!empty($data->token)) ? $data->token : ''; ?>" />
 <input type="hidden" name="complianceOfficer" value="<?= $_SESSION['name']; ?>">
 <input type="hidden" name="complianceId" value="<?= $_SESSION['id']; ?>">
+<input type="hidden" name="load_chat" value="<?= $load_chat; ?>">
 
 <div class="modal fade" id="adviserModal" tabindex="-1" role="dialog" aria-labelledby="adviserModalModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -227,7 +229,7 @@ $chat = ($chat != NULL) ? $chat : "";
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#generatePDF">
+            <a class="nav-link last-page" href="#generatePDF">
                 Generate<br>
                 <small><i class="material-icons">article</i></small>
             </a>

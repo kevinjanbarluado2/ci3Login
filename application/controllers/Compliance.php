@@ -377,4 +377,18 @@ class Compliance extends CI_Controller
         $view = $this->load->view('pages/replyEmail',$data,true);
         echo $view;
     }
+
+    //accessing chat/notes
+    public function fetchNotification() {
+        $this->load->model('ComplianceCollection');
+        $result['data'] = $this->ComplianceCollection->fetchNotification($_POST['session_id']);
+
+        echo json_encode($result);
+    }
+
+    //accessing chat/notes
+    public function updateNotification() {
+        $this->load->model('ComplianceCollection');
+        $result['data'] = $this->ComplianceCollection->updateNotification($_POST['token']);
+    }
 }
