@@ -40,6 +40,40 @@ let fetchStep = (stepNum) => {
 
 
 $(function () {
+    const base_url = $('#base_url').val();
+    var load_chat = $('[name=load_chat]').val();
+    var token = $('[name="token"]').val();
+
+    if(load_chat == 'chat') {
+        $('#smartwizard').smartWizard({
+            theme: 'arrows',
+            transitionEffect: 'fade',
+            justified: true,
+            enableURLhash: false,
+            toolbarSettings: {
+                toolbarPosition: 'both', // none, top, bottom, both
+                toolbarButtonPosition: 'right', // left, right, center
+                showNextButton: true, // show/hide a Next button
+                showPreviousButton: true, // show/hide a Previous button
+                toolbarExtraButtons: [] // Extra buttons to show on toolbar, array of jQuery input/buttons elements
+            },
+            anchorSettings: {
+                anchorClickable: true, // Enable/Disable anchor navigation
+                enableAllAnchors: true, // Activates all anchors clickable all times
+                markDoneStep: true, // add done css
+                enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
+            },
+        });
+    
+        $('#smartwizard .nav-link').addClass('done');
+        $('#smartwizard .last-page').click();
+    }
+    
+    setInterval(function(){ 
+        updatechat(); 
+    }, 3000);
+    
+
     let apbutton = $('#fetchAdviceProcess');
     ($('[name=adviser]').val()=="")?apbutton.prop('disabled', true):"";
     $('[name=adviser]').on('change', function () {
@@ -53,8 +87,6 @@ $(function () {
         loadTable();
     });
 
-
-    const base_url = $('#base_url').val();
     $(document).ready(function () {
         $('.multiselect').select2({
             placeholder: "Select Multiple",
@@ -123,6 +155,8 @@ $(function () {
         data.filename = $('[name=filename]').val();
         data.includeAdviser = ($('[name=includeAdviser]:checked').val() !== undefined) ? true : false;
         data.complianceOfficer = ($('[name=complianceOfficer]').val() !== "") ? $('[name=complianceOfficer]').val() : "";
+        data.results_token = $('[name="token"]').val();
+        
         let link = "sendEmail";
         //console.log(data.includeAdviser);
 
@@ -337,11 +371,11 @@ $(function () {
                 dataType: "json",
                 success: function (res) {
                     $('.inputField').prop("disabled", false);
-                    $('.chat-holder').append(
-                        '<div class="container-chat">'+
-                            '<p class="p-left">'+ complianceOfficer +'<span class="time-right">'+ currentTime +'</span></p>'+
-                            '<span class="msg-left">'+ msg +'</span>'+
-                        '</div>')
+                    // $('.chat-holder').append(
+                    //     '<div class="container-chat">'+
+                    //         '<p class="p-left">'+ complianceOfficer +'<span class="time-right">'+ currentTime +'</span></p>'+
+                    //         '<span class="msg-left">'+ msg +'</span>'+
+                    //     '</div>')
 
                     $(".chat-holder").animate({ scrollTop: $('.chat-holder').prop("scrollHeight")}, 500);
                     $(".inputField").val('');
@@ -354,3 +388,63 @@ $(function () {
         }        
     });
 });
+
+function updatechat() {
+    const base_url = $('#base_url').val();
+    var results_token = $('[name="token"]').val();
+    var adviser_name = ($('[name=adviser]').val() !== "") ? $.trim($('[name=adviser] option:selected').text()) : "";
+    var timestamp = ($('[name=timestamp]').val() !== "") ? $('[name=timestamp]').val() : "";
+    var complianceId = ($('[name=complianceId]').val() !== "") ? $('[name=complianceId]').val() : "";
+
+    $.ajax({
+        url: `${base_url}/compliance/get_chat`,
+        type: 'post',
+        data: { 
+            results_token: results_token
+        },
+        dataType: "json",
+        success: function (res) {
+            $('.chat-holder').html('');
+            $.each(res.data,function(i,v){
+                timestamp_curr = v.timestamp;
+                sender = v.sender;
+                class_name = "";
+
+                if(v.sender == 0) {
+                    sender_name = v.user_name;
+                    if(complianceId == v.user_id) {
+                        class_name = "";
+                        alignment = "right";
+                    } else {
+                        class_name = "darker";
+                        alignment = "left";
+                    }     
+                } else {
+                    sender_name = adviser_name;
+                    class_name = "darker";
+                    alignment = "left";
+                } 
+
+                $('.chat-holder').append(
+                    '<div class="container-chat '+ class_name +'">'+
+                        '<p class="p-left">'+ sender_name +'<span class="time-right">'+ moment(v.timestamp).format("DD MMMM YYYY - hh:mm A") +'</span></p>'+
+                        '<span class="msg-left" style="float:'+ alignment +'">'+ v.message +'</span>'+
+                    '</div>');   
+            }); 
+            
+            if(timestamp != timestamp_curr) {
+                $('[name=timestamp]').val(timestamp_curr);
+                $(".chat-holder").animate({ scrollTop: $('.chat-holder').prop("scrollHeight")}, 500);     
+            }   
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: `${base_url}/compliance/updateNotification`,
+        data: {
+            token : results_token
+        },
+        dataType: "json"
+    });
+}

@@ -22,6 +22,7 @@
 <input type="hidden" class="adviser_id" name="adviser_id" value="">
 <input type="hidden" class="filename" name="filename" value="">
 <input type="hidden" name="complianceOfficer" value="<?= $_SESSION['name']; ?>">
+<input type="hidden" class="token" name="token" value="">
 
 <div class="form-elements-container">
 	<div class="row clearfix">
