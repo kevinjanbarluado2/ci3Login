@@ -867,7 +867,7 @@ $load_chat = isset($_GET['page']) ? $_GET['page'] : "";
                         <?php $token = isset($data->token) ? $data->token : ""; ?>
 
                         Click this
-                        <a id="redirect-link" href="http://onlineinsure.co.nz/compliance-messenger/app?u=<?php echo $_SESSION['id']; ?>&v=0&w=<?php echo $data->token; ?>" onclick="window.open(this.href,'newwindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600'); return false;"><strong>LINK</strong></a> to add/send notes.
+                        <a id="redirect-link" href="http://onlineinsure.co.nz/compliance-messenger/app?u=<?php echo $_SESSION['id']; ?>&v=0&w=<?php echo $token; ?>" onclick="window.open(this.href,'newwindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600'); return false;"><strong>LINK</strong></a> to add/send notes.
 
                         <!-- <a id="redirect-link" href="http://localhost/compliance-messenger/app?u=<?php echo $_SESSION['id']; ?>&v=0&w=<?php echo $token; ?>" onclick="window.open(this.href,'newwindow','toolbar=no,location=yes,status=yes,menubar=no,scrollbars=yes,resizable=no,width=400,height=600'); return false;"><strong>LINK</strong></a> to add/send notes.  -->
 
