@@ -322,7 +322,7 @@
     const base_url = $('#base_url').val();
 
     update_notification();
-    
+
      //update notif
     $(document).on('click', '.unread-notes', function (e) {
       e.preventDefault();
@@ -357,7 +357,7 @@
           $('#navbarDropdownMenuLink_div').html('');
 
           $.each(data,function(i,v){
-            $('#navbarDropdownMenuLink_div').append('<a class="dropdown-item unread-notes" href="http://localhost/compliance-messenger/app?u=<?php echo $_SESSION['id']; ?>&v=0&w=' + v.results_token + '" onclick="window.open(this.href,\'newwindow\',\'toolbar=no,location=yes,status=yes,menubar=no,scrollbars=yes,resizable=no,width=400,height=600\'); return false;">You have unread notes from '+v.last_name+', '+v.first_name+'</a>')
+            $('#navbarDropdownMenuLink_div').append('<a class="dropdown-item unread-notes" href="http://onlineinsure.co.nz/compliance-messenger/app?u=<?php echo $_SESSION['id']; ?>&v=0&w=' + v.results_token + '" onclick="window.open(this.href,\'newwindow\',\'toolbar=no,location=yes,status=yes,menubar=no,scrollbars=yes,resizable=no,width=400,height=600\'); return false;">You have unread notes from '+v.last_name+', '+v.first_name+'</a>')
             // $('#navbarDropdownMenuLink_div').append(
             //   '<a class="dropdown-item unread-notes" href="#" data-token="'+v.results_token+'"></a>'
             // );
