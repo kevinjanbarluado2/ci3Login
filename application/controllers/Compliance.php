@@ -128,12 +128,13 @@ class Compliance extends CI_Controller
                 }
             } else {
                 //for production purposes only
-                $mail->addAddress('kevin@eliteinsure.co.nz', 'Recipient');
+                // $mail->addAddress('kevin@eliteinsure.co.nz', 'Recipient');
                 $mail->addAddress('omar@eliteinsure.co.nz', 'Recipient');
 
                 //will add this to previous "if" condition when done.
                 if ('true' == $includeAdviser) {
-                    $advisermail->addAddress($adviserEmail, 'adviser');
+                    $advisermail->addAddress('omar@eliteinsure.co.nz', 'Recipient')
+                    // $advisermail->addAddress($adviserEmail, 'adviser');
                      //Content
                     $advisermail->isHTML(true);                                  
                     //Set email format to HTML
