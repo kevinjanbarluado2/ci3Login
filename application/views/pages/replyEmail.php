@@ -76,75 +76,15 @@
     }
 </style>
 <body style="background-color: #f5f5f5;">
-<?php if($page == 'actual-page') : ?>
-    <input type="hidden" value="<?= base_url(); ?>" id="base_url" />
-    <input type="hidden" class="token" name="token" value="<?php echo $token; ?>">
-    <input type="hidden" name="adviser_id" value="<?php echo $adviser_id; ?>">
-    <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-    <input type="hidden" name="adviser_name" value="<?php echo $adviser_name; ?>">
-    
-    <div class="container-fluid">
-        <img src="https://onlineinsure.co.nz/compliance/img/img.png" style="width:150px;" class="mx-auto d-block pt-3">
-        <div class="row">
-            <div class="col py-3">
-                <h3 class="h3 mb-3 font-weight-normal text-center" style="color:#858796">Compliance App</h3>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div class="chat-holder">
-                <?php 
-                    if($chat != '') : 
-                        foreach ($chat as $k => $v) : 
-                            $datetime = date_format(date_create($chat[$k]['timestamp']),"d F Y - h:i:s A"); 
-                            $timestamp = $chat[$k]['timestamp'];
-                            $sender = $chat[$k]['sender'];
-
-                            if($sender == 0) {
-                                $sender_name = $chat[$k]['user_name'];
-                                $class= "darker";
-                                $alignment = "left";
-                            } else {
-                                $sender_name = $adviser_name;
-                                $class= "";
-                                $alignment = "right";
-                            }
-                ?>
-
-                    <div class="container-chat <?php echo $class; ?>">
-                        <p class="p-left"><?php echo $sender_name; ?><span class="time-right"><?php echo $datetime; ?></span></p>
-                        <span class="msg-left" style="float:<?php echo $alignment; ?>"><?php echo $chat[$k]['message']; ?></span>
-                    </div>
-                <?php 
-                        endforeach; 
-                    endif; 
-                ?>         
-                </div>
-                <input type="hidden" name="timestamp" value="<?php echo $timestamp; ?>">   
-            </div>
-        </div>
-
-        <div class="fixed-bottom px-3">
-            <textarea class="form-control inputField" name="" id="" cols="10" rows="5" placeholder="Reply..."></textarea>
-            <button id="sendChat" class="btn btn-primary btn-block text-white" type="button">Send</button>
-        </div>
-    </div>
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <!-- Plugin for the momentJs  -->
-    <script src="../assets/js/plugins/moment.min.js"></script>
-    <script src="../assets/js/addons/replyEmail.js"></script>
-
-<?php else : ?>
     A new window for formatted compliance messenger will open. If the messenger doesn't open, kindly click this
-    <a id="redirect-link" href="<?php echo base_url() ?>Compliance/loadChatBox?v=<?php echo $token; ?>&adviser=<?php echo $adviser; ?>" onclick="window.open(this.href,'newwindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600'); return false;">link</a> to manually open it.
+    <a id="redirect-link" href="http://onlineinsure.co.nz/compliance-messenger/app?u=<?php echo $adviser; ?>&v=1&w=<?php echo $token; ?>" onclick="window.open(this.href,'newwindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600'); return false;"><strong>LINK</strong></a> to manually open it.
+
+   <!--  A new window for formatted compliance messenger will open. If the messenger doesn't open, kindly click this
+    <a id="redirect-link" href="http://localhost/compliance-messenger/app?u=<?php echo $adviser; ?>&v=1&w=<?php echo $token; ?>" onclick="window.open(this.href,'newwindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600'); return false;">link</a> to manually open it. -->
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
     <script type="text/javascript">
         $('#redirect-link').click();
     </script>
-<?php endif; ?>
 </body>
 </html>
