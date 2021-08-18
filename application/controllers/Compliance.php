@@ -356,27 +356,27 @@ class Compliance extends CI_Controller
     public function replyEmail() {
         $data['adviser'] = isset($_GET['adviser']) && $_GET['adviser'] != '' ? $_GET['adviser'] : '';
         $data['token'] = isset($_GET['v']) && $_GET['v'] != '' ? $_GET['v'] : '';
-        $data['page'] = "redirect-page";
+
         $view = $this->load->view('pages/replyEmail',$data,true);
         echo $view;
     }
 
     //load chatbox
-    public function loadChatBox() {
-        $token = isset($_GET['v']) && $_GET['v'] != '' ? $_GET['v'] : '';
-        $adviser = isset($_GET['adviser']) && $_GET['adviser'] != '' ? $_GET['adviser'] : '';
+    // public function loadChatBox() {
+    //     $token = isset($_GET['v']) && $_GET['v'] != '' ? $_GET['v'] : '';
+    //     $adviser = isset($_GET['adviser']) && $_GET['adviser'] != '' ? $_GET['adviser'] : '';
 
-        $this->load->model('ComplianceCollection');
-        $data['chat'] = $this->ComplianceCollection->get_chat($token);
+    //     $this->load->model('ComplianceCollection');
+    //     $data['chat'] = $this->ComplianceCollection->get_chat($token);
 
-        $this->load->model('AdvisersCollection');
-        $data['adviser'] = $this->AdvisersCollection->getActiveAdvisersById($adviser);
+    //     $this->load->model('AdvisersCollection');
+    //     $data['adviser'] = $this->AdvisersCollection->getActiveAdvisersById($adviser);
         
-        $data['token'] = isset($_GET['v']) && $_GET['v'] != '' ? $_GET['v'] : '';
-        $data['page'] = "actual-page";
-        $view = $this->load->view('pages/replyEmail',$data,true);
-        echo $view;
-    }
+    //     $data['token'] = isset($_GET['v']) && $_GET['v'] != '' ? $_GET['v'] : '';
+    //     $data['page'] = "actual-page";
+    //     $view = $this->load->view('pages/replyEmail',$data,true);
+    //     echo $view;
+    // }
 
     //accessing chat/notes
     public function fetchNotification() {

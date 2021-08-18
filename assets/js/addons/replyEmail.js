@@ -1,7 +1,8 @@
 $(function(){
-	setInterval(function(){ 
-        updatechat(); 
-    }, 3000);
+	// setInterval(function(){ 
+ //        updatechat(); 
+ //    }, 3000);
+ 
     $(".chat-holder").animate({ scrollTop: $('.chat-holder').prop("scrollHeight")}, 500);
 
 	const base_url = $('#base_url').val();
