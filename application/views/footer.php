@@ -320,59 +320,63 @@
 <script>
   $(document).ready(function() {
     const base_url = $('#base_url').val();
-    var session_id = $('#session_id').val();
 
-    setInterval(function(){ 
-      $.ajax({
-        type: "POST",
-        url: `${base_url}/compliance/fetchNotification`,
-        data: {
-          session_id : session_id
-        },
-        dataType: "json",
-        success: function(result){
-          data = result.data;
-          
-          notif_cnt = data.length;
-          if(notif_cnt > 0) {
-            $('#navbarDropdownMenuLink').html(
-              '<i class="material-icons">notifications</i>'+
-              '<span class="notification">'+notif_cnt+'</span>'+
-              '<p class="d-lg-none d-md-block">Some Actions</p>'
-              );
-
-            $('#navbarDropdownMenuLink_div').show();
-            $('#navbarDropdownMenuLink_div').html('');
-
-            $.each(data,function(i,v){
-              $('#navbarDropdownMenuLink_div').append(
-                '<a class="dropdown-item unread-notes" href="#" data-token="'+v.results_token+'">You have unread notes from '+v.last_name+', '+v.first_name+'</a>'
-              );
-            });   
-              
-          } else {
-            $('#navbarDropdownMenuLink').html(
-              '<i class="material-icons">notifications</i>'+
-              '<p class="d-lg-none d-md-block">Some Actions</p>'
-              );
-
-            $('#navbarDropdownMenuLink_div').hide();
-          }
-        },
-        error: function(result){
-          console.log("ERROR");
-        }
-      });
-    }, 3000);
+    update_notification();
     
-     //view pdf
+     //update notif
     $(document).on('click', '.unread-notes', function (e) {
       e.preventDefault();
-
-      var token = $(this).attr('data-token');
-      window.location.replace(`${base_url}compliance?v=${token}&page=chat`);
+      update_notification();
     });
+
   });
+
+  function update_notification() {
+    const base_url = $('#base_url').val();
+    var session_id = $('#session_id').val();
+    
+    $.ajax({
+      type: "POST",
+      url: `${base_url}/compliance/fetchNotification`,
+      data: {
+        session_id : session_id
+      },
+      dataType: "json",
+      success: function(result){
+        data = result.data;
+        
+        notif_cnt = data.length;
+        if(notif_cnt > 0) {
+          $('#navbarDropdownMenuLink').html(
+            '<i class="material-icons">notifications</i>'+
+            '<span class="notification">'+notif_cnt+'</span>'+
+            '<p class="d-lg-none d-md-block">Some Actions</p>'
+            );
+
+          $('#navbarDropdownMenuLink_div').show();
+          $('#navbarDropdownMenuLink_div').html('');
+
+          $.each(data,function(i,v){
+            $('#navbarDropdownMenuLink_div').append('<a class="dropdown-item unread-notes" href="http://localhost/compliance-messenger/app?u=<?php echo $_SESSION['id']; ?>&v=0&w=' + v.results_token + '" onclick="window.open(this.href,\'newwindow\',\'toolbar=no,location=yes,status=yes,menubar=no,scrollbars=yes,resizable=no,width=400,height=600\'); return false;">You have unread notes from '+v.last_name+', '+v.first_name+'</a>')
+            // $('#navbarDropdownMenuLink_div').append(
+            //   '<a class="dropdown-item unread-notes" href="#" data-token="'+v.results_token+'"></a>'
+            // );
+          });   
+            
+        } else {
+          $('#navbarDropdownMenuLink').html(
+            '<i class="material-icons">notifications</i>'+
+            '<p class="d-lg-none d-md-block">Some Actions</p>'
+            );
+
+          $('#navbarDropdownMenuLink_div').hide();
+        }
+      },
+      error: function(result){
+        console.log("ERROR");
+      }
+    });
+  }
 </script>
 <!-- notification script end -->
 

@@ -860,30 +860,21 @@ $load_chat = isset($_GET['page']) ? $_GET['page'] : "";
                 </div>
 
             </div>
-            <div class="col-md-12">
+
+            <div id="chat-link-div" class="col-md-12" <?php echo (isset($data->token) ? "" : "style='visibility: hidden;'"); ?>>
                 <div class="card">
                     <div class="card-body">
-                        <div class="chat-holder">
-                        <!--
-                        <?php if($chat != '') : foreach ($chat as $k => $v) : $datetime = date_format(date_create($chat[$k]['timestamp']),"d F Y - h:i:s A"); ?>
+                        <?php $token = isset($data->token) ? $data->token : ""; ?>
 
-                            <div class="container-chat">
-                                <p class="p-left"><?php echo $chat[$k]['user_name']; ?><span class="time-right"><?php echo $datetime; ?></span></p>
-                                <span class="msg-left"><?php echo $chat[$k]['message']; ?></span>
-                            </div>
-                        <?php endforeach; endif; ?>
-                        -->    
-                        </div>
-                        <input type="hidden" name="timestamp" value="">   
-                        <br>
-                        <div class="flexContainer">
-                            <input type="text" class="inputField" <?php echo $chat != '' ? '' : 'disabled="disabled"'; ?>>
-                            <button type="button" id="sendChat">Send</button>
-                        </div>
+                        Click this
+                        <a id="redirect-link" href="http://onlineinsure.co.nz/compliance-messenger/app?u=<?php echo $_SESSION['id']; ?>&v=0&w=<?php echo $data->token; ?>" onclick="window.open(this.href,'newwindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600'); return false;"><strong>LINK</strong></a> to add/send notes.
+
+                        <!-- <a id="redirect-link" href="http://localhost/compliance-messenger/app?u=<?php echo $_SESSION['id']; ?>&v=0&w=<?php echo $token; ?>" onclick="window.open(this.href,'newwindow','toolbar=no,location=yes,status=yes,menubar=no,scrollbars=yes,resizable=no,width=400,height=600'); return false;"><strong>LINK</strong></a> to add/send notes.  -->
+
                     </div>
                 </div>
-
             </div>
+
         </div>
     </div>
 </div>
