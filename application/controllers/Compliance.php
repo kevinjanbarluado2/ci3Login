@@ -133,7 +133,7 @@ class Compliance extends CI_Controller
 
                 //will add this to previous "if" condition when done.
                 if ('true' == $includeAdviser) {
-                    $advisermail->addAddress('omar@eliteinsure.co.nz', 'Recipient')
+                    $advisermail->addAddress('omar@eliteinsure.co.nz', 'Recipient');
                     // $advisermail->addAddress($adviserEmail, 'adviser');
                      //Content
                     $advisermail->isHTML(true);                                  
