@@ -391,5 +391,7 @@ class Compliance extends CI_Controller
     public function updateNotification() {
         $this->load->model('ComplianceCollection');
         $result['data'] = $this->ComplianceCollection->updateNotification($_POST['token']);
+
+        echo json_encode($result);
     }
 }

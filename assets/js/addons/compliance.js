@@ -67,6 +67,21 @@ $(function () {
     
         $('#smartwizard .nav-link').addClass('done');
         $('#smartwizard .last-page').click();
+
+        setTimeout(function() {
+            $("#redirect-link").trigger('click');
+            $.ajax({
+                type: "POST",
+                url: `${base_url}/compliance/updateNotification`,
+                data: {
+                    token : token
+                },
+                dataType: "json",
+                success: function(res){
+                    update_notification();
+                }
+            });
+        }, 2500);
     }
     
     // setInterval(function(){ 
