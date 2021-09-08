@@ -17,7 +17,7 @@ class MYPDF extends TCPDF
 
         // set margins
         $this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP / 2, PDF_MARGIN_RIGHT);
-        $this->setPageOrientation('P', true, 10);
+        $this->setPageOrientation('L', true, 10);
         $this->SetFont('CALIBRI_0', '', 11); // set the font
 
         $this->setHeaderMargin(PDF_MARGIN_HEADER);
@@ -207,154 +207,304 @@ class Summary extends CI_Controller
 
     public function generate()
     {
-        $adviser_ids = $_POST['data']['info']['adviser'] ?? '';
-        $replacement = $_POST['data']['info']['replacement'] ?? '';
-        $providers = $_POST['data']['info']['providers'] ?? '';
-        $policy_type = $_POST['data']['info']['policyType'] ?? '';
-        $date_from = $_POST['data']['info']['date_from'] ?? '';
-        $date_until = $_POST['data']['info']['date_until'] ?? '';
+        // $adviser_ids = $_POST['data']['info']['adviser'] ?? '';
+        // $replacement = $_POST['data']['info']['replacement'] ?? '';
+        // $providers = $_POST['data']['info']['providers'] ?? '';
+        // $policy_type = $_POST['data']['info']['policyType'] ?? '';
+        // $date_from = $_POST['data']['info']['date_from'] ?? '';
+        // $date_until = $_POST['data']['info']['date_until'] ?? '';
+        // $this->load->model('SummaryCollection');
+
+        // $result_arr = [];
+        // $provider_flag = 0;
+        // $policy_type_flag = 0;
+
+        // if (isset($adviser_ids) && sizeof($adviser_ids) >= 1 && '' != $adviser_ids) {
+        //     foreach ($adviser_ids as $k => $v) {
+        //         //first filter to get result by adviser id and replacement
+        //         $result = $this->SummaryCollection->getResultsById($adviser_ids[$k], $replacement, $date_from, $date_until);
+
+        //         foreach ($result as $k => $v) {
+        //             //first filter to get result by adviser id and replacement
+        //             if (null != $result) {
+        //                 if ('' != $providers) {
+        //                     $providers_new = isset($result[$k]['providers']) ? explode(',', $result[$k]['providers']) : [];
+        //                     $providers_new = array_unique($providers_new);
+        //                     //second filter to get result with a selected provider
+        //                     foreach ($providers as $k1 => $v1) {
+        //                         if (in_array($providers[$k1], $providers_new)) {
+        //                             $provider_flag = 1;
+
+        //                             break;
+        //                         }
+        //                     }
+        //                 } else {
+        //                     $provider_flag = 1;
+        //                 }
+
+        //                 if ('' != $policy_type) {
+        //                     $policy_type_new = isset($result[$k]['policy_type']) ? explode(',', $result[$k]['policy_type']) : [];
+        //                     $policy_type_new = array_unique($policy_type_new);
+        //                     //third filter to get result with a selected policytype
+        //                     foreach ($policy_type as $k1 => $v1) {
+        //                         if (in_array($policy_type[$k1], $policy_type_new)) {
+        //                             $policy_type_flag = 1;
+
+        //                             break;
+        //                         }
+        //                     }
+        //                 } else {
+        //                     $policy_type_flag = 1;
+        //                 }
+
+        //                 if (1 == $provider_flag && 1 == $policy_type_flag) {
+        //                     $provider_flag = 0;
+        //                     $policy_type_flag = 0;
+        //                     array_push($result_arr, $result[$k]);
+        //                 }
+        //             }
+        //         }
+        //     }
+        // } else {
+        //     $result = $this->SummaryCollection->getResultsById($adviser_ids, $replacement, $date_from, $date_until);
+
+        //     foreach ($result as $k => $v) {
+        //         //first filter to get result by adviser id and replacement
+        //         if (null != $result) {
+        //             if ('' != $providers) {
+        //                 $providers_new = isset($result[$k]['providers']) ? explode(',', $result[$k]['providers']) : [];
+        //                 $providers_new = array_unique($providers_new);
+        //                 //second filter to get result with a selected provider
+        //                 foreach ($providers as $k1 => $v1) {
+        //                     if (in_array($providers[$k1], $providers_new)) {
+        //                         $provider_flag = 1;
+
+        //                         break;
+        //                     }
+        //                 }
+        //             } else {
+        //                 $provider_flag = 1;
+        //             }
+
+        //             if ('' != $policy_type) {
+        //                 $policy_type_new = isset($result[$k]['policy_type']) ? explode(',', $result[$k]['policy_type']) : [];
+        //                 $policy_type_new = array_unique($policy_type_new);
+        //                 //third filter to get result with a selected policytype
+        //                 foreach ($policy_type as $k1 => $v1) {
+        //                     if (in_array($policy_type[$k1], $policy_type_new)) {
+        //                         $policy_type_flag = 1;
+
+        //                         break;
+        //                     }
+        //                 }
+        //             } else {
+        //                 $policy_type_flag = 1;
+        //             }
+
+        //             if (1 == $provider_flag && 1 == $policy_type_flag) {
+        //                 $provider_flag = 0;
+        //                 $policy_type_flag = 0;
+        //                 array_push($result_arr, $result[$k]);
+        //             }
+        //         }
+        //     }
+        // }
+
+        // $result_arr = json_decode(json_encode($result_arr), true);
+        // $providers_arr_name = [];
+
+        // foreach ($result_arr as $k => $v) {
+        //     $providers_arr = isset($result_arr[$k]['providers']) ? explode(',', $result_arr[$k]['providers']) : [];
+        //     $providers_arr = array_unique($providers_arr);
+
+        //     foreach ($providers_arr as $k1 => $v1) {
+        //         $providers_arr_name[$result_arr[$k]['result_id']][$k1] = $this->SummaryCollection->getProvidersNameById($providers_arr[$k1]);
+        //     }
+        // }
+
+        // $policy_arr_name = [];
+
+        // foreach ($result_arr as $k => $v) {
+        //     $policy_arr = isset($result_arr[$k]['policy_type']) ? explode(',', $result_arr[$k]['policy_type']) : [];
+        //     $policy_arr = array_unique($policy_arr);
+
+        //     foreach ($policy_arr as $k1 => $v1) {
+        //         $policy_arr_name[$result_arr[$k]['result_id']][$k1] = $this->SummaryCollection->getPolicyNameById($policy_arr[$k1]);
+        //     }
+        // }
+
+        // $adviser_str = '';
+        // $result_str = '';
+
+        // foreach ($result_arr as $k => $v) {
+        //     if ('' == $adviser_str) {
+        //         $adviser_str = $result_arr[$k]['adviser_id'];
+        //         $result_str = $result_arr[$k]['result_id'];
+        //     } else {
+        //         $adviser_str .= ',' . $result_arr[$k]['adviser_id'];
+        //         $result_str .= ',' . $result_arr[$k]['result_id'];
+        //     }
+        // }
+
         $this->load->model('SummaryCollection');
+        $fetch_data = $this->SummaryCollection->getFilteredSummary();
+        $data = [];
 
-        $result_arr = [];
-        $provider_flag = 0;
-        $policy_type_flag = 0;
+        foreach ($fetch_data as $k => $row) {
+            $buttons = '';
+            $buttons_data = '';
 
-        if (isset($adviser_ids) && sizeof($adviser_ids) >= 1 && '' != $adviser_ids) {
-            foreach ($adviser_ids as $k => $v) {
-                //first filter to get result by adviser id and replacement
-                $result = $this->SummaryCollection->getResultsById($adviser_ids[$k], $replacement, $date_from, $date_until);
+            $sub_array = [];
 
-                foreach ($result as $k => $v) {
-                    //first filter to get result by adviser id and replacement
-                    if (null != $result) {
-                        if ('' != $providers) {
-                            $providers_new = isset($result[$k]['providers']) ? explode(',', $result[$k]['providers']) : [];
-                            $providers_new = array_unique($providers_new);
-                            //second filter to get result with a selected provider
-                            foreach ($providers as $k1 => $v1) {
-                                if (in_array($providers[$k1], $providers_new)) {
-                                    $provider_flag = 1;
+            //policy type start
+            $policy_type_arr = explode(',', $row->policy_type);
+            $policy_type_list = '';
 
-                                    break;
-                                }
-                            }
+            if (sizeof($policy_type_arr) >= 1) {
+                $policy_type_arr = array_unique($policy_type_arr);
+                $policy_type_arr_new = array_values($policy_type_arr);
+
+                foreach ($policy_type_arr_new as $k1 => $v1) {
+                    $policy_type_name = $this->SummaryCollection->getPolicyNameById($policy_type_arr_new[$k1]);
+                    if($policy_type_name != '') {
+                        if ('' == $policy_type_list) {
+                            $policy_type_list .= $policy_type_name;
                         } else {
-                            $provider_flag = 1;
+                            $policy_type_list .= ',' . $policy_type_name;
                         }
-
-                        if ('' != $policy_type) {
-                            $policy_type_new = isset($result[$k]['policy_type']) ? explode(',', $result[$k]['policy_type']) : [];
-                            $policy_type_new = array_unique($policy_type_new);
-                            //third filter to get result with a selected policytype
-                            foreach ($policy_type as $k1 => $v1) {
-                                if (in_array($policy_type[$k1], $policy_type_new)) {
-                                    $policy_type_flag = 1;
-
-                                    break;
-                                }
-                            }
-                        } else {
-                            $policy_type_flag = 1;
-                        }
-
-                        if (1 == $provider_flag && 1 == $policy_type_flag) {
-                            $provider_flag = 0;
-                            $policy_type_flag = 0;
-                            array_push($result_arr, $result[$k]);
-                        }
-                    }
+                    }  
                 }
             }
-        } else {
-            $result = $this->SummaryCollection->getResultsById($adviser_ids, $replacement, $date_from, $date_until);
+            //policy type end
 
-            foreach ($result as $k => $v) {
-                //first filter to get result by adviser id and replacement
-                if (null != $result) {
-                    if ('' != $providers) {
-                        $providers_new = isset($result[$k]['providers']) ? explode(',', $result[$k]['providers']) : [];
-                        $providers_new = array_unique($providers_new);
-                        //second filter to get result with a selected provider
-                        foreach ($providers as $k1 => $v1) {
-                            if (in_array($providers[$k1], $providers_new)) {
-                                $provider_flag = 1;
+            //provider start
+            $providers_arr = explode(',', $row->providers);
+            $providers_list = '';
 
-                                break;
-                            }
+            if (sizeof($providers_arr) >= 1) {
+                $providers_arr = array_unique($providers_arr);
+                $providers_arr_new = array_values($providers_arr);
+
+                foreach ($providers_arr_new as $k1 => $v1) {
+                    $providers_name = $this->SummaryCollection->getProvidersNameById($providers_arr_new[$k1]);
+                    if($providers_name != '') {
+                        if ('' == $providers_list) {
+                            $providers_list .= $providers_name;
+                        } else {
+                            $providers_list .= ',' . $providers_name;
                         }
-                    } else {
-                        $provider_flag = 1;
-                    }
-
-                    if ('' != $policy_type) {
-                        $policy_type_new = isset($result[$k]['policy_type']) ? explode(',', $result[$k]['policy_type']) : [];
-                        $policy_type_new = array_unique($policy_type_new);
-                        //third filter to get result with a selected policytype
-                        foreach ($policy_type as $k1 => $v1) {
-                            if (in_array($policy_type[$k1], $policy_type_new)) {
-                                $policy_type_flag = 1;
-
-                                break;
-                            }
-                        }
-                    } else {
-                        $policy_type_flag = 1;
-                    }
-
-                    if (1 == $provider_flag && 1 == $policy_type_flag) {
-                        $provider_flag = 0;
-                        $policy_type_flag = 0;
-                        array_push($result_arr, $result[$k]);
-                    }
+                    } 
                 }
             }
-        }
+            //provider end
 
-        $result_arr = json_decode(json_encode($result_arr), true);
-        $providers_arr_name = [];
+            $answers = isset($row->answers) ? json_decode($row->answers, true) : [];
 
-        foreach ($result_arr as $k => $v) {
-            $providers_arr = isset($result_arr[$k]['providers']) ? explode(',', $result_arr[$k]['providers']) : [];
-            $providers_arr = array_unique($providers_arr);
-
-            foreach ($providers_arr as $k1 => $v1) {
-                $providers_arr_name[$result_arr[$k]['result_id']][$k1] = $this->SummaryCollection->getProvidersNameById($providers_arr[$k1]);
+            //step 1 computation start
+            $step1_score = 0;
+            $step1_total_questions = sizeof($answers['step1']);
+            foreach ($answers['step1'] as $key => $value) {
+                $step1_score += $answers['step1'][$key]['value'];
             }
-        }
+            $step1_max_score = $step1_total_questions * 2;
+            $step1_score_percentage = ($step1_score / $step1_max_score) * 100;
+            $step1_score_percentage = round((float)$step1_score_percentage, 2, PHP_ROUND_HALF_UP);
+            $step1_score_disp = $step1_score."/".$step1_max_score." (".$step1_score_percentage."%)";
+            //step 1 computation end
 
-        $policy_arr_name = [];
-
-        foreach ($result_arr as $k => $v) {
-            $policy_arr = isset($result_arr[$k]['policy_type']) ? explode(',', $result_arr[$k]['policy_type']) : [];
-            $policy_arr = array_unique($policy_arr);
-
-            foreach ($policy_arr as $k1 => $v1) {
-                $policy_arr_name[$result_arr[$k]['result_id']][$k1] = $this->SummaryCollection->getPolicyNameById($policy_arr[$k1]);
+            //step 2 computation start
+            $step2_score = 0;
+            $step2_total_questions = sizeof($answers['step2']);
+            foreach ($answers['step2'] as $key => $value) {
+                $step2_score += $answers['step2'][$key]['value'];
             }
-        }
+            $step2_max_score = $step2_total_questions * 2;
+            $step2_score_percentage = ($step2_score / $step2_max_score) * 100;
+            $step2_score_percentage = round((float)$step2_score_percentage, 2, PHP_ROUND_HALF_UP);
+            $step2_score_disp = $step2_score."/".$step2_max_score." (".$step2_score_percentage."%)";
+            //step 2 computation end
 
-        $adviser_str = '';
-        $result_str = '';
-
-        foreach ($result_arr as $k => $v) {
-            if ('' == $adviser_str) {
-                $adviser_str = $result_arr[$k]['adviser_id'];
-                $result_str = $result_arr[$k]['result_id'];
-            } else {
-                $adviser_str .= ',' . $result_arr[$k]['adviser_id'];
-                $result_str .= ',' . $result_arr[$k]['result_id'];
+            //step 3 computation start
+            $step3_score = 0;
+            $step3_total_questions = sizeof($answers['step3']);
+            foreach ($answers['step3'] as $key => $value) {
+                $step3_score += $answers['step3'][$key]['value'];
             }
+            $step3_max_score = $step3_total_questions * 2;
+            $step3_score_percentage = ($step3_score / $step3_max_score) * 100;
+            $step3_score_percentage = round((float)$step3_score_percentage, 2, PHP_ROUND_HALF_UP);
+            $step3_score_disp = $step3_score."/".$step3_max_score." (".$step3_score_percentage."%)";
+            //step 3 computation end
+
+            //step 4 computation start
+            $step4_score = 0;
+            $step4_total_questions = sizeof($answers['step4']);
+            foreach ($answers['step4'] as $key => $value) {
+                $step4_score += $answers['step4'][$key]['value'];
+            }
+            $step4_max_score = $step4_total_questions * 2;
+            $step4_score_percentage = ($step4_score / $step4_max_score) * 100;
+            $step4_score_percentage = round((float)$step4_score_percentage, 2, PHP_ROUND_HALF_UP);
+            $step4_score_disp = $step4_score."/".$step4_max_score." (".$step4_score_percentage."%)";
+            //step 4 computation end
+
+            //step 5 computation start
+            $step5_score = 0;
+            $step5_total_questions = sizeof($answers['step5']);
+            foreach ($answers['step5'] as $key => $value) {
+                $step5_score += $answers['step5'][$key]['value'];
+            }
+            $step5_max_score = $step5_total_questions * 2;
+            $step5_score_percentage = ($step5_score / $step5_max_score) * 100;
+            $step5_score_percentage = round((float)$step5_score_percentage, 2, PHP_ROUND_HALF_UP);
+            $step5_score_disp = $step5_score."/".$step5_max_score." (".$step5_score_percentage."%)";
+            //step 5 computation end
+
+            //step 6 computation start
+            $step6_score = 0;
+            $step6_total_questions = sizeof($answers['step6']);
+            foreach ($answers['step6'] as $key => $value) {
+                $step6_score += $answers['step6'][$key]['value'];
+            }
+            $step6_max_score = $step6_total_questions * 6;
+            $step6_score_percentage = ($step6_score / $step6_max_score) * 100;
+            $step6_score_percentage = round((float)$step6_score_percentage, 2, PHP_ROUND_HALF_UP);
+            $step6_score_disp = $step6_score."/".$step6_max_score." (".$step6_score_percentage."%)";
+            //step 6 computation end
+
+            //total score computation start
+            for ($i = 1; $i <= 6; $i++) {
+                $total_question += sizeof($answers['step' . $i]);
+            }
+
+            $max_score = $total_question * 2;
+            $score_percentage = ($row->score / $max_score) * 100;
+            $score_percentage = round((float)$score_percentage, 2, PHP_ROUND_HALF_UP);
+            $total_question = 0;
+
+            $total_score_disp = $row->score."/".$max_score." (".$score_percentage."%)";
+            //total score computation end
+            
+            $sub_array['clients'] = $row->clients;
+            $sub_array['step1'] = $step1_score_disp;
+            $sub_array['step2'] = $step2_score_disp;
+            $sub_array['step3'] = $step3_score_disp;
+            $sub_array['step4'] = $step4_score_disp;
+            $sub_array['step5'] = $step5_score_disp;
+            $sub_array['step6'] = $step6_score_disp;
+            $sub_array['total_score'] = $total_score_disp;
+            $sub_array['replacement'] = ($row->replacement == '') ? 'N/A' : $row->replacement;
+            $sub_array['policy_type'] = $policy_type_list;
+            $sub_array['providers'] = $providers_list;
+
+            $data[] = $sub_array;
         }
 
         ob_start();
         set_time_limit(300);
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $html = $this->load->view('docs/summary-template', [
-            'data' => $_POST,
-            'result_arr' => $result_arr,
-            'added_by' => $_SESSION['name'],
-            'providers_arr' => $providers_arr_name,
-            'policy_arr' => $policy_arr_name,
+            'data' => $data
         ], true);
         // remove default header/footer
         $pdf->setPrintHeader(true);
@@ -369,11 +519,13 @@ class Summary extends CI_Controller
             'link' => base_url('assets/resources/preview.pdf'),
             'adviser_str' => $adviser_str,
             'result_str' => $result_str,
+            'count' => sizeof($fetch_data)
         ]);
     }
 
     public function savesummary()
     {
+        var_export($_POST);die();
         $result['message'] = 'There was an error in the connection. Please contact the administrator for updates.';
         $result['summary_id'] = '';
         $result['filename'] = '';
@@ -588,5 +740,378 @@ class Summary extends CI_Controller
             'data' => $data,
         ];
         echo json_encode($output);
+    }
+
+    public function fetchFilteredRows()
+    {
+        $this->load->model('SummaryCollection');
+        $fetch_data = $this->SummaryCollection->make_datatables_v2();
+        $data = [];
+
+        foreach ($fetch_data as $k => $row) {
+            $buttons = '';
+            $buttons_data = '';
+
+            $sub_array = [];
+
+            //policy type start
+            $policy_type_arr = explode(',', $row->policy_type);
+            $policy_type_list = '';
+
+            if (sizeof($policy_type_arr) >= 1) {
+                $policy_type_arr = array_unique($policy_type_arr);
+                $policy_type_arr_new = array_values($policy_type_arr);
+
+                foreach ($policy_type_arr_new as $k1 => $v1) {
+                    $policy_type_name = $this->SummaryCollection->getPolicyNameById($policy_type_arr_new[$k1]);
+                    if($policy_type_name != '') {
+                        if ('' == $policy_type_list) {
+                            $policy_type_list = '<ul>';
+                            $policy_type_list .= '<li>' . $policy_type_name . '</li>';
+                        } else {
+                            $policy_type_list .= '<li>' . $policy_type_name . '</li>';
+                        }
+                    }  
+                }
+
+                $policy_type_list .= '</ul>';
+            }
+            //policy type end
+
+            //provider start
+            $providers_arr = explode(',', $row->providers);
+            $providers_list = '';
+
+            if (sizeof($providers_arr) >= 1) {
+                $providers_arr = array_unique($providers_arr);
+                $providers_arr_new = array_values($providers_arr);
+
+                foreach ($providers_arr_new as $k1 => $v1) {
+                    $providers_name = $this->SummaryCollection->getProvidersNameById($providers_arr_new[$k1]);
+                    if($providers_name != '') {
+                        if ('' == $providers_list) {
+                            $providers_list = '<ul>';
+                            $providers_list .= '<li>' . $providers_name . '</li>';
+                        } else {
+                            $providers_list .= '<li>' . $providers_name . '</li>';
+                        }
+                    } 
+                }
+
+                $providers_list .= '</ul>';
+            }
+            //provider end
+
+            $answers = isset($row->answers) ? json_decode($row->answers, true) : [];
+
+            //step 1 computation start
+            $step1_score = 0;
+            $step1_total_questions = sizeof($answers['step1']);
+            foreach ($answers['step1'] as $key => $value) {
+                $step1_score += $answers['step1'][$key]['value'];
+            }
+            $step1_max_score = $step1_total_questions * 2;
+            $step1_score_percentage = ($step1_score / $step1_max_score) * 100;
+            $step1_score_percentage = round((float)$step1_score_percentage, 2, PHP_ROUND_HALF_UP);
+            $step1_score_disp = $step1_score."/".$step1_max_score." (".$step1_score_percentage."%)";
+            //step 1 computation end
+
+            //step 2 computation start
+            $step2_score = 0;
+            $step2_total_questions = sizeof($answers['step2']);
+            foreach ($answers['step2'] as $key => $value) {
+                $step2_score += $answers['step2'][$key]['value'];
+            }
+            $step2_max_score = $step2_total_questions * 2;
+            $step2_score_percentage = ($step2_score / $step2_max_score) * 100;
+            $step2_score_percentage = round((float)$step2_score_percentage, 2, PHP_ROUND_HALF_UP);
+            $step2_score_disp = $step2_score."/".$step2_max_score." (".$step2_score_percentage."%)";
+            //step 2 computation end
+
+            //step 3 computation start
+            $step3_score = 0;
+            $step3_total_questions = sizeof($answers['step3']);
+            foreach ($answers['step3'] as $key => $value) {
+                $step3_score += $answers['step3'][$key]['value'];
+            }
+            $step3_max_score = $step3_total_questions * 2;
+            $step3_score_percentage = ($step3_score / $step3_max_score) * 100;
+            $step3_score_percentage = round((float)$step3_score_percentage, 2, PHP_ROUND_HALF_UP);
+            $step3_score_disp = $step3_score."/".$step3_max_score." (".$step3_score_percentage."%)";
+            //step 3 computation end
+
+            //step 4 computation start
+            $step4_score = 0;
+            $step4_total_questions = sizeof($answers['step4']);
+            foreach ($answers['step4'] as $key => $value) {
+                $step4_score += $answers['step4'][$key]['value'];
+            }
+            $step4_max_score = $step4_total_questions * 2;
+            $step4_score_percentage = ($step4_score / $step4_max_score) * 100;
+            $step4_score_percentage = round((float)$step4_score_percentage, 2, PHP_ROUND_HALF_UP);
+            $step4_score_disp = $step4_score."/".$step4_max_score." (".$step4_score_percentage."%)";
+            //step 4 computation end
+
+            //step 5 computation start
+            $step5_score = 0;
+            $step5_total_questions = sizeof($answers['step5']);
+            foreach ($answers['step5'] as $key => $value) {
+                $step5_score += $answers['step5'][$key]['value'];
+            }
+            $step5_max_score = $step5_total_questions * 2;
+            $step5_score_percentage = ($step5_score / $step5_max_score) * 100;
+            $step5_score_percentage = round((float)$step5_score_percentage, 2, PHP_ROUND_HALF_UP);
+            $step5_score_disp = $step5_score."/".$step5_max_score." (".$step5_score_percentage."%)";
+            //step 5 computation end
+
+            //step 6 computation start
+            $step6_score = 0;
+            $step6_total_questions = sizeof($answers['step6']);
+            foreach ($answers['step6'] as $key => $value) {
+                $step6_score += $answers['step6'][$key]['value'];
+            }
+            $step6_max_score = $step6_total_questions * 6;
+            $step6_score_percentage = ($step6_score / $step6_max_score) * 100;
+            $step6_score_percentage = round((float)$step6_score_percentage, 2, PHP_ROUND_HALF_UP);
+            $step6_score_disp = $step6_score."/".$step6_max_score." (".$step6_score_percentage."%)";
+            //step 6 computation end
+
+            //total score computation start
+            for ($i = 1; $i <= 6; $i++) {
+                $total_question += sizeof($answers['step' . $i]);
+            }
+
+            $max_score = $total_question * 2;
+            $score_percentage = ($row->score / $max_score) * 100;
+            $score_percentage = round((float)$score_percentage, 2, PHP_ROUND_HALF_UP);
+            $total_question = 0;
+
+            $total_score_disp = $row->score."/".$max_score." (".$score_percentage."%)";
+            //total score computation end
+            
+            $sub_array['clients'] = $row->clients;
+            $sub_array['step1'] = $step1_score_disp;
+            $sub_array['step2'] = $step2_score_disp;
+            $sub_array['step3'] = $step3_score_disp;
+            $sub_array['step4'] = $step4_score_disp;
+            $sub_array['step5'] = $step5_score_disp;
+            $sub_array['step6'] = $step6_score_disp;
+            $sub_array['total_score'] = $total_score_disp;
+            $sub_array['replacement'] = ($row->replacement == '') ? 'N/A' : $row->replacement;
+            $sub_array['policy_type'] = $policy_type_list;
+            $sub_array['providers'] = $providers_list;
+            $sub_array['score_status'] = ($row->score_status == 'Based on percentage') ? (($score_status >= 75) ? '<span style="color:green">Passed</span>' : '<span style="color:red">Failed</span>') : (($row->score_status == "Passed") ? '<span style="color:green">Passed</span>' : '<span style="color:red">Failed</span>');
+            // $buttons_data .= ' data-results_id="'.$row->results_id.'" ';
+            foreach ($row as $k1 => $v1) {
+                if($k1 != 'answers')
+                    $buttons_data .= ' data-' . $k1 . '="' . $v1 . '" ';
+            }
+
+            $buttons .= ' <a id="viewPdfForm" '
+                      . ' class="viewPdfForm" data-key="view" style="text-decoration: none;" '
+                      . ' href="'. base_url().'Pdf/viewPdfForm" '
+                      . $buttons_data
+                      . ' > '
+                      . ' <button class="btn btn-primary btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="View file review report">'
+                      . ' <i class="material-icons">remove_red_eye</i> '
+                      . ' </button> '
+                      . ' </a> ';
+            $sub_array['actions'] = $buttons;
+            $data[] = $sub_array;
+        }
+        $output = [
+            'draw' => intval($_POST['draw']),
+            'recordsTotal' => $this->SummaryCollection->get_all_data_v2(),
+            'recordsFiltered' => $this->SummaryCollection->get_filtered_data_v2(),
+            'data' => $data,
+        ];
+        echo json_encode($output);
+    }
+
+    public function fetchSummaryDetails(){
+        $this->load->model('SummaryCollection');
+        $fetch_data = $this->SummaryCollection->getFilteredSummary();
+        $data = [];
+
+        $step1_passed = 0;
+        $step2_passed = 0;
+        $step3_passed = 0;
+        $step4_passed = 0;
+        $step5_passed = 0;
+        $step6_passed = 0;
+
+        $step1_failed = 0;
+        $step2_failed = 0;
+        $step3_failed = 0;
+        $step4_failed = 0;
+        $step5_failed = 0;
+        $step6_failed = 0;
+
+        $policy_type_list = array();
+        $providers_list = array();
+        $replacement_list = array();
+
+        foreach ($fetch_data as $k => $row) {
+            $buttons = '';
+            $buttons_data = '';
+
+            $sub_array = [];
+            if($row->replacement == "") $row->replacement = "N/A";
+            if(isset($replacement_list[$row->replacement]))
+                $replacement_list[$row->replacement] = $replacement_list[$row->replacement] + 1;
+            else
+                $replacement_list[$row->replacement] = 1; 
+
+            //policy type start
+            $policy_type_arr = explode(',', $row->policy_type);
+            if (sizeof($policy_type_arr) >= 1) {
+                $policy_type_arr = array_unique($policy_type_arr);
+                $policy_type_arr_new = array_values($policy_type_arr);
+
+                foreach ($policy_type_arr_new as $k1 => $v1) {
+                    $policy_type_name = $this->SummaryCollection->getPolicyNameById($policy_type_arr_new[$k1]);
+                    if($policy_type_name != '') {
+                        if(isset($policy_type_list[$policy_type_name]))
+                            $policy_type_list[$policy_type_name] = $policy_type_list[$policy_type_name] + 1;
+                        else
+                            $policy_type_list[$policy_type_name] = 1;     
+                    }  
+                }
+            }
+            //policy type end
+
+            //provider start
+            $providers_arr = explode(',', $row->providers);
+            if (sizeof($providers_arr) >= 1) {
+                $providers_arr = array_unique($providers_arr);
+                $providers_arr_new = array_values($providers_arr);
+
+                foreach ($providers_arr_new as $k1 => $v1) {
+                    $providers_name = $this->SummaryCollection->getProvidersNameById($providers_arr_new[$k1]);
+                    if($providers_name != '') {
+                        if(isset($providers_list[$providers_name]))
+                            $providers_list[$providers_name] = $providers_list[$providers_name] + 1;
+                        else
+                            $providers_list[$providers_name] = 1;
+                    } 
+                }
+            }
+            //provider end
+
+            $answers = isset($row->answers) ? json_decode($row->answers, true) : [];
+
+            //step 1 computation start
+            $step1_score = 0;
+            $step1_total_questions = sizeof($answers['step1']);
+            foreach ($answers['step1'] as $key => $value) {
+                $step1_score += $answers['step1'][$key]['value'];
+            }
+            $step1_max_score = $step1_total_questions * 2;
+            $step1_score_percentage = ($step1_score / $step1_max_score) * 100;
+            $step1_score_percentage = round((float)$step1_score_percentage, 2, PHP_ROUND_HALF_UP);
+            if($step1_score_percentage >= 75) $step1_passed++;
+            else $step1_failed++;
+            //step 1 computation end
+
+            //step 2 computation start
+            $step2_score = 0;
+            $step2_total_questions = sizeof($answers['step2']);
+            foreach ($answers['step2'] as $key => $value) {
+                $step2_score += $answers['step2'][$key]['value'];
+            }
+            $step2_max_score = $step2_total_questions * 2;
+            $step2_score_percentage = ($step2_score / $step2_max_score) * 100;
+            $step2_score_percentage = round((float)$step2_score_percentage, 2, PHP_ROUND_HALF_UP);
+            if($step2_score_percentage >= 75) $step2_passed++;
+            else $step2_failed++;
+            //step 2 computation end
+
+            //step 3 computation start
+            $step3_score = 0;
+            $step3_total_questions = sizeof($answers['step3']);
+            foreach ($answers['step3'] as $key => $value) {
+                $step3_score += $answers['step3'][$key]['value'];
+            }
+            $step3_max_score = $step3_total_questions * 2;
+            $step3_score_percentage = ($step3_score / $step3_max_score) * 100;
+            $step3_score_percentage = round((float)$step3_score_percentage, 2, PHP_ROUND_HALF_UP);
+            if($step3_score_percentage >= 75) $step3_passed++;
+            else $step3_failed++;
+            //step 3 computation end
+
+            //step 4 computation start
+            $step4_score = 0;
+            $step4_total_questions = sizeof($answers['step4']);
+            foreach ($answers['step4'] as $key => $value) {
+                $step4_score += $answers['step4'][$key]['value'];
+            }
+            $step4_max_score = $step4_total_questions * 2;
+            $step4_score_percentage = ($step4_score / $step4_max_score) * 100;
+            $step4_score_percentage = round((float)$step4_score_percentage, 2, PHP_ROUND_HALF_UP);
+            if($step4_score_percentage >= 75) $step4_passed++;
+            else $step4_failed++;
+            //step 4 computation end
+
+            //step 5 computation start
+            $step5_score = 0;
+            $step5_total_questions = sizeof($answers['step5']);
+            foreach ($answers['step5'] as $key => $value) {
+                $step5_score += $answers['step5'][$key]['value'];
+            }
+            $step5_max_score = $step5_total_questions * 2;
+            $step5_score_percentage = ($step5_score / $step5_max_score) * 100;
+            $step5_score_percentage = round((float)$step5_score_percentage, 2, PHP_ROUND_HALF_UP);
+            if($step5_score_percentage >= 75) $step5_passed++;
+            else $step5_failed++;
+            //step 5 computation end
+
+            //step 6 computation start
+            $step6_score = 0;
+            $step6_total_questions = sizeof($answers['step6']);
+            foreach ($answers['step6'] as $key => $value) {
+                $step6_score += $answers['step6'][$key]['value'];
+            }
+            $step6_max_score = $step6_total_questions * 6;
+            $step6_score_percentage = ($step6_score / $step6_max_score) * 100;
+            $step6_score_percentage = round((float)$step6_score_percentage, 2, PHP_ROUND_HALF_UP);
+            if($step6_score_percentage >= 75) $step6_passed++;
+            else $step6_failed++;
+            //step 6 computation end
+
+            //total score computation start
+            for ($i = 1; $i <= 6; $i++) {
+                $total_question += sizeof($answers['step' . $i]);
+            }
+
+            $max_score = $total_question * 2;
+            $score_percentage = ($row->score / $max_score) * 100;
+            $score_percentage = round((float)$score_percentage, 2, PHP_ROUND_HALF_UP);
+            $total_question = 0;
+
+            $total_score_disp = $row->score."/".$max_score." (".$score_percentage."%)";
+            //total score computation end
+            
+        }
+
+
+        $data = array(
+            "step1_passed" => $step1_passed,
+            "step2_passed" => $step2_passed,
+            "step3_passed" => $step3_passed,
+            "step4_passed" => $step4_passed,
+            "step5_passed" => $step5_passed,
+            "step6_passed" => $step6_passed,
+            "step1_failed" => $step1_failed,
+            "step2_failed" => $step2_failed,
+            "step3_failed" => $step3_failed,
+            "step4_failed" => $step4_failed,
+            "step5_failed" => $step5_failed,
+            "step6_failed" => $step6_failed,
+            "policy_type_arr"   => $policy_type_list,
+            "providers_arr"     => $providers_list,
+            "replacement_arr"   => $replacement_list
+        );
+
+        echo json_encode($data);
     }
 }

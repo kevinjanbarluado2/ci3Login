@@ -1,5 +1,5 @@
 <?php
-class PdfCollection extends CI_Model
+class AdviserNotesCollection extends CI_Model
 {
     var $select_column = null;
     function __construct()
@@ -51,14 +51,16 @@ class PdfCollection extends CI_Model
         $ap_db = $_ENV['ap_database'];
 
         $this->select_column[] = $ap_db.'.users.last_name';
-        $this->select_column[] = $ap_db.'.users.first_name';
+        $this->select_column[] =  $ap_db.'.users.first_name';
         $this->db->select(
             $c_db.'.results_tbl.*,'.
+            $c_db.'.user_tbl.name AS compliance_officer_name,'.
             $ap_db.'.users.first_name,'.
             $ap_db.'.users.last_name'
         );
         $this->db->from($this->table);
         $this->db->join($ap_db.".users", $c_db.".results_tbl.adviser_id = ".$ap_db.".users.idusers", "left");
+        $this->db->join($c_db.".user_tbl", $c_db.".results_tbl.added_by = ".$c_db.".user_tbl.id", "left");
 
         if (isset($_POST["search"]["value"])) {
             $this->db->group_start();
@@ -69,6 +71,8 @@ class PdfCollection extends CI_Model
 
             $this->db->group_end();
         }
+
+        $this->db->where($ap_db.'.users.idusers = "'.$_SESSION['id'].'"');
 
         if (isset($_POST["order"])) {
             $this->db->order_by($this->order_column[$_POST['order']['0']['column']] . " " . $_POST['order']['0']['dir']);
@@ -93,34 +97,4 @@ class PdfCollection extends CI_Model
         return $query->num_rows();
     }
 
-    //delete adviser
-    public function deleteRows($params)
-    {
-        $this->db->where('results_id', $params['results_id']);
-        if ($this->db->delete($this->table, $params) !== FALSE)
-            return true;
-        return false;
-    }
-
-    public function get_one_data($userid,$column)
-    {
-        $sql = "SELECT * FROM results_tbl WHERE $column=?";
-        $query = $this->db->query($sql, array($userid));
-        if ($query->num_rows() > 0) {
-            $result = $query->result();
-            $item = $result[0];
-
-            return $item;
-        } else {
-            return null;
-        }
-    }
-
-    //update score status
-    public function updateStatus($params){        
-        $this->db->where('results_id', $params['results_id']);
-        if ($this->db->update($this->table,$params) !== FALSE)
-            return true;    
-        return false;
-    }
 }

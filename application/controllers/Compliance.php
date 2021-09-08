@@ -17,7 +17,7 @@ class MYPDF extends TCPDF
 
         // set margins
         $this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP / 2, PDF_MARGIN_RIGHT);
-        $this->setPageOrientation('P', true, 10);
+        $this->setPageOrientation('L', true, 10);
         $this->SetFont('dejavusans', '', 8); // set the font
 
         $this->setHeaderMargin(PDF_MARGIN_HEADER);
@@ -117,13 +117,14 @@ class Compliance extends CI_Controller
                      //Content
                     $advisermail->isHTML(true);                                  
                     //Set email format to HTML
+                    // $advisermail->Subject = 'Compliance Test Result';
+                    // $advisermail->Body = "Hello Adviser $adviserName,<br><br>   
+                    // After you review the attached compliance result and you have your questions / feedback, kindly click the link below to communicate with the Compliance Officer.
+                    // <br><br>
+                    // <a href=\"".base_url()."Compliance/replyEmail?v=".$results_token."&adviser=".$adviser."\" onclick=\"window.open(this.href,'newwindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600'); return false;\">Click here to reply</a>
+                    // ";
                     $advisermail->Subject = 'Compliance Test Result';
-                    $advisermail->Body = "Hello Adviser $adviserName,<br><br>   
-                    After you review the attached compliance result and you have your questions / feedback, kindly click the link below to communicate with the Compliance Officer.
-                    <br><br>
-                    <a href=\"".base_url()."Compliance/replyEmail?v=".$results_token."&adviser=".$adviser."\" onclick=\"window.open(this.href,'newwindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600'); return false;\">Click here to reply</a>
-                    ";
-
+                    $advisermail->Body = "Hi, {$adviserName}, please find the attached file review report.";
                     $advisermail->send();
                 }
             } else {
@@ -138,13 +139,14 @@ class Compliance extends CI_Controller
                      //Content
                     $advisermail->isHTML(true);                                  
                     //Set email format to HTML
+                    // $advisermail->Subject = 'Compliance Test Result';
+                    // $advisermail->Body = "Hello Adviser $adviserName,<br><br>   
+                    // After you review the attached compliance result and you have your questions / feedback, kindly click the link below to communicate with the Compliance Officer.
+                    // <br><br>
+                    // <a href=\"".base_url()."Compliance/replyEmail?v=".$results_token."&adviser=".$adviser."\" onclick=\"window.open(this.href,'newwindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600'); return false;\">Click here to reply</a>
+                    // ";
                     $advisermail->Subject = 'Compliance Test Result';
-                    $advisermail->Body = "Hello Adviser $adviserName,<br><br>   
-                    After you review the attached compliance result and you have your questions / feedback, kindly click the link below to communicate with the Compliance Officer.
-                    <br><br>
-                    <a href=\"".base_url()."Compliance/replyEmail?v=".$results_token."&adviser=".$adviser."\" onclick=\"window.open(this.href,'newwindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=400,height=600'); return false;\">Click here to reply</a>
-                    ";
-
+                    $advisermail->Body = "Hi, {$adviserName}, please find the attached file review report.";
                     $advisermail->send();
                 }
             }
@@ -156,7 +158,7 @@ class Compliance extends CI_Controller
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = 'Compliance Test Result';
-            $mail->Body = "Hi, {$complianceOfficer}, please find attached the file review report.";
+            $mail->Body = "Hi, {$complianceOfficer}, please find the attached file review report.";
 
             $mail->send();
             echo json_encode(['status' => 'Message has been sent successfully', 'message' => 'Successfully Sent', 'includeAdviser' => $includeAdviser]);
@@ -188,7 +190,8 @@ class Compliance extends CI_Controller
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(true);
         $pdf->AddPage(); // add a page
-        $pdf->writeHTMLCell(187, 300, 12, 5, $html, 0, 0, false, true, '', true);
+        // $pdf->writeHTMLCell(187, 300, 12, 5, $html, 0, 0, false, true, '', true);
+        $pdf->writeHTML($html, true, false, true, false, '');
         $link = FCPATH . 'assets/resources/preview.pdf';
         $pdf->Output($link, 'F');
         ob_end_clean();

@@ -70,6 +70,10 @@
 <script src="./assets/demo/demo.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js" type="text/javascript"></script>
 
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
 <script src="./assets/js/addons/<?=$activeNav;?>.js"></script>
 
 <script>

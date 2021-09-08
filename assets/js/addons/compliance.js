@@ -27,13 +27,14 @@ let fetchStep = (stepNum) => {
         data[x] = {
             'value': ($(this).find('input:checked').val() !== undefined) ? $(this).find('input:checked').val() : "",
             'question': $(this).find('td').eq(0).html(),
-            'notes': $(this).find('textarea').val().trim()
+            'notes': $(this).find('[name="notes"]').html(),
+            'with_bgcolor': $(this).find('[name="with_bgcolor"]').val(),
         };
 
     });
 
-    // console.log('data:');
-    // console.log(data);
+    console.log('data:');
+    console.log(data);
 
     return data;
 }
@@ -41,10 +42,10 @@ let fetchStep = (stepNum) => {
 
 $(function () {
     const base_url = $('#base_url').val();
-    var load_chat = $('[name=load_chat]').val();
+    var privileges = $('[name=privileges]').val();
     var token = $('[name="token"]').val();
 
-    if(load_chat == 'chat') {
+    if(privileges == 'advisernotes') {
         $('#smartwizard').smartWizard({
             theme: 'arrows',
             transitionEffect: 'fade',
@@ -55,7 +56,13 @@ $(function () {
                 toolbarButtonPosition: 'right', // left, right, center
                 showNextButton: true, // show/hide a Next button
                 showPreviousButton: true, // show/hide a Previous button
-                toolbarExtraButtons: [] // Extra buttons to show on toolbar, array of jQuery input/buttons elements
+                toolbarExtraButtons: [
+                $('<button></button>').text('Save')
+                    .addClass('btn saveadvisernotes')
+                    .on('click', function(){ 
+                        $("#save-btn").trigger('click');                          
+                    })
+                ] // Extra buttons to show on toolbar, array of jQuery input/buttons elements
             },
             anchorSettings: {
                 anchorClickable: true, // Enable/Disable anchor navigation
@@ -66,22 +73,23 @@ $(function () {
         });
     
         $('#smartwizard .nav-link').addClass('done');
-        $('#smartwizard .last-page').click();
+        $(':radio').attr("disabled",true);
+        // $('#smartwizard .last-page').click();
 
-        setTimeout(function() {
-            $("#redirect-link").trigger('click');
-            $.ajax({
-                type: "POST",
-                url: `${base_url}/compliance/updateNotification`,
-                data: {
-                    token : token
-                },
-                dataType: "json",
-                success: function(res){
-                    update_notification();
-                }
-            });
-        }, 2500);
+        // setTimeout(function() {
+        //     $("#redirect-link").trigger('click');
+        //     $.ajax({
+        //         type: "POST",
+        //         url: `${base_url}/compliance/updateNotification`,
+        //         data: {
+        //             token : token
+        //         },
+        //         dataType: "json",
+        //         success: function(res){
+        //             update_notification();
+        //         }
+        //     });
+        // }, 2500);
     }
     
     // setInterval(function(){ 
@@ -123,7 +131,9 @@ $(function () {
         data.step4 = fetchStep(4);
         data.step5 = fetchStep(5);
         data.step6 = fetchStep(6);
-
+        console.log("start");
+        console.log(data.info);
+        console.log("end");
         let token = $('[name="token"]').val();
 
         //console.log(data, base_url);
@@ -247,7 +257,7 @@ $(function () {
 
                 $('#redirect-link').attr("href", "http://onlineinsure.co.nz/compliance-messenger/app?u="+complianceId+"&v=0&w="+result.token);
                 // $('#redirect-link').attr("href", "http://localhost/compliance-messenger/app?u="+complianceId+"&v=0&w="+result.token);
-                $('#chat-link-div').css('visibility', 'visible');
+                // $('#chat-link-div').css('visibility', 'visible');
                 console.log(result.token);
                 
                 $.notify({
@@ -364,64 +374,118 @@ $(function () {
 
     });
 
+    // $(document).on('keyup','.inputField',function(e){
+    //     if (e.keyCode === 13) {
+    //         $(".addNote").click();
+    //     }
+    // });
+
+    $(document).on('click','.addNote',function(e){
+        var color = "green";
+        var with_bgcolor = "yes";
+        if(privileges == "advisernotes") {
+            color = "blue";
+            with_bgcolor = "no";
+        }
+
+        var prev_notes = $(this).parent().siblings('[name=notes]').text();
+        var msg = $(this).siblings('.inputField').val();
+        var complianceOfficer = ($('[name=complianceOfficer]').val() !== "") ? $('[name=complianceOfficer]').val() : "";
+        var currentTime = moment().format("DD MMMM YYYY - hh:mm A");
+        if(msg != '') {
+            if(prev_notes == '') {
+                $(this).parent().siblings('[name=notes]').append(
+                    '<font color="'+color+'">'+complianceOfficer+'</font> - '+currentTime+
+                    '<br>'+msg);
+                $(this).parent().siblings('[name=notes]').animate({ scrollTop: $(this).parent().siblings('[name=notes]').prop("scrollHeight")}, 500);
+
+                var disp_id = $(this).attr("data-id");
+                var disp_msg = $(this).parent().siblings('[name=notes]').html();
+                $('div#'+disp_id).html(disp_msg);
+                $('div#'+disp_id).animate({ scrollTop: $(this).parent().siblings('[name=notes]').prop("scrollHeight")}, 500);
+
+                $(".inputField").val('');
+                $(this).closest('tr').find('[name=with_bgcolor]').val(with_bgcolor);
+                $(this).closest('tr').css("background-color","transparent");
+            } else {
+                $(this).parent().siblings('[name=notes]').append(
+                    '<br><br>'+
+                    '<font color="'+color+'">'+complianceOfficer+'</font> - '+currentTime+
+                    '<br>'+msg)
+                $(this).parent().siblings('[name=notes]').animate({ scrollTop: $(this).parent().siblings('[name=notes]').prop("scrollHeight")}, 500);
+                
+                var disp_id = $(this).attr("data-id");
+                var disp_msg = $(this).parent().siblings('[name=notes]').html();
+                $('div#'+disp_id).html(disp_msg);
+                $('div#'+disp_id).animate({ scrollTop: $(this).parent().siblings('[name=notes]').prop("scrollHeight")}, 500);
+
+                $(".inputField").val('');
+                $(this).closest('tr').find('[name=with_bgcolor]').val(with_bgcolor);
+                $(this).closest('tr').css("background-color","transparent");
+            }
+            
+        }        
+        // console.log($(this).parent());
+        // console.log($(this).parent().siblings());
+    });
 });
 
-function updatechat() {
-    const base_url = $('#base_url').val();
-    var results_token = $('[name="token"]').val();
-    var adviser_name = ($('[name=adviser]').val() !== "") ? $.trim($('[name=adviser] option:selected').text()) : "";
-    var timestamp = ($('[name=timestamp]').val() !== "") ? $('[name=timestamp]').val() : "";
-    var complianceId = ($('[name=complianceId]').val() !== "") ? $('[name=complianceId]').val() : "";
+// function updatechat() {
+//     const base_url = $('#base_url').val();
+//     var results_token = $('[name="token"]').val();
+//     var adviser_name = ($('[name=adviser]').val() !== "") ? $.trim($('[name=adviser] option:selected').text()) : "";
+//     var timestamp = ($('[name=timestamp]').val() !== "") ? $('[name=timestamp]').val() : "";
+//     var complianceId = ($('[name=complianceId]').val() !== "") ? $('[name=complianceId]').val() : "";
 
-    $.ajax({
-        url: `${base_url}/compliance/get_chat`,
-        type: 'post',
-        data: { 
-            results_token: results_token
-        },
-        dataType: "json",
-        success: function (res) {
-            $('.chat-holder').html('');
-            $.each(res.data,function(i,v){
-                timestamp_curr = v.timestamp;
-                sender = v.sender;
-                class_name = "";
+//     $.ajax({
+//         url: `${base_url}/compliance/get_chat`,
+//         type: 'post',
+//         data: { 
+//             results_token: results_token
+//         },
+//         dataType: "json",
+//         success: function (res) {
+//             $('.chat-holder').html('');
+//             $.each(res.data,function(i,v){
+//                 timestamp_curr = v.timestamp;
+//                 sender = v.sender;
+//                 class_name = "";
 
-                if(v.sender == 0) {
-                    sender_name = v.user_name;
-                    if(complianceId == v.user_id) {
-                        class_name = "";
-                        alignment = "right";
-                    } else {
-                        class_name = "darker";
-                        alignment = "left";
-                    }     
-                } else {
-                    sender_name = adviser_name;
-                    class_name = "darker";
-                    alignment = "left";
-                } 
+//                 if(v.sender == 0) {
+//                     sender_name = v.user_name;
+//                     if(complianceId == v.user_id) {
+//                         class_name = "";
+//                         alignment = "right";
+//                     } else {
+//                         class_name = "darker";
+//                         alignment = "left";
+//                     }     
+//                 } else {
+//                     sender_name = adviser_name;
+//                     class_name = "darker";
+//                     alignment = "left";
+//                 } 
 
-                $('.chat-holder').append(
-                    '<div class="container-chat '+ class_name +'">'+
-                        '<p class="p-left">'+ sender_name +'<span class="time-right">'+ moment(v.timestamp).format("DD MMMM YYYY - hh:mm A") +'</span></p>'+
-                        '<span class="msg-left" style="float:'+ alignment +'">'+ v.message +'</span>'+
-                    '</div>');   
-            }); 
+//                 $('.chat-holder').append(
+//                     '<div class="container-chat '+ class_name +'">'+
+//                         '<p class="p-left">'+ sender_name +'<span class="time-right">'+ moment(v.timestamp).format("DD MMMM YYYY - hh:mm A") +'</span></p>'+
+//                         '<span class="msg-left" style="float:'+ alignment +'">'+ v.message +'</span>'+
+//                     '</div>');   
+//             }); 
             
-            if(timestamp != timestamp_curr) {
-                $('[name=timestamp]').val(timestamp_curr);
-                $(".chat-holder").animate({ scrollTop: $('.chat-holder').prop("scrollHeight")}, 500);     
-            }   
-        }
-    });
+//             if(timestamp != timestamp_curr) {
+//                 $('[name=timestamp]').val(timestamp_curr);
+//                 $(".chat-holder").animate({ scrollTop: $('.chat-holder').prop("scrollHeight")}, 500);     
+//             }   
+//         }
+//     });
 
-    $.ajax({
-        type: "POST",
-        url: `${base_url}/compliance/updateNotification`,
-        data: {
-            token : results_token
-        },
-        dataType: "json"
-    });
-}
+//     $.ajax({
+//         type: "POST",
+//         url: `${base_url}/compliance/updateNotification`,
+//         data: {
+//             token : results_token
+//         },
+//         dataType: "json"
+//     });
+// }

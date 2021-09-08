@@ -1,32 +1,11 @@
-<?php
-    $adviser_arr = [];
-
-    foreach ($result_arr as $k => $v) {
-        array_push($adviser_arr, $result_arr[$k]['adviser_first_name'] . ' ' . $result_arr[$k]['adviser_last_name']);
-    }
-
-    $adviser_arr = array_unique($adviser_arr);
-    $adviser_arr_new = array_values($adviser_arr);
-
-    foreach ($adviser_arr_new as $k => $v) {
-        if ('' == $filename) {
-            $filename = $adviser_arr_new[$k];
-        } else {
-            $filename .= ', ' . $adviser_arr_new[$k];
-        }
-    }
-
-    $filename = 'Summary of ' . $filename;
-    $total_question = 0;
-?>
-
 <style>
 	.main-tbl, .main-tbl th, .main-tbl td {
 	  border: 1px solid black;
-	  border-collapse: collapse;
+	  border-collapse: collapse; 
+	  font-size:9px;
 	}
 
-	.sectionn-title {
+	.section-title {
 		padding: 0%;
 		margin: 0%;
 		color: #205478;
@@ -37,65 +16,49 @@
 	}
 </style>
 
-	<h2 class="sectionn-title" align="center"><?php echo strtoupper(trim($filename, ' ')); ?></h2>
-	
-	<p></p>
-	
-	<table class="main-tbl" cellpadding="5">
-		<thead>
-			<tr>
-				<th align="center">Adviser</th>
-				<th align="center">Policy Type</th>
-				<th align="center">Providers</th>
-				<th align="center">Replacement Cover</th>
-				<th align="center">Compliance Officer</th>
-				<th align="center">Score</th>
-				<th align="center">Percentage</th>
-				<th align="center">Date Generated</th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php foreach ($result_arr as $k => $v) {
-    $answers = isset($result_arr[$k]['answers']) ? json_decode($result_arr[$k]['answers'], true) : [];
+<h2 class="section-title" align="center">File Review Report</h2>
 
-    for ($i = 1; $i <= 6; $i++) {
-        $total_question += sizeof($answers['step' . $i]);
-    }
+<p></p>
 
-    $max_score = $total_question * 2;
-    $score_percentage = ($result_arr[$k]['score'] / $max_score) * 100;
-    $total_question = 0; ?>
-				<tr>
-					<td>
-						<?php
-                            echo $result_arr[$k]['adviser_first_name'] . ' ' . $result_arr[$k]['adviser_last_name']; ?>
-					</td>
-					<td>
-						<ul>
-							<?php foreach ($policy_arr[$result_arr[$k]['result_id']] as $k1 => $v1) { ?>
-								<li>
-									<?php echo $policy_arr[$result_arr[$k]['result_id']][$k1]; ?>
-								</li>
-							<?php } ?>
-						</ul>
-					</td>
-					<td>
-						<ul>
-							<?php foreach ($providers_arr[$result_arr[$k]['result_id']] as $k1 => $v1) { ?>
-								<li><?php echo $providers_arr[$result_arr[$k]['result_id']][$k1]; ?></li>
-							<?php } ?>
-						</ul>
-					</td>
-					<td><?php echo $result_arr[$k]['replacement']; ?></td>
-					<td><?php echo $added_by; ?></td>
-					<td><?php echo $result_arr[$k]['score'] . '/' . $max_score; ?></td>
-					<td>
-						<?php
-                            echo number_format($score_percentage, 2) . '%'; ?>
-					</td>
-					<td><?php echo $result_arr[$k]['date_added'] ?? 'N/A'; ?></td>
-				</tr>
-			<?php
-} ?>
-		</tbody>
-	</table>
+<table class="main-tbl" cellpadding="5">
+	<thead>
+		<tr>
+			<th align="center" valign="middle" style="width:14%">Client Name</th>
+			<th align="center" valign="middle" style="width:7%">Step 1</th>
+			<th align="center" valign="middle" style="width:7%">Step 2</th>
+			<th align="center" valign="middle" style="width:7%">Step 3</th>
+			<th align="center" valign="middle" style="width:7%">Step 4</th>
+			<th align="center" valign="middle" style="width:7%">Step 5</th>
+			<th align="center" valign="middle" style="width:7%">Step 6</th>
+			<th align="center" valign="middle" style="width:7%">Total Score</th>
+			<th align="center" valign="middle" style="width:15%">Policy type sold</th>
+			<th align="center" valign="middle" style="width:15%">Provider</th>
+			<th align="center" valign="middle" style="width:7%">Replacement</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($data as $k => $v) : ?>
+		<tr>
+			<td align="left" valign="middle" style="width:14%"><?php echo $data[$k]['clients']; ?></td>
+			<td align="center" valign="middle" style="width:7%"><?php echo $data[$k]['step1']; ?></td>
+			<td align="center" valign="middle" style="width:7%"><?php echo $data[$k]['step2']; ?></td>
+			<td align="center" valign="middle" style="width:7%"><?php echo $data[$k]['step3']; ?></td>
+			<td align="center" valign="middle" style="width:7%"><?php echo $data[$k]['step4']; ?></td>
+			<td align="center" valign="middle" style="width:7%"><?php echo $data[$k]['step5']; ?></td>
+			<td align="center" valign="middle" style="width:7%"><?php echo $data[$k]['step6']; ?></td>
+			<td align="center" valign="middle" style="width:7%"><?php echo $data[$k]['total_score']; ?></td>
+			<td align="left" valign="middle" style="width:15%">
+				<?php 
+					echo str_replace(",","<br><br>",$data[$k]['policy_type']); 
+				?>
+			</td>
+			<td align="left" valign="middle" style="width:15%">
+				<?php 
+					echo str_replace(",","<br><br>",$data[$k]['providers']); 
+				?>
+			</td>
+			<td align="left" valign="middle" style="width:7%"><?php echo $data[$k]['replacement']; ?></td>
+		</tr>
+		<?php endforeach; ?>
+	</tbody>
+</table>

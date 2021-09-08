@@ -14,7 +14,7 @@ class MYPDF extends TCPDF
 
         // set margins
         $this->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP / 2, PDF_MARGIN_RIGHT);
-        $this->setPageOrientation('P', true, 10);
+        $this->setPageOrientation('L', true, 10);
         $this->SetFont('dejavusans', '', 8); // set the font
 
         $this->setHeaderMargin(PDF_MARGIN_HEADER);
@@ -99,7 +99,8 @@ class Pdf extends CI_Controller {
         $pdf->setPrintHeader(false);
         $pdf->setPrintFooter(true);
         $pdf->AddPage(); // add a page
-        $pdf->writeHTMLCell(187, 300, 12, 5, $html, 0, 0, false, true, '', true);
+        // $pdf->writeHTMLCell(187, 300, 12, 5, $html, 0, 0, false, true, '', true);
+        $pdf->writeHTML($html, true, false, true, false, '');
         $link = FCPATH . "assets/resources/preview.pdf";
         $pdf->Output($link, 'F');
         ob_end_clean();
@@ -173,7 +174,21 @@ class Pdf extends CI_Controller {
             $sub_array[] = $row->filename;
             $sub_array[] = $score_disp;
             $sub_array[] = $row->date_added;
-            
+
+            $score_status = $row->score_status;
+            if($score_status == "Based on percentage") {
+                $score_status = "<span style='color:red'>Failed</span>";
+                if($score_percentage >= 75) 
+                    $score_status = "<span style='color:green'>Passed</span>";
+            } else {
+                if($score_status == "Passed")
+                    $score_status = "<span style='color:green'>".$score_status."</span>";
+                else
+                    $score_status = "<span style='color:red'>".$score_status."</span>"; 
+            }
+
+
+            $sub_array[] = $score_status;
             // $buttons_data .= ' data-results_id="'.$row->results_id.'" ';
             foreach($row as $k1=>$v1){
                 if($k1 != "answers")
@@ -214,6 +229,15 @@ class Pdf extends CI_Controller {
                       . ' > '
                       . ' <button class="btn btn-warning btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Email PDF">'
                       . ' <i class="material-icons">mail</i> '
+                      . ' </button> '
+                      . ' </a> ';
+            $buttons .= ' <a id="updateStatusForm" ' 
+                      . ' class="updateStatusForm" style="text-decoration: none;" '
+                      . ' href="'. base_url().'Pdf/updateStatusForm" '
+                      . $buttons_data
+                      . ' > '
+                      . ' <button class="btn btn-success btn-round btn-fab btn-fab-mini" data-toggle="tooltip" data-placement="top" title="Update Status">'
+                      . ' <i class="material-icons">checklist</i> '
                       . ' </button> '
                       . ' </a> ';
             $sub_array[] = $buttons;
@@ -346,6 +370,48 @@ class Pdf extends CI_Controller {
         ob_end_clean();
 
         $result['form'] = $this->load->view('forms/sendmail.php', $formData, TRUE);
+        echo json_encode($result);
+    }
+
+    //accessing result status form
+    public function updateStatusForm() {
+        $formData = array();
+        $result = array();
+        $result['key'] = 'updateStatus';
+        $formData['key'] = $result['key'];
+
+        $results_id = $this->input->post('results_id');
+        $results_token = $this->input->post('results_token');
+        $this->load->model('ComplianceCollection');
+        
+        $res = $this->ComplianceCollection->getComplianceResultsById($results_id);
+        $data['data'] = json_decode($res->answers, true);
+        $result['form'] = $this->load->view('forms/updatestatus.php', $formData, TRUE);
+        echo json_encode($result);
+    }
+
+    //updated result status
+    public function updateStatus() {
+        $result = array();
+        $page = 'updateStatus';
+        $result['message'] = "There was an error in the connection. Please contact the administrator for updates.";
+
+        if($this->input->post() && $this->input->post() != null){
+            $post_data = array();
+            foreach ($this->input->post() as $k => $v) {
+                $post_data[$k] = $this->input->post($k,true);
+            }
+
+            $this->load->model('PdfCollection');
+            if($this->PdfCollection->updateStatus($post_data)) {
+                $result['message'] = "Successfully updated test result.";
+            } else {
+                $result['message'] = "Failed to update test result.";
+            }
+        } 
+
+        $result['key'] = $page;
+        
         echo json_encode($result);
     }
 }

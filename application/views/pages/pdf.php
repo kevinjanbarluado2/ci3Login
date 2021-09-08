@@ -92,6 +92,7 @@
 											<th>File Name</th>
 											<th width="10%">Score</th>
 											<th>Date Created</th>
+											<th>Result</th>
 											<th width="15%">Action</th>
 										</tr>
 									</thead>

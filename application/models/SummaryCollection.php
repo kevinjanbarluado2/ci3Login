@@ -1,6 +1,7 @@
 <?php
 class SummaryCollection extends CI_Model {
     var $select_column = null;
+    var $select_column_v2 = null;
     function __construct()
     {
         // Call the Model constructor
@@ -8,6 +9,11 @@ class SummaryCollection extends CI_Model {
         $columns = $this->getColumns();
         foreach ($columns as $key => $value) {
             $this->select_column[] = $this->table . '.' . $value;
+        }
+
+        $columns_v2 = $this->getColumns_v2();
+        foreach ($columns_v2 as $key => $value) {
+            $this->select_column_v2[] = $this->table . '.' . $value;
         }
     }
 
@@ -86,6 +92,149 @@ class SummaryCollection extends CI_Model {
         return $query->num_rows();
     }
 
+    //////////////////////////////////
+    var $order_column_v2 = array();
+
+    //set searchable parameters in summary_tbl table
+    public function getColumns_v2()
+    {
+        $rows = array();
+        return $rows;
+    }   
+
+    //set limit in datatable
+    function make_datatables_v2()
+    {
+        $this->make_query_v2();
+        if ($_POST["length"] != -1) {
+            $this->db->limit($_POST['length'], $_POST['start']);
+        }
+
+        $query = $this->db->get();
+        return $query->result();
+    }
+
+    //fetch list of summary_tbl
+    function make_query_v2()
+    {      
+        $c_db = $_ENV['db_database'];
+        $ap_db = $_ENV['ap_database'];
+
+        $info = isset($_POST['info']) ? $_POST['info'] : '';
+        $adviser = array();
+        $replacement = '';
+        $policyType = array();
+        $providers = array();
+        $date_from = '';
+        $date_until = '';
+
+        if($info != '') {
+            $adviser = $info['adviser'];
+            $replacement = $info['replacement'];
+            $policyType = $info['policyType'];
+            $providers = $info['providers'];
+            $date_from = $info['date_from = $'];
+            $date_until = $info['date_until']; 
+        }
+
+        $this->select_column_v2[] = $ap_db.'.users.last_name';
+        $this->select_column_v2[] = $ap_db.'.users.first_name';
+        $this->select_column_v2[] = $ap_db.'.users.middle_name';
+        $this->db->select(
+            $c_db.'.results_tbl.results_id AS result_id,'.
+            $c_db.'.results_tbl.adviser_id,'.
+            $ap_db.'.users.last_name AS adviser_last_name,'.
+            $ap_db.'.users.first_name AS adviser_first_name,'.
+            $ap_db.'.users.middle_name AS adviser_middle_name,'.
+            $c_db.'.results_tbl.providers,'.
+            $c_db.'.results_tbl.policy_type,'.
+            $c_db.'.results_tbl.policy_number,'.
+            $c_db.'.results_tbl.clients,'.
+            $c_db.'.results_tbl.replacement,'.
+            $c_db.'.results_tbl.score,'. 
+            $c_db.'.results_tbl.token,'. 
+            $c_db.'.results_tbl.score_status,'. 
+            'DATE_FORMAT(DATE('.$c_db.'.results_tbl.date_added), "%d/%m/%Y") AS date_added,'.
+            $c_db.'.results_tbl.answers'
+        );
+        $this->db->from($c_db.'.results_tbl');
+        $this->db->join($ap_db.".users","results_tbl.adviser_id = ".$ap_db.".users.idusers", "left");
+
+        if (isset($_POST["search"]["value"])) {
+            $this->db->group_start();
+
+            foreach ($this->select_column_v2 as $key => $value) {
+                $this->db->or_like($value, $_POST["search"]["value"]);
+            }
+
+            $this->db->group_end();
+        }
+
+        if(isset($_POST['info']['replacement']) && $_POST['info']['replacement'] != null && $_POST['info']['replacement'] != '') {
+            if($_POST['info']['replacement'] == "N/A") {
+                $this->db->group_start();
+                $this->db->or_where($c_db.'.results_tbl.replacement = "'.$_POST['info']['replacement'].'"');
+                $this->db->or_where($c_db.'.results_tbl.replacement = ""');
+                $this->db->group_end();
+            } else $this->db->where($c_db.'.results_tbl.replacement = "'.$_POST['info']['replacement'].'"');
+        }
+        if(isset($_POST['info']['date_from']) && $_POST['info']['date_from'] != null) {
+            if(isset($_POST['info']['date_until']) && $_POST['info']['date_until'] != null) 
+                $this->db->where('DATE('.$c_db.'.results_tbl.date_added) BETWEEN "'.$_POST['info']['date_from'].'" AND "'.$_POST['info']['date_until'].'"');
+        }
+
+        if(isset($_POST['info']['policyType']) && sizeof($_POST['info']['policyType']) >= 1) {
+            foreach ($_POST['info']['policyType'] as $k => $v) {
+                $this->db->group_start();
+                $this->db->or_where($c_db.'.results_tbl.policy_type LIKE "%,'.$v.'"');
+                $this->db->or_where($c_db.'.results_tbl.policy_type LIKE "%,'.$v.',%"');
+                $this->db->or_where($c_db.'.results_tbl.policy_type LIKE "'.$v.',%"');
+                $this->db->group_end();
+            } 
+        }
+
+        if(isset($_POST['info']['providers']) && sizeof($_POST['info']['providers']) >= 1) {
+            foreach ($_POST['info']['providers'] as $k => $v) {
+                $this->db->group_start();
+                $this->db->or_where($c_db.'.results_tbl.providers LIKE "%,'.$v.'"');
+                $this->db->or_where($c_db.'.results_tbl.providers LIKE "%,'.$v.',%"');
+                $this->db->or_where($c_db.'.results_tbl.providers LIKE "'.$v.',%"');
+                $this->db->group_end();
+            } 
+        }
+
+        if(isset($_POST['info']['adviser']) && sizeof($_POST['info']['adviser']) >= 1) {
+            if(is_array($_POST['info']['adviser']) && $_POST['info']['adviser'][0] != '') {
+                $array = implode(', ', $_POST['info']['adviser']);
+                $this->db->where($c_db.'.results_tbl.adviser_id IN ('.$array.')');
+            } elseif($_POST['info']['adviser'][0] != '') 
+                $this->db->where($c_db.'.results_tbl.adviser_id = "'.$_POST['info']['adviser'].'"');
+                
+        }
+        
+        if (isset($_POST["order"])) {
+            $this->db->order_by($this->order_column_v2[$_POST['order']['0']['column']] . " " . $_POST['order']['0']['dir']);
+        } else {
+            $this->db->order_by($c_db.".results_tbl.date_modified DESC");
+        }
+    }
+
+    //get count of all summary_tbl
+    function get_all_data_v2()
+    {
+        $this->db->select("results_tbl.*");
+        $this->db->from("results_tbl");
+        return $this->db->count_all_results();
+    }
+
+    //get count of filtered summary_tbl
+    function get_filtered_data_v2()
+    {
+        $this->make_query_v2();
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+    //////////////////////////////////
     public function getResultsById($id, $replacement, $date_from, $date_until){
         $this->db->select('
             results_id AS result_id,
@@ -211,6 +360,95 @@ class SummaryCollection extends CI_Model {
         $this->db->where('summary_id', $id);
         // $this->db->where('status', 'Active');
         return $this->db->get()->row();
+    }
+
+    public function getFilteredSummary() {
+        $c_db = $_ENV['db_database'];
+        $ap_db = $_ENV['ap_database'];
+
+        $info = isset($_POST['info']) ? $_POST['info'] : '';
+        $adviser = array();
+        $replacement = '';
+        $policyType = array();
+        $providers = array();
+        $date_from = '';
+        $date_until = '';
+
+        if($info != '') {
+            $adviser = $info['adviser'];
+            $replacement = $info['replacement'];
+            $policyType = $info['policyType'];
+            $providers = $info['providers'];
+            $date_from = $info['date_from = $'];
+            $date_until = $info['date_until']; 
+        }
+
+        $this->db->select(
+            $c_db.'.results_tbl.results_id AS result_id,'.
+            $c_db.'.results_tbl.adviser_id,'.
+            $ap_db.'.users.last_name AS adviser_last_name,'.
+            $ap_db.'.users.first_name AS adviser_first_name,'.
+            $ap_db.'.users.middle_name AS adviser_middle_name,'.
+            $c_db.'.results_tbl.providers,'.
+            $c_db.'.results_tbl.policy_type,'.
+            $c_db.'.results_tbl.policy_number,'.
+            $c_db.'.results_tbl.clients,'.
+            $c_db.'.results_tbl.replacement,'.
+            $c_db.'.results_tbl.score,'. 
+            $c_db.'.results_tbl.token,'. 
+            'DATE_FORMAT(DATE('.$c_db.'.results_tbl.date_added), "%d/%m/%Y") AS date_added,'.
+            $c_db.'.results_tbl.answers'
+        );
+        $this->db->from($c_db.'.results_tbl');
+        $this->db->join($ap_db.".users","results_tbl.adviser_id = ".$ap_db.".users.idusers", "left");
+
+        if(isset($_POST['info']['replacement']) && $_POST['info']['replacement'] != null && $_POST['info']['replacement'] != '') {
+            if($_POST['info']['replacement'] == "N/A") {
+                $this->db->group_start();
+                $this->db->or_where($c_db.'.results_tbl.replacement = "'.$_POST['info']['replacement'].'"');
+                $this->db->or_where($c_db.'.results_tbl.replacement = ""');
+                $this->db->group_end();
+            } else $this->db->where($c_db.'.results_tbl.replacement = "'.$_POST['info']['replacement'].'"');
+        }
+        if(isset($_POST['info']['date_from']) && $_POST['info']['date_from'] != null) {
+            if(isset($_POST['info']['date_until']) && $_POST['info']['date_until'] != null) 
+                $this->db->where('DATE('.$c_db.'.results_tbl.date_added) BETWEEN "'.$_POST['info']['date_from'].'" AND "'.$_POST['info']['date_until'].'"');
+        }
+
+        if(isset($_POST['info']['policyType']) && sizeof($_POST['info']['policyType']) >= 1) {
+            foreach ($_POST['info']['policyType'] as $k => $v) {
+                $this->db->group_start();
+                $this->db->or_where($c_db.'.results_tbl.policy_type LIKE "%,'.$v.'"');
+                $this->db->or_where($c_db.'.results_tbl.policy_type LIKE "%,'.$v.',%"');
+                $this->db->or_where($c_db.'.results_tbl.policy_type LIKE "'.$v.',%"');
+                $this->db->group_end();
+            } 
+        }
+
+        if(isset($_POST['info']['providers']) && sizeof($_POST['info']['providers']) >= 1) {
+            foreach ($_POST['info']['providers'] as $k => $v) {
+                $this->db->group_start();
+                $this->db->or_where($c_db.'.results_tbl.providers LIKE "%,'.$v.'"');
+                $this->db->or_where($c_db.'.results_tbl.providers LIKE "%,'.$v.',%"');
+                $this->db->or_where($c_db.'.results_tbl.providers LIKE "'.$v.',%"');
+                $this->db->group_end();
+            } 
+        }
+
+        if(isset($_POST['info']['adviser']) && sizeof($_POST['info']['adviser']) >= 1) {
+            if(is_array($_POST['info']['adviser']) && $_POST['info']['adviser'][0] != '') {
+                $array = implode(', ', $_POST['info']['adviser']);
+                $this->db->where($c_db.'.results_tbl.adviser_id IN ('.$array.')');
+            } elseif($_POST['info']['adviser'][0] != '') 
+                $this->db->where($c_db.'.results_tbl.adviser_id = "'.$_POST['info']['adviser'].'"');
+                
+        }
+        
+
+        $this->db->order_by($c_db.".results_tbl.date_modified DESC");   
+
+        $query = $this->db->get();
+        return $query->result();
     }
 }
 ?>
