@@ -26,7 +26,7 @@
     <img class="mb-4" src="img/img.png" alt="" width="150px">
     <h1 class="h3 mb-3 font-weight-normal">Compliance App</h1>
     <label for="inputEmail" class="sr-only border-primary">Email address</label>
-    <input type="email" id="inputEmail" name="inputEmail" class="form-control <?= ($isInvalid) ? 'is-invalid' : '' ?>" placeholder="Email address" required autofocus>
+    <input type="text" id="inputEmail" name="inputEmail" class="form-control <?= ($isInvalid) ? 'is-invalid' : '' ?>" placeholder="Email address" required autofocus>
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" name="inputPassword" id="inputPassword" class="form-control <?= ($isInvalid) ? 'is-invalid' : '' ?>" placeholder="Password" required>
 

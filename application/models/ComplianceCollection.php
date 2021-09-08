@@ -146,6 +146,9 @@ class ComplianceCollection extends CI_Model {
             "score" => $total_score
         );
 
+        if($_SESSION['privileges'] == 'advisernotes')
+            unset($params2['added_by']);
+
         $this->db->where('results_id', $params['results_id']);
         if ($this->db->update('results_tbl', $params2) !== FALSE)
             return true;    

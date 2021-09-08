@@ -184,6 +184,64 @@ $(function () {
     });
 
     //Ajax non-forms
+    //event triggered upon clicking of send pdf
+    //displays upate status form
+    $(document).on('click', '#updateStatusForm', function (e) {
+        e.preventDefault();
+
+        my = $(this)
+        results_id = my.attr('data-results_id');
+        results_token = my.attr('data-token');
+        url = my.attr('href');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: {
+                results_id : results_id,
+                results_token: results_token
+            },
+            dataType: "json",
+            success: function(result){
+                page = my.attr('results_id');
+                if(result.hasOwnProperty("key")){
+                    switch(result.key){
+                        case 'updateStatus':
+                            $('#myModal .modal-dialog').attr('class','modal-dialog modal-md');
+                            $('#myModal .modal-title').html('System Message');
+                            $('#myModal .modal-body').html(result.form);
+                            $('#myModal').modal('show');    
+
+                            $('.select2').select2({
+                                allowClear: true,
+                                width: '100%',
+                            });
+                            $.each(my.data(),function(i,v){
+                                $('.'+i).val(my.data(i)).change(); 
+                            });                 
+                            break;
+                    }
+                }
+            },
+            error: function(result){
+                $.notify({
+                    icon: "notifications",
+                    message: "There was an error in the connection. Please contact the administrator for updates."
+
+                }, {
+                    type: 'danger',
+                    timer: 1000,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    }
+                });
+            }
+        });
+
+    });
+
+    //Ajax non-forms
     //event triggered upon clicking of send pdf (summary)
     //displays send mail form
     $(document).on('click', '#sendSummaryEmailForm', function (e) {
@@ -287,6 +345,59 @@ $(function () {
                 $.notify({
                     icon: "notifications",
                     message: "There was an error in the connection. Please contact the administrator for updates."
+
+                }, {
+                    type: 'danger',
+                    timer: 1000,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    }
+                });
+            }
+
+        });
+    });
+
+    //Ajax Forms
+    //event triggered upon submitting form
+    $(document).on('submit', '#updateStatus', function (e) {
+        e.preventDefault();
+        var form = $(this)
+        content = "Are you sure you want to proceed?";
+
+        if (form.attr('id') == "updateStatus") {
+            content = "Are you sure you want to update test result?";
+        }
+
+        url = form.attr('action');  
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: new FormData(form[0]),
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (result) {
+                loadTable();
+                $('#myModal').modal('hide');
+                $.notify({
+                    icon: "notifications",
+                    message: result.message
+
+                }, {
+                    type: 'success',
+                    timer: 1000,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    }
+                });
+            },
+            error: function (req, err) { 
+                $.notify({
+                    icon: "notifications",
+                    message: result.message
 
                 }, {
                     type: 'danger',
