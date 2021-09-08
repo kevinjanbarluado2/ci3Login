@@ -39,9 +39,11 @@ $privileges=explode(",",$_SESSION['privileges']);
 
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo"><a href="#" class="simple-text logo-normal">
-          Compliance Checker
-        </a></div>
+      <div class="logo" style="text-align: center;"><a href="#" class="simple-text logo-normal">
+          <?php echo ($_SESSION['admin']) ? "Compliance Checker" : "Compliance Adviser"; ?>
+        </a>
+        <?php echo $_SESSION['name']; ?>
+      </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
         <?php if(in_array('dashboard',$privileges)):?>
@@ -100,6 +102,14 @@ $privileges=explode(",",$_SESSION['privileges']);
             </a>
           </li>
           <?php endif;?>
+          <?php if(in_array('advisernotes',$privileges)):?>
+          <li class="nav-item <?php if($activeNav=="advisernotes"){echo "active";} ?>">
+            <a class="nav-link" href="<?=base_url('advisernotes'); ?>">
+              <i class="material-icons">people_alt</i>
+              <p>Clients</p>
+            </a>
+          </li>
+          <?php endif;?>
         </ul>
       </div>
     </div>
@@ -108,7 +118,7 @@ $privileges=explode(",",$_SESSION['privileges']);
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="javascript:;"><?= ucfirst($activeNav); ?></a>
+            <a class="navbar-brand" href="javascript:;"><?= ($activeNav == "advisernotes") ? "Client's List" : ucfirst($activeNav); ?></a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>

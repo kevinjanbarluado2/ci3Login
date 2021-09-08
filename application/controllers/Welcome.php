@@ -23,9 +23,9 @@ class Welcome extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		if (!$this->session->userdata('admin')) {
-			redirect('login');
-		}
+		// if (!$this->session->userdata('admin')) {
+		// 	redirect('login');
+		// }
 	}
 
 
@@ -117,5 +117,12 @@ class Welcome extends CI_Controller
 		$this->load->view('pages/summary');
 		$this->load->view('footer',$data);
 	}
-
+	public function advisernotes()
+	{
+		$data = array();
+		$data['activeNav'] = "advisernotes";
+		$this->load->view('header', $data);
+		$this->load->view('pages/advisernotes');
+		$this->load->view('footer',$data);
+	}
 }

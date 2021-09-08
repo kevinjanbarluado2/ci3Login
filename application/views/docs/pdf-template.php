@@ -9,7 +9,7 @@ $adviser_fsp_no = "";
 $adviser_contact_no = "";
 $adviser_email_address = "";
 $adviser_address = "";
-if (isset($adviserInfo) && sizeof($adviserInfo) >= 1) {
+if (isset($adviserInfo) && count((array)$adviserInfo) >= 1) {
 	$adviser_name = $adviserInfo->first_name . " " . $adviserInfo->last_name;
 	$adviser_fsp_no = $adviserInfo->fspr_number;
 	$adviser_contact_no = $adviserInfo->telephone_no;
@@ -44,7 +44,7 @@ $steps = [
 
 for ($i = 1; $i <= 6; $i++) :
 	foreach ($data['data']['step' . $i] as $ind => $x) :
-		$total_score += $x['value'];
+		$total_score += ($x['value'] == '') ? 0 : $x['value'];
 
 	endforeach;
 	$total_question += sizeof($data['data']['step' . $i]);
@@ -63,17 +63,22 @@ function createTable($step)
 		$one = ($x['value'] == "1") ? "checked=\"true\"" : "";
 		$two = ($x['value'] == "2") ? "checked=\"true\"" : "";
 		$num = $ind + 1;
-		echo "<td width=\"350px\">{$num}. {$x['question']}";
+		echo "<td style=\"text-align: right\" width=\"5%\">{$num}.</td>";
+		echo "<td style=\"text-align: justify\" width=\"55%\">{$x['question']}</td>";
 
-		if ($x['notes']) {
-			echo "<br><br><span color=\"red\">Notes: {$x['notes']}</span>";
-		}
-
-		echo "</td>";
-		echo "<td  width=\"175px\">";
+		echo "<td  width=\"5%\">";
 		echo "<input type=\"radio\" readonly=\"true\" $zero name=\"{$ind}\" id=\"rqa\" value=\"0\"/><span></span> <label style=\"color:black;\" for=\"rqa\">0</label><br />";
 		echo "<input type=\"radio\" readonly=\"true\" $one name=\"{$ind}\" id=\"rqa\" value=\"1\"/><span></span> <label style=\"color:black;\" for=\"rqa\">1</label><br />";
-		echo "<input type=\"radio\" readonly=\"true\" $two name=\"{$ind}\" id=\"rqb\" value=\"2\"/><span></span>  <label style=\"color:black;\"  for=\"rqb\">2</label><br /></td>";
+		echo "<input type=\"radio\" readonly=\"true\" $two name=\"{$ind}\" id=\"rqb\" value=\"2\"/><span></span>  <label style=\"color:black;\"  for=\"rqb\">2</label><br />";
+		echo "</td>";
+		if ($x['notes']) {
+			echo "<td width=\"35%\">";
+			echo $x['notes'];
+			echo "</td>";
+		} else {
+			echo "<td width=\"35%\">&nbsp;</td>";	
+		}
+		
 		echo "</tr>";
 
 	endforeach;
@@ -360,7 +365,7 @@ function getStepScore($step)
 		<th style="color: #205478">
 			<?php
 
-			$providerArr = $info['providers'];
+			$providerArr = isset($info['providers']) ? $info['providers'] : array();
 			$provderStr = array();
 			foreach ($providerArr as $x) {
 				$query = $this->db->query('SELECT * FROM company_provider WHERE idcompany_provider="' . $x . '"');
@@ -382,7 +387,7 @@ function getStepScore($step)
 		<th style="color: #205478">
 			<?php
 
-			$productArr = $info['policyType'];
+			$productArr = isset($info['policyType']) ? $info['policyType'] : array();
 			$productStr = array();
 			foreach ($productArr as $x) {
 				$query = $this->db->query('SELECT * FROM product_category WHERE idproduct_category="' . $x . '"');
